@@ -1,0 +1,58 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "globalEnv": [
+    "NODE_ENV",
+    "SKIP_ENV_VALIDATION",
+    "PREVIEW_AUTH",
+    "HOST",
+    "PORT"
+  ],
+  "globalPassThroughEnv": ["CI", "NEXT_RUNTIME"],
+  "tasks": {
+    "build": {
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "env": ["NEXT_PUBLIC_APP_URL", "BACKEND_URL", "LOG_LEVEL"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+    },
+    "lint": {
+      "env": [
+        "NEXT_PUBLIC_APP_URL",
+        "BACKEND_URL",
+        "LOG_LEVEL",
+        "PLAYWRIGHT_BASE_URL",
+        "PLAYWRIGHT_SKIP_WEBSERVER"
+      ]
+    },
+    "format": {},
+    "typecheck": {
+      "env": ["NEXT_PUBLIC_APP_URL", "BACKEND_URL", "LOG_LEVEL"]
+    },
+    "test": {
+      "env": ["NEXT_PUBLIC_APP_URL", "BACKEND_URL", "LOG_LEVEL"]
+    },
+    "test:coverage": {
+      "outputs": ["coverage/**"]
+    },
+    "test:e2e": {
+      "cache": false,
+      "env": [
+        "NEXT_PUBLIC_APP_URL",
+        "BACKEND_URL",
+        "LOG_LEVEL",
+        "PLAYWRIGHT_BASE_URL",
+        "PLAYWRIGHT_SKIP_WEBSERVER"
+      ],
+      "dependsOn": ["build"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "env": ["NEXT_PUBLIC_APP_URL", "BACKEND_URL", "LOG_LEVEL"]
+    },
+    "clean": {
+      "cache": false
+    }
+  },
+  "globalDependencies": ["packages/**", "tsconfig.shared.json"]
+}

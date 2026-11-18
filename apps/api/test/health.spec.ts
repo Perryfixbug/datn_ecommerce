@@ -1,0 +1,25 @@
+import "reflect-metadata"
+import { Test } from "@nestjs/testing"
+import request from "supertest"
+import { AppModule } from "../src/app.module.js"
+
+it("serves health without database or other infrastructure", async () => {
+  const module = await Test.createTestingModule({
+    imports: [AppModule],
+  }).compile()
+  const app = module.createNestApplication()
+  app.setGlobalPrefix("api/v1")
+  await app.init()
+  try {
+    const response = await request(app.getHttpServer())
+      .get("/api/v1/health")
+      .expect(200)
+    expect(response.body).toEqual({
+      status: "ok",
+      uptime: expect.any(Number),
+      timestamp: expect.any(String),
+    })
+  } finally {
+    await app.close()
+  }
+})

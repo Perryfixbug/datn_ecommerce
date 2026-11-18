@@ -1,0 +1,39 @@
+{
+  "extends": "../../packages/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@shared/ui/globals.css": ["../../packages/ui/src/styles/globals.css"],
+      "@shared/ui/*": ["../../packages/ui/src/*"],
+      "@shared/api-client": ["../../packages/api-client/src/index.ts"],
+      "@shared/api-client/shop": [
+        "../../packages/api-client/src/generated/shop/api.ts"
+      ],
+      "@shared/api-client/admin": [
+        "../../packages/api-client/src/generated/admin/api.ts"
+      ],
+      "@shared/api-client/server": [
+        "../../packages/api-client/src/transport/server.ts"
+      ],
+      "@shared/api-client/axios": [
+        "../../packages/api-client/src/lib/axios-instance.ts"
+      ],
+      "@shared/api-client/hooks/*": ["../../packages/api-client/src/hooks/*"],
+      "@shared/api-contract": ["../../packages/api-contract/src/index.ts"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "next.config.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
+}

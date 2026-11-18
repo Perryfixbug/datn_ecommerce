@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  title: Furniture admin API
+  version: 0.0.0
+tags:
+  - name: health
+paths:
+  /api/v1/health:
+    get:
+      operationId: getHealth
+      parameters: []
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Furniture.Common.HealthStatus"
+      tags:
+        - health
+components:
+  schemas:
+    Furniture.Common.HealthStatus:
+      type: object
+      required:
+        - status
+        - uptime
+        - timestamp
+      properties:
+        status:
+          type: string
+          enum:
+            - ok
+            - degraded
+            - down
+        uptime:
+          type: number
+          format: double
+          minimum: 0
+        timestamp:
+          type: string
+          format: date-time

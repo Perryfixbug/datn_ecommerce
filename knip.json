@@ -1,0 +1,51 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignoreUnresolved": ["next"],
+  "workspaces": {
+    ".": {
+      "project": [
+        "*.{js,ts}",
+        "scripts/*.mjs",
+        "packages/**/*.{ts,tsx,js,mjs}"
+      ],
+      "ignoreDependencies": ["lint-staged"],
+      "entry": [
+        "scripts/*.mjs",
+        "packages/ui/src/**/*.{ts,tsx}",
+        "packages/api-client/src/index.ts",
+        "packages/api-contract/src/index.ts",
+        "packages/*/orval.config.ts"
+      ]
+    },
+    "apps/admin": {
+      "entry": [
+        "app/**/{page,layout,template,error,loading,not-found,route}.{ts,tsx}",
+        "tests/**/*.{test,spec}.{ts,tsx}",
+        "tests/e2e/**/*.spec.ts"
+      ],
+      "project": ["**/*.{ts,tsx}"],
+      "ignoreDependencies": [
+        "pino-pretty",
+        "@tailwindcss/postcss",
+        "@testing-library/user-event"
+      ]
+    },
+    "apps/storefront": {
+      "entry": [
+        "app/**/{page,layout,template,error,loading,not-found,route}.{ts,tsx}",
+        "tests/**/*.{test,spec}.{ts,tsx}",
+        "tests/e2e/**/*.spec.ts"
+      ],
+      "project": ["**/*.{ts,tsx}"],
+      "ignoreDependencies": [
+        "pino-pretty",
+        "@tailwindcss/postcss",
+        "@testing-library/user-event"
+      ]
+    },
+    "apps/api": {
+      "entry": ["src/main.ts", "test/**/*.spec.ts", "jest.config.cjs"],
+      "project": ["src/**/*.ts", "test/**/*.ts"]
+    }
+  }
+}

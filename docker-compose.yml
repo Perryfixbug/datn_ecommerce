@@ -1,0 +1,75 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    image: furniture-ecommerce/api:local
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${API_PORT:-4000}:4000"
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:4000/api/v1/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  storefront:
+    build:
+      context: .
+      dockerfile: apps/storefront/Dockerfile
+      args:
+        NEXT_PUBLIC_APP_URL: ${STOREFRONT_URL:-http://localhost:3000}
+    image: furniture-ecommerce/storefront:local
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${STOREFRONT_PORT:-3000}:3000"
+    environment:
+      NEXT_PUBLIC_APP_URL: ${STOREFRONT_URL:-http://localhost:3000}
+      BACKEND_URL: http://api:4000
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  admin:
+    build:
+      context: .
+      dockerfile: apps/admin/Dockerfile
+      args:
+        NEXT_PUBLIC_APP_URL: ${ADMIN_URL:-http://localhost:3002}
+    image: furniture-ecommerce/admin:local
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${ADMIN_PORT:-3002}:3000"
+    environment:
+      NEXT_PUBLIC_APP_URL: ${ADMIN_URL:-http://localhost:3002}
+      BACKEND_URL: http://api:4000
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s

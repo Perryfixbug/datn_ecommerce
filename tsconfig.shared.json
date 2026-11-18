@@ -1,0 +1,17 @@
+{
+  "extends": "./packages/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@shared/ui/*": ["packages/ui/src/*"]
+    },
+    "types": ["node", "react", "react-dom"]
+  },
+  "include": [
+    "packages/ui/src/**/*.ts",
+    "packages/ui/src/**/*.tsx",
+    "packages/api-client/src/**/*.ts",
+    "packages/api-contract/src/**/*.ts"
+  ],
+  "exclude": ["node_modules", "**/dist/**"]
+}
