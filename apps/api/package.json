@@ -7,17 +7,18 @@
     "dist"
   ],
   "scripts": {
-    "dev": "nest start --watch",
-    "build": "nest build",
+    "dev": "prisma generate && nest start --watch",
+    "build": "prisma generate && nest build",
     "start": "node dist/apps/api/src/main.js",
     "lint": "eslint --max-warnings 0",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "typecheck": "tsc --noEmit",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
-    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --coverage",
-    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
+    "typecheck": "prisma generate && tsc --noEmit",
+    "test": "prisma generate && node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
+    "test:coverage": "prisma generate && node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --coverage",
+    "test:watch": "prisma generate && node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
     "clean": "node ../../scripts/clean.mjs dist coverage",
     "prisma:generate": "prisma generate",
+    "prisma:seed": "prisma generate && prisma db seed",
     "prisma:validate": "prisma validate"
   },
   "dependencies": {

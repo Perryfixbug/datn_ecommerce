@@ -8,7 +8,7 @@
     "HOST",
     "PORT"
   ],
-  "globalPassThroughEnv": ["CI", "NEXT_RUNTIME"],
+  "globalPassThroughEnv": ["CI", "NEXT_RUNTIME", "DATABASE_URL"],
   "tasks": {
     "build": {
       "inputs": ["$TURBO_DEFAULT$", ".env*"],

@@ -5,7 +5,7 @@ paths:
 
 # Kiến trúc API NestJS
 
-Hiện trạng: NestJS ESM trên Express; module tại src/modules/, thành phần chung tại src/common/. GET /api/v1/health là endpoint nền. Prisma/Better Auth mới cài, chưa có tích hợp database hoặc auth.
+Hiện trạng: NestJS ESM trên Express; module tại src/modules/, thành phần chung tại src/common/. GET /api/v1/health là liveness. Prisma đã có schema PostgreSQL, migration khởi tạo đã áp dụng local và runtime DI tại src/infrastructure/database/. Runtime yêu cầu DATABASE_URL hợp lệ, kết nối lúc khởi tạo và đóng theo vòng đời NestJS; không tự chạy migration/seed. Seed demo chỉ chạy thủ công trên PostgreSQL local đã xác nhận, không tạo tài khoản đăng nhập hoạt động. Better Auth mới cài, chưa tích hợp auth.
 
 - Dùng module, provider và DI của NestJS. Controller được viết tay trong module nghiệp vụ và phải khớp đặc tả HTTP.
 - Controller tiếp nhận đầu vào đã kiểm tra, gọi service/usecase và trả HTTP response. Không đặt truy vấn DB hoặc nghiệp vụ phức tạp trực tiếp trong controller.

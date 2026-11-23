@@ -44,6 +44,14 @@ Bộ tài liệu trong `.agent/rules/` là nguồn chuẩn cho quy ước phát 
 - Tên tệp dùng kebab-case; component/class dùng PascalCase; hook theo mẫu `useThing`. Giữ tên tệp đặc biệt theo framework.
 - Giữ nguyên thay đổi không liên quan của người dùng. Không dùng lệnh Git phá hủy để dọn worktree.
 
+## Lịch sử prompt
+
+- Đọc và tuân thủ quy định tại `docs/prompts/README.md`.
+- Sau khi hoàn tất yêu cầu có chỉnh sửa file, trước phản hồi cuối, thêm đúng một dòng vào `docs/prompts/prompt-history.md` theo mẫu trong README.
+- Không ghi các lượt chỉ hỏi đáp hoặc chỉ sửa chính `prompt-history.md`.
+- Dùng ID tiếp theo trong lịch sử thực tế; nếu chưa có bản ghi, bắt đầu từ P-001. Không lấy các dòng ví dụ trong README làm lịch sử.
+- Ghi kết quả thực tế, không ghi thông tin nhạy cảm và không sửa hoặc xóa bản ghi cũ khi chưa được yêu cầu.
+
 ## Nguyên tắc chia sẻ mã
 
 1. Hợp đồng HTTP và ràng buộc đầu vào thuộc TypeSpec; không tạo thêm nguồn DTO/schema viết tay song song.

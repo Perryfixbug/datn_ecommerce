@@ -1,0 +1,635 @@
+// Nguồn: docs/specs/database/DB_Schema.md; PostgreSQL, chưa áp dụng migration.
+// ID do ứng dụng cấp; BIGINT(16) chỉ có độ rộng hiển thị, không phải giới hạn 16 bit.
+// DATETIME → timestamp(0) không múi giờ; DATE → date; bỏ charset MySQL.
+// CHECK chỉ là ghi chú, cần SQL ở bước 2; không dùng db push thay migration đầy đủ.
+// FK không khai báo hành vi → NoAction; unique index thêm tiền tố uq_<bảng> tránh trùng tên.
+// updatedAt chỉ có default theo mô hình, không tự cập nhật bằng @updatedAt.
+
+generator client {
+  provider               = "prisma-client"
+  output                 = "../generated/prisma"
+  moduleFormat           = "esm"
+  generatedFileExtension = "ts"
+  importFileExtension    = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model NguoiDung {
+  // CHECK ck_nguoidung_gioitinh: gioiTinh IS NULL OR gioiTinh IN ('Nam','Nu','Khac')
+  // CHECK ck_nguoidung_vaitro: vaiTro IN ('NguoiMua','NguoiBan','NhanVien')
+  // CHECK ck_nguoidung_trangthai: trangThai IN ('HoatDong','BiKhoa')
+
+  idNguoiDung     BigInt    @id(map: "pk_nguoidung") @db.BigInt
+  email           String    @db.VarChar(255)
+  soDienThoai     String    @db.VarChar(10)
+  matKhauHash     String    @db.VarChar(255)
+  hoTen           String    @db.VarChar(100)
+  ngaySinh        DateTime? @db.Date
+  gioiTinh        String?   @db.VarChar(30)
+  vaiTro          String    @db.VarChar(30)
+  trangThai       String    @db.VarChar(30)
+  lanDangNhapCuoi DateTime? @db.Timestamp(0)
+  createdAt       DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt       DateTime  @default(now()) @db.Timestamp(0)
+
+  nguoiMua         NguoiMua?    @relation("NguoiMua_NguoiDung_idNguoiMua")
+  nguoiBan         NguoiBan?    @relation("NguoiBan_NguoiDung_idNguoiBan")
+  nhanVienSan      NhanVienSan? @relation("NhanVienSan_NguoiDung_idNhanVien")
+  viDienTu         ViDienTu?    @relation("ViDienTu_NguoiDung_idNguoiDung")
+  danhSachThongBao ThongBao[]   @relation("ThongBao_NguoiDung_idNguoiDung")
+
+  @@unique([email, vaiTro], map: "uq_nguoidung_email")
+  @@unique([soDienThoai, vaiTro], map: "uq_nguoidung_sodienthoai")
+  @@index([vaiTro, trangThai], map: "ix_nguoidung_vaitro_trangthai")
+}
+
+model NguoiMua {
+  // CHECK ck_nguoimua_hang: hangThanhVien IN ('Dong','Bac','Vang','KimCuong')
+  // CHECK ck_nguoimua_diem: diemTichLuy >= 0
+
+  idNguoiMua    BigInt   @id(map: "pk_nguoimua") @db.BigInt
+  hangThanhVien String   @default("Dong") @db.VarChar(30)
+  diemTichLuy   Int      @default(0) @db.Integer
+  updatedAt     DateTime @default(now()) @db.Timestamp(0)
+
+  nguoiDung              NguoiDung        @relation("NguoiMua_NguoiDung_idNguoiMua", fields: [idNguoiMua], references: [idNguoiDung], onDelete: Restrict, onUpdate: NoAction, map: "NguoiMua_idNguoiMua_fkey")
+  danhSachChiTietGioHang ChiTietGioHang[] @relation("ChiTietGioHang_NguoiMua_idNguoiMua")
+  danhSachDiaChi         DiaChi[]         @relation("DiaChi_NguoiMua_idNguoiMua")
+  danhSachDonHang        DonHang[]        @relation("DonHang_NguoiMua_idNguoiMua")
+  danhSachBaoCao         BaoCao[]         @relation("BaoCao_NguoiMua_idNguoiMua")
+  danhSachCuocTroChuyen  CuocTroChuyen[]  @relation("CuocTroChuyen_NguoiMua_idNguoiMua")
+
+  @@index([hangThanhVien], map: "ix_nguoimua_hang")
+}
+
+model NguoiBan {
+  // CHECK ck_nguoiban_loaithue: loaiThue IS NULL OR loaiThue IN ('CaNhan','HoKinhDoanh','DoanhNghiep')
+  // CHECK ck_nguoiban_xacminh: trangThaiXacMinh IN ('ChuaNop','ChoDuyet','DaXacMinh','TuChoi')
+  // CHECK ck_nguoiban_tendn: loaiThue IS NULL OR loaiThue <> 'DoanhNghiep' OR tenDoanhNghiep IS NOT NULL
+  // CHECK ck_nguoiban_lydotuchoi: trangThaiXacMinh <> 'TuChoi' OR lyDoTuChoi IS NOT NULL
+
+  idNguoiBan       BigInt    @id(map: "pk_nguoiban") @db.BigInt
+  soCCCD           String?   @unique(map: "uq_nguoiban_socccd") @db.VarChar(12)
+  matTruocCCCD     String?   @db.VarChar(255)
+  matSauCCCD       String?   @db.VarChar(255)
+  loaiThue         String?   @db.VarChar(30)
+  tenDoanhNghiep   String?   @db.VarChar(255)
+  maSoThue         String?   @unique(map: "uq_nguoiban_masothue") @db.VarChar(14)
+  trangThaiXacMinh String    @default("ChuaNop") @db.VarChar(30)
+  lyDoTuChoi       String?   @db.VarChar(500)
+  thoiGianNop      DateTime? @db.Timestamp(0)
+  thoiGianDuyet    DateTime? @db.Timestamp(0)
+  updatedAt        DateTime  @default(now()) @db.Timestamp(0)
+
+  nguoiDung       NguoiDung @relation("NguoiBan_NguoiDung_idNguoiBan", fields: [idNguoiBan], references: [idNguoiDung], onDelete: NoAction, onUpdate: NoAction, map: "NguoiBan_idNguoiBan_fkey")
+  danhSachCuaHang CuaHang[] @relation("CuaHang_NguoiBan_idNguoiBan")
+
+  @@index([trangThaiXacMinh, thoiGianNop], map: "ix_nguoiban_xacminh")
+}
+
+model NhanVienSan {
+  idNhanVien BigInt   @id(map: "pk_nhanviensan") @db.BigInt
+  chucVu     String   @db.VarChar(50)
+  ngayVaoLam DateTime @db.Date
+  updatedAt  DateTime @default(now()) @db.Timestamp(0)
+
+  nguoiDung          NguoiDung    @relation("NhanVienSan_NguoiDung_idNhanVien", fields: [idNhanVien], references: [idNguoiDung], onDelete: NoAction, onUpdate: NoAction, map: "NhanVienSan_idNhanVien_fkey")
+  danhSachDanhMuc    DanhMuc[]    @relation("DanhMuc_NhanVienSan_idNhanVien")
+  danhSachTranhChap  TranhChap[]  @relation("TranhChap_NhanVienSan_idNhanVien")
+  danhSachBaoCao     BaoCao[]     @relation("BaoCao_NhanVienSan_idNhanVien")
+  danhSachLichSuXuLy LichSuXuLy[] @relation("LichSuXuLy_NhanVienSan_idNhanVien")
+  danhSachBanner     Banner[]     @relation("Banner_NhanVienSan_idNhanVien")
+}
+
+model ViDienTu {
+  // CHECK ck_vidientu_sodu: soDu >= 0
+  // CHECK ck_vidientu_trangthai: trangThai IN ('HoatDong','BiKhoa')
+  // CHECK ck_vidientu_saipin: soLanNhapSaiPin BETWEEN 0 AND 5
+
+  idNguoiDung     BigInt    @id(map: "pk_vidientu") @db.BigInt
+  soDu            Decimal   @default(0) @db.Decimal(15, 0)
+  trangThai       String    @default("HoatDong") @db.VarChar(30)
+  maPinHash       String?   @db.VarChar(255)
+  soLanNhapSaiPin Int       @default(0) @db.Integer
+  khoaTamDen      DateTime? @db.Timestamp(0)
+  version         Int       @default(0) @db.Integer
+  createdAt       DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt       DateTime  @default(now()) @db.Timestamp(0)
+
+  nguoiDung          NguoiDung    @relation("ViDienTu_NguoiDung_idNguoiDung", fields: [idNguoiDung], references: [idNguoiDung], onDelete: NoAction, onUpdate: NoAction, map: "ViDienTu_idNguoiDung_fkey")
+  danhSachGiaoDichVi GiaoDichVi[] @relation("GiaoDichVi_ViDienTu_idNguoiDung")
+}
+
+model GiaoDichVi {
+  // CHECK ck_gdvi_loai: loai IN ('Nap','Rut','ThanhToan','NhanTien','PhiSan','HoanTien')
+  // CHECK ck_gdvi_sotien: soTien > 0
+  // CHECK ck_gdvi_trangthai: trangThai IN ('DangXuLy','ThanhCong','ThatBai')
+  // CHECK ck_gdvi_loai_khoa: (loai = 'ThanhToan' AND idDonHang IS NOT NULL AND idCuaHang IS NULL) OR (loai IN ('NhanTien','PhiSan','HoanTien') AND idDonHang IS NOT NULL AND idCuaHang IS NOT NULL) OR (loai IN ('Nap','Rut') AND idDonHang IS NULL AND idCuaHang IS NULL)
+
+  idGiaoDich          BigInt    @id(map: "pk_giaodichvi") @db.BigInt
+  maGiaoDich          String?   @unique(map: "uq_giaodichvi_magiaodich") @db.VarChar(20)
+  idNguoiDung         BigInt    @db.BigInt
+  idDonHang           BigInt?   @db.BigInt
+  idCuaHang           BigInt?   @db.BigInt
+  loai                String    @db.VarChar(30)
+  soTien              Decimal   @db.Decimal(15, 0)
+  trangThai           String    @db.VarChar(30)
+  thoiGian            DateTime  @db.Timestamp(0)
+  ghiChu              String?   @db.VarChar(255)
+  nganHangNhan        String?   @db.VarChar(100)
+  soTaiKhoanNhan      String?   @db.VarChar(30)
+  tenChuTaiKhoanNhan  String?   @db.VarChar(100)
+  thoiGianHoanTat     DateTime? @db.Timestamp(0)
+  noiDungChuyenKhoan  String?   @db.VarChar(100)
+  maThamChieuNganHang String?   @db.VarChar(50)
+
+  viDienTu     ViDienTu      @relation("GiaoDichVi_ViDienTu_idNguoiDung", fields: [idNguoiDung], references: [idNguoiDung], onDelete: NoAction, onUpdate: NoAction, map: "GiaoDichVi_idNguoiDung_fkey")
+  donHang      DonHang?      @relation("GiaoDichVi_DonHang_idDonHang", fields: [idDonHang], references: [idDonHang], onDelete: NoAction, onUpdate: NoAction, map: "GiaoDichVi_idDonHang_fkey")
+  donHangRieng DonHangRieng? @relation("GiaoDichVi_DonHangRieng_idDonHang_idCuaHang", fields: [idDonHang, idCuaHang], references: [idDonHang, idCuaHang], onDelete: NoAction, onUpdate: NoAction, map: "GiaoDichVi_idDonHang_idCuaHang_fkey")
+
+  @@unique([idDonHang, idCuaHang, loai], map: "uq_giaodichvi_iddonhang")
+  @@index([idNguoiDung, thoiGian], map: "ix_gdvi_vi_thoigian")
+  @@index([trangThai, loai], map: "ix_gdvi_trangthai")
+}
+
+model CuaHang {
+  // CHECK ck_cuahang_trangthai: trangThai IN ('HoatDong','TamDong','BiKhoa')
+
+  idCuaHang     BigInt   @id(map: "pk_cuahang") @db.BigInt
+  idNguoiBan    BigInt   @db.BigInt
+  maShop        String?  @unique(map: "uq_cuahang_mashop") @db.VarChar(20)
+  tenShop       String   @db.VarChar(100)
+  anh           String?  @db.VarChar(255)
+  tinh          String   @db.VarChar(100)
+  xa            String   @db.VarChar(100)
+  diaChiChiTiet String   @db.VarChar(255)
+  soDienThoai   String   @db.VarChar(15)
+  moTa          String?  @db.Text
+  ngayMoCuaHang DateTime @db.Date
+  trangThai     String   @default("HoatDong") @db.VarChar(30)
+  createdAt     DateTime @default(now()) @db.Timestamp(0)
+  updatedAt     DateTime @default(now()) @db.Timestamp(0)
+
+  nguoiBan              NguoiBan        @relation("CuaHang_NguoiBan_idNguoiBan", fields: [idNguoiBan], references: [idNguoiBan], onDelete: NoAction, onUpdate: NoAction, map: "CuaHang_idNguoiBan_fkey")
+  danhSachSanPham       SanPham[]       @relation("SanPham_CuaHang_idCuaHang")
+  danhSachDanhMucShop   DanhMucShop[]   @relation("DanhMucShop_CuaHang_idCuaHang")
+  danhSachVoucher       Voucher[]       @relation("Voucher_CuaHang_idCuaHang")
+  danhSachDonHangRieng  DonHangRieng[]  @relation("DonHangRieng_CuaHang_idCuaHang")
+  danhSachCuocTroChuyen CuocTroChuyen[] @relation("CuocTroChuyen_CuaHang_idCuaHang")
+
+  @@index([idNguoiBan], map: "ix_cuahang_nguoiban")
+  @@index([trangThai], map: "ix_cuahang_trangthai")
+}
+
+model SanPham {
+  // CHECK ck_sanpham_trangthai: trangThai IN ('Hien','An','Khoa')
+
+  idSanPham  BigInt   @id(map: "pk_sanpham") @db.BigInt
+  maSanPham  String?  @unique(map: "uq_sanpham_masanpham") @db.VarChar(20)
+  idCuaHang  BigInt   @db.BigInt
+  idDanhMuc  BigInt   @db.BigInt
+  tenSanPham String   @db.VarChar(200)
+  moTa       String?  @db.Text
+  phanLoai   String?  @db.VarChar(100)
+  anh        String?  @db.Text
+  trangThai  String   @default("Hien") @db.VarChar(30)
+  createdAt  DateTime @default(now()) @db.Timestamp(0)
+  updatedAt  DateTime @default(now()) @db.Timestamp(0)
+
+  cuaHang                CuaHang          @relation("SanPham_CuaHang_idCuaHang", fields: [idCuaHang], references: [idCuaHang], onDelete: NoAction, onUpdate: NoAction, map: "SanPham_idCuaHang_fkey")
+  danhMuc                DanhMuc          @relation("SanPham_DanhMuc_idDanhMuc", fields: [idDanhMuc], references: [idDanhMuc], onDelete: NoAction, onUpdate: NoAction, map: "SanPham_idDanhMuc_fkey")
+  danhSachBienThe        BienThe[]        @relation("BienThe_SanPham_idSanPham")
+  danhSachChiTietDanhMuc ChiTietDanhMuc[] @relation("ChiTietDanhMuc_SanPham_idSanPham_idCuaHang")
+  danhSachBaoCao         BaoCao[]         @relation("BaoCao_SanPham_idSanPham")
+
+  @@unique([idSanPham, idCuaHang], map: "uq_sanpham_idsanpham")
+  @@index([idCuaHang, trangThai], map: "ix_sanpham_cuahang_tt")
+  @@index([idDanhMuc, trangThai], map: "ix_sanpham_danhmuc_tt")
+}
+
+model BienThe {
+  // CHECK ck_bienthe_gia: gia >= 0
+  // CHECK ck_bienthe_tonkho: tonKho >= 0
+
+  idBienThe  BigInt   @id(map: "pk_bienthe") @db.BigInt
+  idSanPham  BigInt   @db.BigInt
+  thuocTinh  String   @db.VarChar(255)
+  tenBienThe String   @db.VarChar(200)
+  anh        String?  @db.VarChar(255)
+  gia        Decimal  @db.Decimal(15, 0)
+  tonKho     Int      @default(0) @db.Integer
+  version    Int      @default(0) @db.Integer
+  createdAt  DateTime @default(now()) @db.Timestamp(0)
+  updatedAt  DateTime @default(now()) @db.Timestamp(0)
+
+  sanPham                SanPham          @relation("BienThe_SanPham_idSanPham", fields: [idSanPham], references: [idSanPham], onDelete: NoAction, onUpdate: NoAction, map: "BienThe_idSanPham_fkey")
+  danhSachChiTietGioHang ChiTietGioHang[] @relation("ChiTietGioHang_BienThe_idBienThe")
+  danhSachChiTietDonHang ChiTietDonHang[] @relation("ChiTietDonHang_BienThe_idBienThe")
+
+  @@unique([idSanPham, thuocTinh], map: "uq_bienthe_idsanpham")
+  @@index([idSanPham], map: "ix_bienthe_sanpham")
+}
+
+model DanhMuc {
+  idDanhMuc    BigInt   @id(map: "pk_danhmuc") @db.BigInt
+  idDanhMucCha BigInt?  @db.BigInt
+  idNhanVien   BigInt   @db.BigInt
+  tenDanhMuc   String   @db.VarChar(100)
+  createdAt    DateTime @default(now()) @db.Timestamp(0)
+  updatedAt    DateTime @default(now()) @db.Timestamp(0)
+
+  danhSachSanPham SanPham[]   @relation("SanPham_DanhMuc_idDanhMuc")
+  danhMucCha      DanhMuc?    @relation("DanhMuc_DanhMuc_idDanhMucCha", fields: [idDanhMucCha], references: [idDanhMuc], onDelete: NoAction, onUpdate: NoAction, map: "DanhMuc_idDanhMucCha_fkey")
+  danhMucCon      DanhMuc[]   @relation("DanhMuc_DanhMuc_idDanhMucCha")
+  nhanVienSan     NhanVienSan @relation("DanhMuc_NhanVienSan_idNhanVien", fields: [idNhanVien], references: [idNhanVien], onDelete: NoAction, onUpdate: NoAction, map: "DanhMuc_idNhanVien_fkey")
+
+  @@unique([idDanhMucCha, tenDanhMuc], map: "uq_danhmuc_iddanhmuccha")
+  @@index([idDanhMucCha], map: "ix_danhmuc_cha")
+}
+
+model DanhMucShop {
+  idDanhMucShop    BigInt   @id(map: "pk_danhmucshop") @db.BigInt
+  idCuaHang        BigInt   @db.BigInt
+  idDanhMucShopCha BigInt?  @db.BigInt
+  tenDanhMuc       String   @db.VarChar(100)
+  createdAt        DateTime @default(now()) @db.Timestamp(0)
+  updatedAt        DateTime @default(now()) @db.Timestamp(0)
+
+  cuaHang                CuaHang          @relation("DanhMucShop_CuaHang_idCuaHang", fields: [idCuaHang], references: [idCuaHang], onDelete: NoAction, onUpdate: NoAction, map: "DanhMucShop_idCuaHang_fkey")
+  danhMucShopCha         DanhMucShop?     @relation("DanhMucShop_DanhMucShop_idCuaHang_idDanhMucShopCha", fields: [idCuaHang, idDanhMucShopCha], references: [idCuaHang, idDanhMucShop], onDelete: NoAction, onUpdate: NoAction, map: "DanhMucShop_idCuaHang_idDanhMucShopCha_fkey")
+  danhMucShopCon         DanhMucShop[]    @relation("DanhMucShop_DanhMucShop_idCuaHang_idDanhMucShopCha")
+  danhSachChiTietDanhMuc ChiTietDanhMuc[] @relation("ChiTietDanhMuc_DanhMucShop_idDanhMucShop_idCuaHang")
+
+  @@unique([idDanhMucShop, idCuaHang], map: "uq_danhmucshop_iddanhmucshop")
+  @@unique([idCuaHang, idDanhMucShopCha, tenDanhMuc], map: "uq_danhmucshop_idcuahang")
+  @@index([idCuaHang], map: "ix_dms_shop")
+}
+
+model ChiTietDanhMuc {
+  idSanPham     BigInt   @db.BigInt
+  idDanhMucShop BigInt   @db.BigInt
+  idCuaHang     BigInt   @db.BigInt
+  createdAt     DateTime @default(now()) @db.Timestamp(0)
+
+  sanPham     SanPham     @relation("ChiTietDanhMuc_SanPham_idSanPham_idCuaHang", fields: [idSanPham, idCuaHang], references: [idSanPham, idCuaHang], onDelete: NoAction, onUpdate: NoAction, map: "ChiTietDanhMuc_idSanPham_idCuaHang_fkey")
+  danhMucShop DanhMucShop @relation("ChiTietDanhMuc_DanhMucShop_idDanhMucShop_idCuaHang", fields: [idDanhMucShop, idCuaHang], references: [idDanhMucShop, idCuaHang], onDelete: NoAction, onUpdate: NoAction, map: "ChiTietDanhMuc_idDanhMucShop_idCuaHang_fkey")
+
+  @@id([idSanPham, idDanhMucShop], map: "pk_chitietdanhmuc")
+  @@index([idDanhMucShop, idSanPham], map: "ix_ctdm_danhmuc")
+}
+
+model Voucher {
+  // CHECK ck_voucher_loaigiam: loaiGiam IN ('PhanTram','SoTien')
+  // CHECK ck_voucher_giatri: giaTri > 0 AND (loaiGiam <> 'PhanTram' OR giaTri <= 100)
+  // CHECK ck_voucher_soluong: soLuong >= 0
+  // CHECK ck_voucher_thoigian: ketThuc > batDau
+  // CHECK ck_voucher_trangthai: trangThai IN ('DangChay','TamDung')
+
+  idVoucher   BigInt   @id(map: "pk_voucher") @db.BigInt
+  idCuaHang   BigInt   @db.BigInt
+  code        String?  @unique(map: "uq_voucher_code") @db.VarChar(30)
+  tenVoucher  String   @db.VarChar(100)
+  loaiGiam    String   @db.VarChar(30)
+  giaTri      Decimal  @db.Decimal(15, 2)
+  giamToiDa   Decimal? @db.Decimal(15, 0)
+  donToiThieu Decimal  @default(0) @db.Decimal(15, 0)
+  soLuong     Int      @db.Integer
+  batDau      DateTime @db.Timestamp(0)
+  ketThuc     DateTime @db.Timestamp(0)
+  trangThai   String   @default("DangChay") @db.VarChar(30)
+  createdAt   DateTime @default(now()) @db.Timestamp(0)
+  updatedAt   DateTime @default(now()) @db.Timestamp(0)
+
+  cuaHang              CuaHang        @relation("Voucher_CuaHang_idCuaHang", fields: [idCuaHang], references: [idCuaHang], onDelete: NoAction, onUpdate: NoAction, map: "Voucher_idCuaHang_fkey")
+  danhSachDonHangRieng DonHangRieng[] @relation("DonHangRieng_Voucher_idCuaHang_idVoucher")
+
+  @@unique([idVoucher, idCuaHang], map: "uq_voucher_idvoucher")
+  @@unique([idCuaHang, code], map: "uq_voucher_idcuahang")
+  @@index([idCuaHang, trangThai, ketThuc], map: "ix_voucher_shop_tt_time")
+}
+
+model ChiTietGioHang {
+  // CHECK ck_ctgh_soluong: soLuong > 0
+
+  idNguoiMua BigInt   @db.BigInt
+  idBienThe  BigInt   @db.BigInt
+  soLuong    Int      @db.Integer
+  ngayThem   DateTime @db.Timestamp(0)
+  updatedAt  DateTime @default(now()) @db.Timestamp(0)
+
+  nguoiMua NguoiMua @relation("ChiTietGioHang_NguoiMua_idNguoiMua", fields: [idNguoiMua], references: [idNguoiMua], onDelete: Cascade, onUpdate: NoAction, map: "ChiTietGioHang_idNguoiMua_fkey")
+  bienThe  BienThe  @relation("ChiTietGioHang_BienThe_idBienThe", fields: [idBienThe], references: [idBienThe], onDelete: NoAction, onUpdate: NoAction, map: "ChiTietGioHang_idBienThe_fkey")
+
+  @@id([idNguoiMua, idBienThe], map: "pk_chitietgiohang")
+  @@index([idBienThe], map: "ix_ctgh_bienthe")
+}
+
+model DiaChi {
+  // CHECK ck_diachi_loai: loaiDiaChi IN ('NhaRieng','VanPhong')
+
+  idDiaChi      BigInt   @id(map: "pk_diachi") @db.BigInt
+  idNguoiMua    BigInt   @db.BigInt
+  nguoiNhan     String   @db.VarChar(100)
+  soDienThoai   String   @db.VarChar(15)
+  tinh          String   @db.VarChar(100)
+  xa            String   @db.VarChar(100)
+  diaChiChiTiet String   @db.VarChar(255)
+  loaiDiaChi    String   @db.VarChar(30)
+  macDinh       Boolean  @default(false) @db.Boolean
+  createdAt     DateTime @default(now()) @db.Timestamp(0)
+  updatedAt     DateTime @default(now()) @db.Timestamp(0)
+
+  nguoiMua NguoiMua @relation("DiaChi_NguoiMua_idNguoiMua", fields: [idNguoiMua], references: [idNguoiMua], onDelete: Cascade, onUpdate: NoAction, map: "DiaChi_idNguoiMua_fkey")
+
+  @@index([idNguoiMua], map: "ix_diachi_nguoimua")
+}
+
+model DonHang {
+  // CHECK ck_donhang_phuongthuc: phuongThuc IN ('Vi','QR','COD')
+  // CHECK ck_donhang_sotien: soTien >= 0
+  // CHECK ck_donhang_trangthai: trangThai IN ('Cho','ThanhCong','ThatBai','Huy')
+
+  idDonHang          BigInt    @id(map: "pk_donhang") @db.BigInt
+  maDonHang          String?   @unique(map: "uq_donhang_madonhang") @db.VarChar(20)
+  idNguoiMua         BigInt    @db.BigInt
+  thoiGianDat        DateTime  @db.Timestamp(0)
+  tenNguoiNhan       String    @db.VarChar(100)
+  soDienThoaiNhan    String    @db.VarChar(10)
+  tinh               String    @db.VarChar(100)
+  xa                 String    @db.VarChar(100)
+  diaChiChiTiet      String    @db.VarChar(255)
+  phuongThuc         String    @db.VarChar(30)
+  soTien             Decimal   @db.Decimal(15, 0)
+  trangThai          String    @default("Cho") @db.VarChar(30)
+  hanThanhToan       DateTime? @db.Timestamp(0)
+  maDoiSoat          String?   @unique(map: "uq_donhang_madoisoat") @db.VarChar(30)
+  noiDungChuyenKhoan String?   @db.VarChar(100)
+  thoiGianThanhCong  DateTime? @db.Timestamp(0)
+  createdAt          DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt          DateTime  @default(now()) @db.Timestamp(0)
+
+  danhSachGiaoDichVi   GiaoDichVi[]   @relation("GiaoDichVi_DonHang_idDonHang")
+  nguoiMua             NguoiMua       @relation("DonHang_NguoiMua_idNguoiMua", fields: [idNguoiMua], references: [idNguoiMua], onDelete: NoAction, onUpdate: NoAction, map: "DonHang_idNguoiMua_fkey")
+  danhSachDonHangRieng DonHangRieng[] @relation("DonHangRieng_DonHang_idDonHang")
+
+  @@index([idNguoiMua, thoiGianDat], map: "ix_donhang_nguoimua_time")
+  @@index([trangThai, hanThanhToan], map: "ix_donhang_tt_han")
+}
+
+model DonHangRieng {
+  // CHECK ck_dhr_trangthaidon: trangThaiDon IN ('ChoXacNhan','DangChuanBi','DangGiao','DaGiao','DaNhan','DaHuy','DangHoanHang','DaHoanTien')
+  // CHECK ck_dhr_tyle: tyLeHoaHong BETWEEN 0 AND 100
+  // CHECK ck_dhr_nguoixacnhan: nguoiXacNhanNhan IS NULL OR nguoiXacNhanNhan IN ('NguoiMua','HeThong')
+  // CHECK ck_dhr_hoantien: trangThaiHoanTien IN ('Khong','ChoKichHoatVi','DaHoan','QuaHan')
+
+  idDonHang         BigInt    @db.BigInt
+  idCuaHang         BigInt    @db.BigInt
+  maDonHangRieng    String?   @unique(map: "uq_donhangrieng_madonhangrieng") @db.VarChar(20)
+  idVoucher         BigInt?   @db.BigInt
+  trangThaiDon      String    @default("ChoXacNhan") @db.VarChar(30)
+  phiVanChuyen      Decimal   @default(0) @db.Decimal(15, 0)
+  tyLeHoaHong       Decimal   @db.Decimal(5, 2)
+  ngayGiaoDuKien    DateTime? @db.Date
+  thoiGianGiao      DateTime? @db.Timestamp(0)
+  hanNhanHang       DateTime? @db.Timestamp(0)
+  thoiGianNhan      DateTime? @db.Timestamp(0)
+  nguoiXacNhanNhan  String?   @db.VarChar(30)
+  thoiGianHuy       DateTime? @db.Timestamp(0)
+  // VPP không khai báo độ dài: giữ varchar không giới hạn.
+  lyDoHuy           String?   @db.VarChar
+  trangThaiHoanTien String    @default("Khong") @db.VarChar(30)
+  soTienHoan        Decimal?  @db.Decimal(15, 0)
+  hanNhanHoan       DateTime? @db.Timestamp(0)
+  version           Int       @default(0) @db.Integer
+  createdAt         DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt         DateTime  @default(now()) @db.Timestamp(0)
+
+  danhSachGiaoDichVi     GiaoDichVi[]     @relation("GiaoDichVi_DonHangRieng_idDonHang_idCuaHang")
+  donHang                DonHang          @relation("DonHangRieng_DonHang_idDonHang", fields: [idDonHang], references: [idDonHang], onDelete: Cascade, onUpdate: NoAction, map: "DonHangRieng_idDonHang_fkey")
+  cuaHang                CuaHang          @relation("DonHangRieng_CuaHang_idCuaHang", fields: [idCuaHang], references: [idCuaHang], onDelete: NoAction, onUpdate: NoAction, map: "DonHangRieng_idCuaHang_fkey")
+  voucher                Voucher?         @relation("DonHangRieng_Voucher_idCuaHang_idVoucher", fields: [idCuaHang, idVoucher], references: [idCuaHang, idVoucher], onDelete: NoAction, onUpdate: NoAction, map: "DonHangRieng_idCuaHang_idVoucher_fkey")
+  danhSachChiTietDonHang ChiTietDonHang[] @relation("ChiTietDonHang_DonHangRieng_idDonHang_idCuaHang")
+  hoanHang               HoanHang?        @relation("HoanHang_DonHangRieng_idDonHang_idCuaHang")
+
+  @@id([idDonHang, idCuaHang], map: "pk_donhangrieng")
+  @@index([idCuaHang, trangThaiDon, createdAt], map: "ix_dhr_shop_tt")
+  @@index([idVoucher, idCuaHang], map: "ix_dhr_voucher")
+  @@index([trangThaiDon, hanNhanHang], map: "ix_dhr_hannhan")
+  @@index([trangThaiHoanTien, hanNhanHoan], map: "ix_dhr_hoantien")
+}
+
+model ChiTietDonHang {
+  // CHECK ck_ctdh_soluong: soLuong > 0
+  // CHECK ck_ctdh_giamgia: giamGiaPhanBo >= 0
+
+  idDonHang     BigInt   @db.BigInt
+  idCuaHang     BigInt   @db.BigInt
+  idBienThe     BigInt   @db.BigInt
+  tenSanPham    String   @db.VarChar(200)
+  tenBienThe    String   @db.VarChar(200)
+  soLuong       Int      @db.Integer
+  donGia        Decimal  @db.Decimal(15, 0)
+  giamGiaPhanBo Decimal  @default(0) @db.Decimal(15, 0)
+  createdAt     DateTime @default(now()) @db.Timestamp(0)
+
+  donHangRieng DonHangRieng @relation("ChiTietDonHang_DonHangRieng_idDonHang_idCuaHang", fields: [idDonHang, idCuaHang], references: [idDonHang, idCuaHang], onDelete: NoAction, onUpdate: NoAction, map: "ChiTietDonHang_idDonHang_idCuaHang_fkey")
+  bienThe      BienThe      @relation("ChiTietDonHang_BienThe_idBienThe", fields: [idBienThe], references: [idBienThe], onDelete: NoAction, onUpdate: NoAction, map: "ChiTietDonHang_idBienThe_fkey")
+  danhGia      DanhGia?     @relation("DanhGia_ChiTietDonHang_idDonHang_idCuaHang_idBienThe")
+
+  @@id([idDonHang, idCuaHang, idBienThe], map: "pk_chitietdonhang")
+  @@index([idBienThe], map: "ix_ctdh_bienthe")
+}
+
+model DanhGia {
+  // CHECK ck_danhgia_sosao: soSao BETWEEN 1 AND 5
+
+  idDonHang       BigInt    @db.BigInt
+  idCuaHang       BigInt    @db.BigInt
+  idBienThe       BigInt    @db.BigInt
+  soSao           Int       @db.Integer
+  noiDung         String?   @db.Text
+  anh             String?   @db.Text
+  thoiGianDanhGia DateTime  @db.Timestamp(0)
+  phanHoiShop     String?   @db.Text
+  thoiGianPhanHoi DateTime? @db.Timestamp(0)
+  updatedAt       DateTime  @default(now()) @db.Timestamp(0)
+
+  chiTietDonHang ChiTietDonHang @relation("DanhGia_ChiTietDonHang_idDonHang_idCuaHang_idBienThe", fields: [idDonHang, idCuaHang, idBienThe], references: [idDonHang, idCuaHang, idBienThe], onDelete: NoAction, onUpdate: NoAction, map: "DanhGia_idDonHang_idCuaHang_idBienThe_fkey")
+
+  @@id([idDonHang, idCuaHang, idBienThe], map: "pk_danhgia")
+  @@index([idBienThe, soSao], map: "ix_danhgia_bienthe_sao")
+}
+
+model HoanHang {
+  // CHECK ck_hoanhang_trangthai: trangThai IN ('ChoNguoiBan','DaChapNhan','DangTranhChap','HoanTat')
+  // CHECK ck_hoanhang_ketqua: ketQua IS NULL OR ketQua IN ('NguoiMuaThang','NguoiBanThang')
+  // CHECK ck_hoanhang_cachxuly: cachXuLy IS NULL OR cachXuLy IN ('TuDong','NguoiBan','NhanVien')
+
+  idDonHang       BigInt    @db.BigInt
+  idCuaHang       BigInt    @db.BigInt
+  maHoanHang      String?   @unique(map: "uq_hoanhang_mahoanhang") @db.VarChar(20)
+  lyDoHoan        String    @db.VarChar(200)
+  moTa            String?   @db.Text
+  bangChung       String?   @db.Text
+  trangThai       String    @default("ChoNguoiBan") @db.VarChar(30)
+  thoiGianGui     DateTime  @db.Timestamp(0)
+  hanPhanHoi      DateTime  @db.Timestamp(0)
+  thoiGianPhanHoi DateTime? @db.Timestamp(0)
+  ketQua          String?   @db.VarChar(30)
+  lyDoTuChoi      String?   @db.VarChar(500)
+  cachXuLy        String?   @db.VarChar(30)
+  thoiGianHoanTat DateTime? @db.Timestamp(0)
+  updatedAt       DateTime  @default(now()) @db.Timestamp(0)
+
+  donHangRieng DonHangRieng @relation("HoanHang_DonHangRieng_idDonHang_idCuaHang", fields: [idDonHang, idCuaHang], references: [idDonHang, idCuaHang], onDelete: NoAction, onUpdate: NoAction, map: "HoanHang_idDonHang_idCuaHang_fkey")
+  tranhChap    TranhChap?   @relation("TranhChap_HoanHang_idDonHang_idCuaHang")
+
+  @@id([idDonHang, idCuaHang], map: "pk_hoanhang")
+  @@index([trangThai, hanPhanHoi], map: "ix_hoanhang_tt_han")
+}
+
+model TranhChap {
+  // CHECK ck_tranhchap_trangthai: trangThaiTranhChap IN ('ChoXuLy','DaPhanQuyet')
+  // CHECK ck_tranhchap_ketqua: ketQua IS NULL OR ketQua IN ('NguoiMuaThang','NguoiBanThang')
+
+  idDonHang          BigInt    @db.BigInt
+  idCuaHang          BigInt    @db.BigInt
+  maTranhChap        String?   @unique(map: "uq_tranhchap_matranhchap") @db.VarChar(20)
+  idNhanVien         BigInt?   @db.BigInt
+  trangThaiTranhChap String    @default("ChoXuLy") @db.VarChar(30)
+  ketQua             String?   @db.VarChar(30)
+  lyDoPhanQuyet      String?   @db.VarChar(1000)
+  thoiGianMo         DateTime  @db.Timestamp(0)
+  thoiDiemPhanXu     DateTime? @db.Timestamp(0)
+  updatedAt          DateTime  @default(now()) @db.Timestamp(0)
+
+  hoanHang           HoanHang     @relation("TranhChap_HoanHang_idDonHang_idCuaHang", fields: [idDonHang, idCuaHang], references: [idDonHang, idCuaHang], onDelete: NoAction, onUpdate: NoAction, map: "TranhChap_idDonHang_idCuaHang_fkey")
+  nhanVienSan        NhanVienSan? @relation("TranhChap_NhanVienSan_idNhanVien", fields: [idNhanVien], references: [idNhanVien], onDelete: NoAction, onUpdate: NoAction, map: "TranhChap_idNhanVien_fkey")
+  danhSachLichSuXuLy LichSuXuLy[] @relation("LichSuXuLy_TranhChap_idDonHang_idCuaHang")
+
+  @@id([idDonHang, idCuaHang], map: "pk_tranhchap")
+  @@index([idNhanVien, trangThaiTranhChap], map: "ix_tranhchap_nv_tt")
+  @@index([trangThaiTranhChap, thoiGianMo], map: "ix_tranhchap_tt_mo")
+}
+
+model BaoCao {
+  // CHECK ck_baocao_lydo: lyDo IN ('HangGia','HangCam','MoTaSai','Khac')
+  // CHECK ck_baocao_trangthai: trangThai IN ('ChoXuLy','DaKetLuan')
+  // CHECK ck_baocao_ketqua: ketQua IS NULL OR ketQua IN ('ViPham','KhongViPham')
+
+  idBaoCao     BigInt    @id(map: "pk_baocao") @db.BigInt
+  maBaoCao     String?   @unique(map: "uq_baocao_mabaocao") @db.VarChar(20)
+  idNguoiMua   BigInt    @db.BigInt
+  idSanPham    BigInt    @db.BigInt
+  idNhanVien   BigInt?   @db.BigInt
+  lyDo         String    @db.VarChar(30)
+  moTa         String?   @db.Text
+  bangChung    String?   @db.Text
+  trangThai    String    @default("ChoXuLy") @db.VarChar(30)
+  thoiGianGui  DateTime  @db.Timestamp(0)
+  ketQua       String?   @db.VarChar(30)
+  thoiGianDong DateTime? @db.Timestamp(0)
+  updatedAt    DateTime  @default(now()) @db.Timestamp(0)
+
+  nguoiMua           NguoiMua     @relation("BaoCao_NguoiMua_idNguoiMua", fields: [idNguoiMua], references: [idNguoiMua], onDelete: NoAction, onUpdate: NoAction, map: "BaoCao_idNguoiMua_fkey")
+  sanPham            SanPham      @relation("BaoCao_SanPham_idSanPham", fields: [idSanPham], references: [idSanPham], onDelete: NoAction, onUpdate: NoAction, map: "BaoCao_idSanPham_fkey")
+  nhanVienSan        NhanVienSan? @relation("BaoCao_NhanVienSan_idNhanVien", fields: [idNhanVien], references: [idNhanVien], onDelete: NoAction, onUpdate: NoAction, map: "BaoCao_idNhanVien_fkey")
+  danhSachLichSuXuLy LichSuXuLy[] @relation("LichSuXuLy_BaoCao_idBaoCao")
+
+  @@index([idSanPham], map: "ix_baocao_sanpham")
+  @@index([idNguoiMua], map: "ix_baocao_nguoimua")
+  @@index([idNhanVien, trangThai], map: "ix_baocao_nv_tt")
+}
+
+model LichSuXuLy {
+  // CHECK ck_lsxl_loaitru: (idDonHang IS NOT NULL AND idCuaHang IS NOT NULL AND idBaoCao IS NULL) OR (idDonHang IS NULL AND idCuaHang IS NULL AND idBaoCao IS NOT NULL)
+
+  idLichSuXuLy BigInt   @id(map: "pk_lichsuxuly") @db.BigInt
+  idDonHang    BigInt?  @db.BigInt
+  idCuaHang    BigInt?  @db.BigInt
+  idBaoCao     BigInt?  @db.BigInt
+  idNhanVien   BigInt   @db.BigInt
+  hanhDong     String   @db.VarChar(100)
+  ghiChu       String?  @db.VarChar(1000)
+  thoiGian     DateTime @db.Timestamp(0)
+
+  tranhChap   TranhChap?  @relation("LichSuXuLy_TranhChap_idDonHang_idCuaHang", fields: [idDonHang, idCuaHang], references: [idDonHang, idCuaHang], onDelete: NoAction, onUpdate: NoAction, map: "LichSuXuLy_idDonHang_idCuaHang_fkey")
+  baoCao      BaoCao?     @relation("LichSuXuLy_BaoCao_idBaoCao", fields: [idBaoCao], references: [idBaoCao], onDelete: NoAction, onUpdate: NoAction, map: "LichSuXuLy_idBaoCao_fkey")
+  nhanVienSan NhanVienSan @relation("LichSuXuLy_NhanVienSan_idNhanVien", fields: [idNhanVien], references: [idNhanVien], onDelete: NoAction, onUpdate: NoAction, map: "LichSuXuLy_idNhanVien_fkey")
+
+  @@index([idDonHang, idCuaHang, thoiGian], map: "ix_lsxl_tranhchap")
+  @@index([idBaoCao, thoiGian], map: "ix_lsxl_baocao")
+  @@index([idNhanVien], map: "ix_lsxl_nhanvien")
+}
+
+model CuocTroChuyen {
+  idNguoiMua      BigInt    @db.BigInt
+  idCuaHang       BigInt    @db.BigInt
+  thoiGianTinCuoi DateTime? @db.Timestamp(0)
+  createdAt       DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt       DateTime  @default(now()) @db.Timestamp(0)
+
+  nguoiMua        NguoiMua  @relation("CuocTroChuyen_NguoiMua_idNguoiMua", fields: [idNguoiMua], references: [idNguoiMua], onDelete: NoAction, onUpdate: NoAction, map: "CuocTroChuyen_idNguoiMua_fkey")
+  cuaHang         CuaHang   @relation("CuocTroChuyen_CuaHang_idCuaHang", fields: [idCuaHang], references: [idCuaHang], onDelete: NoAction, onUpdate: NoAction, map: "CuocTroChuyen_idCuaHang_fkey")
+  danhSachTinNhan TinNhan[] @relation("TinNhan_CuocTroChuyen_idNguoiMua_idCuaHang")
+
+  @@id([idNguoiMua, idCuaHang], map: "pk_cuoctrochuyen")
+  @@index([idCuaHang, thoiGianTinCuoi], map: "ix_cuoctc_shop_time")
+  @@index([idNguoiMua, thoiGianTinCuoi], map: "ix_cuoctc_mua_time")
+}
+
+model TinNhan {
+  // CHECK ck_tinnhan_bengui: benGui IN ('NguoiMua','CuaHang')
+
+  idTinNhan  BigInt   @id(map: "pk_tinnhan") @db.BigInt
+  idNguoiMua BigInt   @db.BigInt
+  idCuaHang  BigInt   @db.BigInt
+  noiDung    String   @db.Text
+  thoiGian   DateTime @db.Timestamp(0)
+  benGui     String   @db.VarChar(30)
+  daDoc      Boolean  @default(false) @db.Boolean
+
+  cuocTroChuyen CuocTroChuyen @relation("TinNhan_CuocTroChuyen_idNguoiMua_idCuaHang", fields: [idNguoiMua, idCuaHang], references: [idNguoiMua, idCuaHang], onDelete: NoAction, onUpdate: NoAction, map: "TinNhan_idNguoiMua_idCuaHang_fkey")
+
+  @@index([idNguoiMua, idCuaHang, thoiGian], map: "ix_tinnhan_cuoc_time")
+  @@index([idNguoiMua, idCuaHang, daDoc], map: "ix_tinnhan_chuadoc")
+}
+
+model ThongBao {
+  // CHECK ck_thongbao_loai: loai IN ('DonHang','ThanhToan','HoanTien','TranhChap','TinNhan','HeThong')
+
+  idThongBao       BigInt   @id(map: "pk_thongbao") @db.BigInt
+  idNguoiDung      BigInt   @db.BigInt
+  loai             String   @db.VarChar(30)
+  tieuDe           String   @db.VarChar(200)
+  noiDung          String   @db.Text
+  daDoc            Boolean  @default(false) @db.Boolean
+  thoiGianGui      DateTime @db.Timestamp(0)
+  doiTuongLienQuan String?  @db.VarChar(50)
+
+  nguoiDung NguoiDung @relation("ThongBao_NguoiDung_idNguoiDung", fields: [idNguoiDung], references: [idNguoiDung], onDelete: Cascade, onUpdate: NoAction, map: "ThongBao_idNguoiDung_fkey")
+
+  @@index([idNguoiDung, daDoc, thoiGianGui], map: "ix_thongbao_user_chuadoc")
+}
+
+model Banner {
+  // CHECK ck_banner_thoigian: ketThuc > batDau
+
+  idBanner   BigInt   @id(map: "pk_banner") @db.BigInt
+  idNhanVien BigInt   @db.BigInt
+  tieuDe     String   @db.VarChar(200)
+  anh        String   @db.VarChar(255)
+  thuTu      Int      @db.Integer
+  batDau     DateTime @db.Timestamp(0)
+  ketThuc    DateTime @db.Timestamp(0)
+  dangHien   Boolean  @default(true) @db.Boolean
+  createdAt  DateTime @default(now()) @db.Timestamp(0)
+  updatedAt  DateTime @default(now()) @db.Timestamp(0)
+
+  nhanVienSan NhanVienSan @relation("Banner_NhanVienSan_idNhanVien", fields: [idNhanVien], references: [idNhanVien], onDelete: NoAction, onUpdate: NoAction, map: "Banner_idNhanVien_fkey")
+
+  @@index([dangHien, thuTu, batDau, ketThuc], map: "ix_banner_hien")
+}
