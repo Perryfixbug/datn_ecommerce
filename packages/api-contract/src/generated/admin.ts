@@ -6,6 +6,83 @@
  */
 import * as zod from "zod"
 
+export const LoginBody = zod.object({
+  email: zod.string(),
+  password: zod.string(),
+})
+
+export const LoginResponse = zod.object({
+  accessToken: zod.string(),
+  refreshToken: zod.string(),
+  user: zod.object({
+    id: zod.string(),
+    email: zod.string(),
+    name: zod.string(),
+    role: zod.string(),
+  }),
+})
+
+export const LogoutBody = zod.object({
+  refreshToken: zod.string().optional(),
+})
+
+export const LogoutResponse = zod.object({
+  success: zod.boolean(),
+})
+
+export const MeResponse = zod.object({
+  id: zod.string(),
+  email: zod.string(),
+  name: zod.string(),
+  role: zod.string(),
+})
+
+export const RefreshBody = zod.object({
+  refreshToken: zod.string(),
+})
+
+export const RefreshResponse = zod.object({
+  accessToken: zod.string(),
+  refreshToken: zod.string(),
+  user: zod.object({
+    id: zod.string(),
+    email: zod.string(),
+    name: zod.string(),
+    role: zod.string(),
+  }),
+})
+
+export const GetCommonConventionsResponse = zod.object({
+  tokens: zod.object({
+    accessToken: zod.string(),
+    refreshToken: zod.string(),
+  }),
+  permission: zod.object({
+    name: zod.string(),
+  }),
+  list: zod.object({
+    nextCursor: zod.string().nullable(),
+    total: zod.number(),
+    items: zod.array(zod.string()),
+  }),
+  error: zod.object({
+    error: zod.object({
+      code: zod.string(),
+      message: zod.string(),
+      details: zod
+        .array(
+          zod.object({
+            field: zod.string().optional(),
+            code: zod.string(),
+            message: zod.string(),
+          })
+        )
+        .optional(),
+      correlationId: zod.string().optional(),
+    }),
+  }),
+})
+
 export const getHealthResponseUptimeMin = 0
 
 export const GetHealthResponse = zod.object({

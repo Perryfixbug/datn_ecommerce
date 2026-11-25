@@ -1,6 +1,6 @@
 import "@typespec/http";
 using TypeSpec.Http;
-namespace Furniture.Common;
+namespace Common;
 
 model HealthStatus {
   status: "ok" | "degraded" | "down";

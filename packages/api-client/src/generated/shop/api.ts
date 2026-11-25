@@ -4,29 +4,539 @@
  * Furniture shop API
  * OpenAPI spec version: 0.0.0
  */
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import type {
   DataTag,
   DefinedInitialDataOptions,
   DefinedUseQueryResult,
+  MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
 } from "@tanstack/react-query"
 
-import type { FurnitureCommonHealthStatus } from "./models"
+import type {
+  CommonAuthUser,
+  CommonHealthStatus,
+  CommonLoginRequest,
+  CommonLoginResponse,
+  CommonLogoutRequest,
+  CommonRefreshRequest,
+  GetCommonConventions200,
+  Logout200,
+} from "./models"
 
 import { customAxiosInstance } from "../../lib/axios-instance"
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1]
+
+export const login = (
+  commonLoginRequest: CommonLoginRequest,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<CommonLoginResponse>(
+    {
+      url: `/api/v1/auth/login`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: commonLoginRequest,
+      signal,
+    },
+    options
+  )
+}
+
+export const getLoginMutationOptions = <
+  TError = unknown,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof login>>,
+    TError,
+    { data: CommonLoginRequest },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof login>>,
+  TError,
+  { data: CommonLoginRequest },
+  TContext
+> => {
+  const mutationKey = ["login"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof login>>,
+    { data: CommonLoginRequest }
+  > = (props) => {
+    const { data } = props ?? {}
+
+    return login(data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type LoginMutationResult = NonNullable<Awaited<ReturnType<typeof login>>>
+export type LoginMutationBody = CommonLoginRequest
+export type LoginMutationError = unknown
+
+export const useLogin = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof login>>,
+      TError,
+      { data: CommonLoginRequest },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof login>>,
+  TError,
+  { data: CommonLoginRequest },
+  TContext
+> => {
+  return useMutation(getLoginMutationOptions(options), queryClient)
+}
+
+export const logout = (
+  commonLogoutRequest: CommonLogoutRequest,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<Logout200>(
+    {
+      url: `/api/v1/auth/logout`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: commonLogoutRequest,
+      signal,
+    },
+    options
+  )
+}
+
+export const getLogoutMutationOptions = <
+  TError = unknown,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof logout>>,
+    TError,
+    { data: CommonLogoutRequest },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof logout>>,
+  TError,
+  { data: CommonLogoutRequest },
+  TContext
+> => {
+  const mutationKey = ["logout"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof logout>>,
+    { data: CommonLogoutRequest }
+  > = (props) => {
+    const { data } = props ?? {}
+
+    return logout(data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type LogoutMutationResult = NonNullable<
+  Awaited<ReturnType<typeof logout>>
+>
+export type LogoutMutationBody = CommonLogoutRequest
+export type LogoutMutationError = unknown
+
+export const useLogout = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof logout>>,
+      TError,
+      { data: CommonLogoutRequest },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof logout>>,
+  TError,
+  { data: CommonLogoutRequest },
+  TContext
+> => {
+  return useMutation(getLogoutMutationOptions(options), queryClient)
+}
+
+export const me = (
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<CommonAuthUser>(
+    { url: `/api/v1/auth/me`, method: "GET", signal },
+    options
+  )
+}
+
+export const getMeQueryKey = () => {
+  return [`/api/v1/auth/me`] as const
+}
+
+export const getMeQueryOptions = <
+  TData = Awaited<ReturnType<typeof me>>,
+  TError = unknown,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof me>>, TError, TData>
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getMeQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof me>>> = ({ signal }) =>
+    me(requestOptions, signal)
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof me>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type MeQueryResult = NonNullable<Awaited<ReturnType<typeof me>>>
+export type MeQueryError = unknown
+
+export function useMe<TData = Awaited<ReturnType<typeof me>>, TError = unknown>(
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof me>>, TError, TData>
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof me>>,
+          TError,
+          Awaited<ReturnType<typeof me>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useMe<TData = Awaited<ReturnType<typeof me>>, TError = unknown>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof me>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof me>>,
+          TError,
+          Awaited<ReturnType<typeof me>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useMe<TData = Awaited<ReturnType<typeof me>>, TError = unknown>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof me>>, TError, TData>
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+
+export function useMe<TData = Awaited<ReturnType<typeof me>>, TError = unknown>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof me>>, TError, TData>
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions = getMeQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return { ...query, queryKey: queryOptions.queryKey }
+}
+
+export const refresh = (
+  commonRefreshRequest: CommonRefreshRequest,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<CommonLoginResponse>(
+    {
+      url: `/api/v1/auth/refresh`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: commonRefreshRequest,
+      signal,
+    },
+    options
+  )
+}
+
+export const getRefreshMutationOptions = <
+  TError = unknown,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof refresh>>,
+    TError,
+    { data: CommonRefreshRequest },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof refresh>>,
+  TError,
+  { data: CommonRefreshRequest },
+  TContext
+> => {
+  const mutationKey = ["refresh"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof refresh>>,
+    { data: CommonRefreshRequest }
+  > = (props) => {
+    const { data } = props ?? {}
+
+    return refresh(data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type RefreshMutationResult = NonNullable<
+  Awaited<ReturnType<typeof refresh>>
+>
+export type RefreshMutationBody = CommonRefreshRequest
+export type RefreshMutationError = unknown
+
+export const useRefresh = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof refresh>>,
+      TError,
+      { data: CommonRefreshRequest },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof refresh>>,
+  TError,
+  { data: CommonRefreshRequest },
+  TContext
+> => {
+  return useMutation(getRefreshMutationOptions(options), queryClient)
+}
+
+export const getCommonConventions = (
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<GetCommonConventions200>(
+    { url: `/api/v1/common/conventions`, method: "GET", signal },
+    options
+  )
+}
+
+export const getGetCommonConventionsQueryKey = () => {
+  return [`/api/v1/common/conventions`] as const
+}
+
+export const getGetCommonConventionsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getCommonConventions>>,
+  TError = unknown,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getCommonConventions>>,
+      TError,
+      TData
+    >
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetCommonConventionsQueryKey()
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getCommonConventions>>
+  > = ({ signal }) => getCommonConventions(requestOptions, signal)
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getCommonConventions>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetCommonConventionsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getCommonConventions>>
+>
+export type GetCommonConventionsQueryError = unknown
+
+export function useGetCommonConventions<
+  TData = Awaited<ReturnType<typeof getCommonConventions>>,
+  TError = unknown,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCommonConventions>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getCommonConventions>>,
+          TError,
+          Awaited<ReturnType<typeof getCommonConventions>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetCommonConventions<
+  TData = Awaited<ReturnType<typeof getCommonConventions>>,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCommonConventions>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getCommonConventions>>,
+          TError,
+          Awaited<ReturnType<typeof getCommonConventions>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetCommonConventions<
+  TData = Awaited<ReturnType<typeof getCommonConventions>>,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCommonConventions>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+
+export function useGetCommonConventions<
+  TData = Awaited<ReturnType<typeof getCommonConventions>>,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCommonConventions>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions = getGetCommonConventionsQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return { ...query, queryKey: queryOptions.queryKey }
+}
 
 export const getHealth = (
   options?: SecondParameter<typeof customAxiosInstance>,
   signal?: AbortSignal
 ) => {
-  return customAxiosInstance<FurnitureCommonHealthStatus>(
+  return customAxiosInstance<CommonHealthStatus>(
     { url: `/api/v1/health`, method: "GET", signal },
     options
   )

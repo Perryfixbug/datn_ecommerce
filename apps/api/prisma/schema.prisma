@@ -40,12 +40,29 @@ model NguoiDung {
   nhanVienSan      NhanVienSan? @relation("NhanVienSan_NguoiDung_idNhanVien")
   viDienTu         ViDienTu?    @relation("ViDienTu_NguoiDung_idNguoiDung")
   danhSachThongBao ThongBao[]   @relation("ThongBao_NguoiDung_idNguoiDung")
+  danhSachRefreshToken RefreshToken[] @relation("RefreshToken_NguoiDung_idNguoiDung")
 
   @@unique([email, vaiTro], map: "uq_nguoidung_email")
   @@unique([soDienThoai, vaiTro], map: "uq_nguoidung_sodienthoai")
   @@index([vaiTro, trangThai], map: "ix_nguoidung_vaitro_trangthai")
 }
 
+model RefreshToken {
+  id             BigInt    @id(map: "pk_refreshtoken")
+  tokenHash      String    @unique(map: "uq_refreshtoken_hash") @db.VarChar(128)
+  idNguoiDung    BigInt    @db.BigInt
+  expiresAt      DateTime  @db.Timestamp(0)
+  revokedAt      DateTime? @db.Timestamp(0)
+  replacedById   BigInt?   @db.BigInt
+  createdAt      DateTime  @default(now()) @db.Timestamp(0)
+
+  nguoiDung      NguoiDung  @relation("RefreshToken_NguoiDung_idNguoiDung", fields: [idNguoiDung], references: [idNguoiDung], onDelete: Cascade, onUpdate: NoAction, map: "RefreshToken_idNguoiDung_fkey")
+  replacedBy     RefreshToken? @relation("RefreshToken_Rotation", fields: [replacedById], references: [id], onDelete: SetNull, onUpdate: NoAction, map: "RefreshToken_replacedById_fkey")
+  replaces       RefreshToken[] @relation("RefreshToken_Rotation")
+
+  @@index([idNguoiDung, revokedAt], map: "ix_refreshtoken_user_revoked")
+  @@index([expiresAt], map: "ix_refreshtoken_expires")
+}
 model NguoiMua {
   // CHECK ck_nguoimua_hang: hangThanhVien IN ('Dong','Bac','Vang','KimCuong')
   // CHECK ck_nguoimua_diem: diemTichLuy >= 0
