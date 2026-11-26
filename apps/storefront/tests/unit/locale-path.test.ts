@@ -50,10 +50,10 @@ describe("getSafeNext", () => {
     ["a backslash-escaped path", "/\\evil.com"],
     ["a relative path", "settings"],
   ])("falls back to the default target for %s", (_label, raw) => {
-    expect(getSafeNext(raw)).toBe("/dashboard")
+    expect(getSafeNext(raw)).toBe("/")
   })
 
   it("falls back to the default target when the param is absent", () => {
-    expect(getSafeNext(null)).toBe("/dashboard")
+    expect(getSafeNext(null)).toBe("/")
   })
 })

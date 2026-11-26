@@ -4,23 +4,25 @@ import { useUIStore } from "@/lib/stores/ui-store"
 
 describe("useUIStore", () => {
   beforeEach(() => {
-    // Reset to the initial state between tests (store is a module singleton).
-    useUIStore.setState({ sidebarCollapsed: false })
+    // Store là singleton của module — đặt lại trạng thái giữa các test.
+    useUIStore.setState({ chatOpen: false })
   })
 
-  it("starts with the sidebar expanded", () => {
-    expect(useUIStore.getState().sidebarCollapsed).toBe(false)
+  it("mặc định đóng hộp chat", () => {
+    expect(useUIStore.getState().chatOpen).toBe(false)
   })
 
-  it("toggleSidebar flips the collapsed flag", () => {
-    useUIStore.getState().toggleSidebar()
-    expect(useUIStore.getState().sidebarCollapsed).toBe(true)
-    useUIStore.getState().toggleSidebar()
-    expect(useUIStore.getState().sidebarCollapsed).toBe(false)
+  it("toggleChat đảo trạng thái đóng/mở", () => {
+    useUIStore.getState().toggleChat()
+    expect(useUIStore.getState().chatOpen).toBe(true)
+    useUIStore.getState().toggleChat()
+    expect(useUIStore.getState().chatOpen).toBe(false)
   })
 
-  it("setSidebarCollapsed sets the flag explicitly", () => {
-    useUIStore.getState().setSidebarCollapsed(true)
-    expect(useUIStore.getState().sidebarCollapsed).toBe(true)
+  it("setChatOpen đặt trạng thái tường minh", () => {
+    useUIStore.getState().setChatOpen(true)
+    expect(useUIStore.getState().chatOpen).toBe(true)
+    useUIStore.getState().setChatOpen(false)
+    expect(useUIStore.getState().chatOpen).toBe(false)
   })
 })

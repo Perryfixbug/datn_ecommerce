@@ -1,17 +1,25 @@
 import type { Metadata } from "next"
 import { hasLocale, NextIntlClientProvider } from "next-intl"
 import { getTranslations, setRequestLocale } from "next-intl/server"
-import { Geist_Mono, Inter } from "next/font/google"
+import { Geist_Mono, Inter, Lora } from "next/font/google"
 import { notFound } from "next/navigation"
 
-import "@shared/ui/globals.css"
+import "../storefront.css"
 import { cn } from "@shared/ui/lib/utils"
 
 import { Providers } from "@/components/providers"
 import { env } from "@/lib/env"
 import { routing } from "@/i18n/routing"
 
-const fontSans = Inter({ subsets: ["latin"], variable: "--font-sans" })
+const fontSans = Inter({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-sans",
+})
+const fontDisplay = Lora({
+  subsets: ["latin", "vietnamese"],
+  weight: ["600"],
+  variable: "--font-display",
+})
 const fontMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" })
 
 export function generateStaticParams() {
@@ -32,8 +40,8 @@ export async function generateMetadata({
       : undefined,
     title: { default: t("title"), template: t("template") },
     description: t("description"),
-    applicationName: "turbo/app",
-    // Authenticated product surface — keep it out of search indexes.
+    applicationName: "Anhà",
+    // Storefront chưa mở công khai và đang dùng dữ liệu mẫu — chưa cho index.
     robots: { index: false, follow: false },
   }
 }
@@ -58,7 +66,8 @@ export default async function LocaleLayout({
         "antialiased",
         fontMono.variable,
         "font-sans",
-        fontSans.variable
+        fontSans.variable,
+        fontDisplay.variable
       )}
     >
       <body>

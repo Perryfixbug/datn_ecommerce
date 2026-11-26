@@ -1,0 +1,83 @@
+/*
+ * Giao diện người mua Anhà: dùng lại toàn bộ token/base của UI dùng chung rồi
+ * ghi đè bảng màu theo thiết kế Figma (tông kem – nâu gỗ – xanh lá). Chỉ
+ * storefront nạp tệp này nên trang quản trị giữ nguyên bảng màu riêng.
+ */
+@import "../../../packages/ui/src/styles/globals.css";
+
+@theme inline {
+  --font-display: var(--font-display);
+  --color-header: var(--header);
+  --color-header-foreground: var(--header-foreground);
+  --color-cream: var(--cream);
+  --color-rating: var(--rating);
+}
+
+:root {
+  --background: #f9f6f2;
+  --foreground: #252821;
+  --card: #f3efe9;
+  --card-foreground: #252821;
+  --popover: #fbf8f3;
+  --popover-foreground: #252821;
+  --primary: #65be9c;
+  --primary-foreground: #163a2d;
+  --secondary: #f3efe9;
+  --secondary-foreground: #34312d;
+  --muted: #fbf8f3;
+  --muted-foreground: #6b6863;
+  --accent: #e8f3ee;
+  --accent-foreground: #247456;
+  --destructive: #b42318;
+  --border: #ddd5cb;
+  --input: #d8ccbe;
+  --ring: #65be9c;
+  --brand: #247456;
+  --brand-foreground: #ffffff;
+  --brand-muted: #e8f3ee;
+  --highlight: #c2381d;
+  --highlight-foreground: #ffffff;
+  --highlight-muted: #fbe6e2;
+  --success: #247456;
+  --warning: #a16207;
+  --radius: 0.5rem;
+
+  --header: #fcf3e8;
+  --header-foreground: #34312d;
+  --cream: #f3ebdd;
+  --rating: #9a630d;
+}
+
+.dark {
+  --background: #1d1b18;
+  --foreground: #f3efe9;
+  --card: #27241f;
+  --card-foreground: #f3efe9;
+  --popover: #27241f;
+  --popover-foreground: #f3efe9;
+  --primary: #65be9c;
+  --primary-foreground: #163a2d;
+  --secondary: #2e2a24;
+  --secondary-foreground: #f3efe9;
+  --muted: #2e2a24;
+  --muted-foreground: #b5ada2;
+  --accent: #1f3a2f;
+  --accent-foreground: #8fd3b6;
+  --destructive: #f2836f;
+  --border: #3b362f;
+  --input: #4a443b;
+  --ring: #65be9c;
+  --brand: #8fd3b6;
+  --brand-foreground: #163a2d;
+  --brand-muted: #1f3a2f;
+  --highlight: #d9583c;
+  --highlight-foreground: #ffffff;
+  --highlight-muted: #3a221c;
+  --success: #8fd3b6;
+  --warning: #e0a13a;
+
+  --header: #24211c;
+  --header-foreground: #f3efe9;
+  --cream: #2a261f;
+  --rating: #e0a13a;
+}

@@ -1,58 +1,106 @@
 import { describe, expect, it } from "vitest"
 
-import { loginSchema, registerSchema } from "@/lib/validation/auth"
+import {
+  createEmailSchema,
+  createForgotPasswordSchema,
+  createLoginSchema,
+  createRegisterSchema,
+  type ValidationMessageKey,
+} from "@/lib/validation/auth"
 
-describe("loginSchema", () => {
-  it("accepts a valid email + 8-char password", () => {
-    const result = loginSchema.safeParse({
-      email: "user@example.com",
-      password: "password123",
-    })
-    expect(result.success).toBe(true)
+// Trả nguyên khóa để kiểm tra đúng thông báo được gắn cho từng lỗi.
+const t = (key: ValidationMessageKey) => key
+
+function issues(result: {
+  success: boolean
+  error?: { issues: { path: PropertyKey[]; message: string }[] }
+}) {
+  return (result.error?.issues ?? []).map((i) => [i.path.join("."), i.message])
+}
+
+describe("createLoginSchema", () => {
+  const schema = createLoginSchema(t)
+
+  it("chấp nhận email hợp lệ và mật khẩu bất kỳ khác rỗng", () => {
+    expect(
+      schema.safeParse({ email: "lan@anha.vn", password: "x" }).success
+    ).toBe(true)
   })
 
-  it("rejects an invalid email", () => {
-    const result = loginSchema.safeParse({
-      email: "not-an-email",
-      password: "password123",
-    })
-    expect(result.success).toBe(false)
-    if (!result.success) {
-      expect(result.error.issues[0]?.path).toEqual(["email"])
-    }
-  })
-
-  it("rejects a password shorter than 8 characters", () => {
-    const result = loginSchema.safeParse({
-      email: "user@example.com",
-      password: "short",
-    })
-    expect(result.success).toBe(false)
-    if (!result.success) {
-      expect(result.error.issues[0]?.path).toEqual(["password"])
-    }
+  it("báo lỗi email sai và mật khẩu trống", () => {
+    expect(issues(schema.safeParse({ email: "lan", password: "" }))).toEqual([
+      ["email", "emailInvalid"],
+      ["password", "passwordRequired"],
+    ])
   })
 })
 
-describe("registerSchema", () => {
-  it("accepts a valid name + email + password", () => {
-    const result = registerSchema.safeParse({
-      name: "Ada Lovelace",
-      email: "ada@example.com",
-      password: "password123",
-    })
-    expect(result.success).toBe(true)
+describe("createRegisterSchema", () => {
+  const schema = createRegisterSchema(t)
+  const valid = {
+    email: "lan@anha.vn",
+    phone: "0912345678",
+    password: "matkhau123",
+    confirmPassword: "matkhau123",
+  }
+
+  it("chấp nhận dữ liệu hợp lệ", () => {
+    expect(schema.safeParse(valid).success).toBe(true)
   })
 
-  it("rejects a name shorter than 2 characters", () => {
-    const result = registerSchema.safeParse({
-      name: "A",
-      email: "ada@example.com",
-      password: "password123",
-    })
-    expect(result.success).toBe(false)
-    if (!result.success) {
-      expect(result.error.issues[0]?.path).toEqual(["name"])
+  it.each(["912345678", "09123456789", "0912 345 678", "+84912345678"])(
+    "từ chối số điện thoại %s",
+    (phone) => {
+      expect(issues(schema.safeParse({ ...valid, phone }))).toEqual([
+        ["phone", "phoneInvalid"],
+      ])
     }
+  )
+
+  it("yêu cầu mật khẩu tối thiểu 8 ký tự", () => {
+    const result = schema.safeParse({
+      ...valid,
+      password: "1234567",
+      confirmPassword: "1234567",
+    })
+    expect(issues(result)).toEqual([["password", "passwordMin"]])
+  })
+
+  it("gắn lỗi không khớp vào ô xác nhận mật khẩu", () => {
+    const result = schema.safeParse({ ...valid, confirmPassword: "khac12345" })
+    expect(issues(result)).toEqual([["confirmPassword", "passwordMismatch"]])
+  })
+})
+
+describe("createForgotPasswordSchema", () => {
+  const schema = createForgotPasswordSchema(t)
+  const valid = {
+    email: "lan@anha.vn",
+    otp: "123456",
+    password: "matkhau123",
+    confirmPassword: "matkhau123",
+  }
+
+  it("chấp nhận dữ liệu hợp lệ", () => {
+    expect(schema.safeParse(valid).success).toBe(true)
+  })
+
+  it.each(["12345", "1234567", "12a456"])("từ chối mã OTP %s", (otp) => {
+    expect(issues(schema.safeParse({ ...valid, otp }))).toEqual([
+      ["otp", "otpInvalid"],
+    ])
+  })
+
+  it("báo lỗi khi mật khẩu mới không khớp", () => {
+    expect(
+      issues(schema.safeParse({ ...valid, confirmPassword: "x" }))
+    ).toEqual([["confirmPassword", "passwordMismatch"]])
+  })
+})
+
+describe("createEmailSchema", () => {
+  it("bỏ khoảng trắng đầu cuối trước khi kiểm tra", () => {
+    expect(createEmailSchema(t).safeParse("  lan@anha.vn ").success).toBe(true)
+    expect(createEmailSchema(t).safeParse("lan@").success).toBe(false)
   })
 })

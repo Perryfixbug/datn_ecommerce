@@ -12,6 +12,13 @@ export default defineConfig({
     globals: true,
     setupFiles: ["./tests/setup.ts"],
     include: ["tests/unit/**/*.{test,spec}.{ts,tsx}"],
+    server: {
+      deps: {
+        // next-intl import `next/navigation` không kèm đuôi .js; để Vite xử lý
+        // gói này thì component dùng `Link` của i18n mới render được trong test.
+        inline: ["next-intl"],
+      },
+    },
     coverage: {
       provider: "v8",
       reporter: ["text", "html", "lcov"],
@@ -21,6 +28,9 @@ export default defineConfig({
         "lib/validation/**/*.ts",
         "lib/stores/**/*.ts",
         "lib/locale-path.ts",
+        "lib/format.ts",
+        "lib/routes.ts",
+        "lib/chat.ts",
         "lib/proxy-headers.ts",
         "lib/session-cookie.ts",
       ],

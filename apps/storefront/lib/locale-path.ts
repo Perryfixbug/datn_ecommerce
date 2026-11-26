@@ -4,7 +4,7 @@ import { routing, type Locale } from "@/i18n/routing"
 // sign-in form. Kept side-effect-free so both the edge runtime and the browser
 // bundle can import them, and so they are unit-testable in isolation.
 
-const DEFAULT_POST_LOGIN_TARGET = "/dashboard"
+const DEFAULT_POST_LOGIN_TARGET = "/"
 
 /** Split `/en/settings` into its locale prefix and the locale-free path. */
 export function splitLocale(pathname: string): {

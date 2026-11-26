@@ -1,24 +1,14 @@
 import { create } from "zustand"
-import { persist, createJSONStorage } from "zustand/middleware"
 
+// Trạng thái giao diện cục bộ của storefront (không phải dữ liệu máy chủ).
 interface UIState {
-  sidebarCollapsed: boolean
-  setSidebarCollapsed: (collapsed: boolean) => void
-  toggleSidebar: () => void
+  chatOpen: boolean
+  setChatOpen: (open: boolean) => void
+  toggleChat: () => void
 }
 
-export const useUIStore = create<UIState>()(
-  persist(
-    (set) => ({
-      sidebarCollapsed: false,
-      setSidebarCollapsed: (sidebarCollapsed) => set({ sidebarCollapsed }),
-      toggleSidebar: () =>
-        set((state) => ({ sidebarCollapsed: !state.sidebarCollapsed })),
-    }),
-    {
-      name: "ui-store",
-      storage: createJSONStorage(() => localStorage),
-      skipHydration: true,
-    }
-  )
-)
+export const useUIStore = create<UIState>()((set) => ({
+  chatOpen: false,
+  setChatOpen: (chatOpen) => set({ chatOpen }),
+  toggleChat: () => set((state) => ({ chatOpen: !state.chatOpen })),
+}))

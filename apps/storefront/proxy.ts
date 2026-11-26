@@ -3,26 +3,18 @@ import { NextResponse, type NextRequest } from "next/server"
 
 import { routing } from "@/i18n/routing"
 import { splitLocale } from "@/lib/locale-path"
+import { isProtectedPath } from "@/lib/routes"
 import { hasSessionCookie, isPreviewAuth } from "@/lib/session-cookie"
 
-const PUBLIC_PATHS = [
-  "/login",
-  "/register",
-  "/forgot-password",
-  "/reset-password",
-]
-
 const intlMiddleware = createMiddleware(routing)
-
-function isPublic(path: string): boolean {
-  return PUBLIC_PATHS.includes(path) || path === "/"
-}
 
 export function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl
   const { locale, path } = splitLocale(pathname)
 
-  if (!isPreviewAuth() && !isPublic(path) && !hasSessionCookie(request)) {
+  // Storefront công khai theo mặc định (trang chủ, tìm kiếm, sản phẩm, gian
+  // hàng); chỉ chặn các tuyến dữ liệu riêng của người mua khi thiếu phiên.
+  if (!isPreviewAuth() && isProtectedPath(path) && !hasSessionCookie(request)) {
     const url = request.nextUrl.clone()
     // Returning a redirect skips the intl middleware, so the locale prefix has
     // to be carried over here — otherwise an `/en/...` visitor lands on the
@@ -42,7 +34,8 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)",
-  ],
+  // Bỏ qua API, tài nguyên Next và mọi đường dẫn có phần mở rộng tệp
+  // (`/images/x.jpg`, `/favicon.ico`…) để tệp tĩnh trong public/ không bị gắn
+  // tiền tố locale thành `/vi/images/...` và trả 404.
+  matcher: ["/((?!api|_next/static|_next/image|.*\\..*).*)"],
 }
