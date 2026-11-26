@@ -81,3 +81,47 @@ Mã: `A-036–A-039`, use case `U18`.
 ## Quy tắc triển khai
 
 Ma trận quyền phải được duyệt trước khi thêm TypeSpec. Các operation thay đổi trạng thái phải mô tả trạng thái trước/sau, lý do bắt buộc, audit event và thông báo nếu có.
+
+## Tài liệu chi tiết theo mã
+
+Các mô tả chi tiết dùng [mẫu endpoint](endpoint-template.md) và [quy ước dùng chung](common-conventions.md). Những mục chưa đủ chính sách vẫn giữ `blocked` hoặc `TBD`.
+
+- [# A-001 Danh sách gian hàng](A001-list-stores.md)
+- [# A-002 Lọc gian hàng](A002-filter-stores.md)
+- [# A-003 Chi tiết gian hàng](A003-get-store-details.md)
+- [# A-004 Phê duyệt hồ sơ gian hàng](A004-approve-store.md)
+- [# A-005 Từ chối hồ sơ gian hàng](A005-reject-store.md)
+- [# A-006 Khóa gian hàng](A006-lock-store.md)
+- [# A-007 Mở khóa gian hàng](A007-unlock-store.md)
+- [# A-008 Danh sách tài khoản](A008-list-accounts.md)
+- [# A-009 Tìm kiếm tài khoản](A009-search-accounts.md)
+- [# A-010 Chi tiết tài khoản](A010-get-account-details.md)
+- [# A-011 Khóa tài khoản](A011-lock-account.md)
+- [# A-012 Mở khóa tài khoản](A012-unlock-account.md)
+- [# A-013 Hàng đợi kiểm duyệt sản phẩm](A013-list-product-moderation.md)
+- [# A-014 Chi tiết sản phẩm chờ duyệt](A014-get-product-moderation-details.md)
+- [# A-015 Phê duyệt sản phẩm](A015-approve-product.md)
+- [# A-016 Từ chối sản phẩm](A016-reject-product.md)
+- [# A-017 Quản lý danh mục toàn sàn](A017-manage-catalog-categories.md)
+- [# A-018 Xem cấu hình trang chủ](A018-get-homepage-config.md)
+- [# A-019 Tạo banner trang chủ](A019-create-homepage-banner.md)
+- [# A-020 Cập nhật banner trang chủ](A020-update-homepage-banner.md)
+- [# A-021 Xóa banner trang chủ](A021-delete-homepage-banner.md)
+- [# A-022 Quản lý danh mục trang chủ](A022-manage-homepage-category-sections.md)
+- [# A-023 Tạo quảng cáo trang chủ](A023-create-homepage-ad.md)
+- [# A-024 Cập nhật quảng cáo trang chủ](A024-update-homepage-ad.md)
+- [# A-025 Xóa quảng cáo trang chủ](A025-delete-homepage-ad.md)
+- [# A-026 Sắp xếp trang chủ](A026-reorder-homepage.md)
+- [# A-027 Xem trước trang chủ](A027-preview-homepage.md)
+- [# A-028 Xuất bản trang chủ](A028-publish-homepage.md)
+- [# A-029 Danh sách yêu cầu/khiếu nại](A029-list-cases.md)
+- [# A-030 Chi tiết yêu cầu/khiếu nại](A030-get-case-details.md)
+- [# A-031 Xử lý khiếu nại](A031-resolve-case.md)
+- [# A-032 Xử lý báo cáo vi phạm](A032-resolve-report.md)
+- [# A-033 Quyết định tranh chấp hoàn hàng](A033-decide-return-dispute.md)
+- [# A-034 Báo cáo tổng hợp](A034-get-report-summary.md)
+- [# A-035 Khuyến mãi toàn sàn](A035-manage-promotions.md)
+- [# A-036 Báo cáo vận hành](A036-get-operations-analytics.md)
+- [# A-037 Báo cáo vận hành theo metric](A037-get-operations-analytics-by-metric.md)
+- [# A-038 Báo cáo vận hành theo khoảng thời gian](A038-get-operations-analytics-by-time-range.md)
+- [# A-039 Audit và giám sát](A039-list-audit-events.md)
