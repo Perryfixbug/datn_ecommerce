@@ -1,5 +1,7 @@
 ﻿# A-017 Quản lý danh mục toàn sàn
 
+> Trạng thái triển khai: **ĐÃ LÀM**: đã có hợp đồng, module NestJS và kiểm thử liên quan. Xem [bảng tiến độ và mức kiểm chứng](../admin-api.md#tổng-quan-tiến-độ).
+
 | Trường                  | Nội dung                                                                         |
 | ----------------------- | -------------------------------------------------------------------------------- |
 | Mã chức năng/use case   | `A-017`, `U19`                                                                   |
@@ -10,6 +12,12 @@
 | Authentication          | Access token; vòng đời token và logout TBD                                       |
 | Authorization/ownership | Permission cụ thể TBD; backend kiểm tra quyền và phạm vi dữ liệu                 |
 | Idempotency/transaction | TBD; thao tác thay đổi trạng thái phải tránh ghi nhận lặp khi retry              |
+
+### Quyết định triển khai
+
+Các mục blocked/TBD bên dưới được thay bởi [quyết định module danh mục](category-module-decisions.md).
+Hợp đồng tại packages/api-spec/typespec/admin-categories.tsp, module tại
+apps/api/src/modules/admin-categories/, test HTTP tại apps/api/test/admin-categories.spec.ts.
 
 ### Request
 

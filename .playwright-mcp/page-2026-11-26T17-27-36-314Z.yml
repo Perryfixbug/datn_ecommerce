@@ -1,0 +1,101 @@
+- generic [ref=f1e3]:
+    - link "Skip to operations" [ref=f1e4] [cursor=pointer]:
+        - /url: "#operations"
+    - banner [ref=f1e5]:
+        - button "Switch to dark mode" [ref=f1e45] [cursor=pointer]
+    - generic [ref=f1e49]:
+        - generic [ref=f1e54]:
+            - heading "Furniture shop API 0.0.0 OAS 3.0" [level=1] [ref=f1e55]:
+                - text: Furniture shop API
+                - generic [ref=f1e56]:
+                    - generic [ref=f1e57]: 0.0.0
+                    - generic [ref=f1e59]: OAS 3.0
+            - link "/docs/shop/openapi.yaml" [ref=f1e61] [cursor=pointer]:
+                - /url: /docs/shop/openapi.yaml
+        - main [ref=f1e63]:
+            - generic [ref=f1e66]:
+                - generic [ref=f1e68]:
+                    - heading [level=3] [ref=f1e69] [cursor=pointer]:
+                        - link "health" [ref=f1e70]:
+                            - /url: "#/health"
+                        - button "Collapse operation" [expanded] [ref=f1e71]
+                    - generic [ref=f1e78] [cursor=pointer]:
+                        - button "GET /api/v1/health" [ref=f1e79]:
+                            - generic [ref=f1e80]: GET
+                            - link "/api/v1/health" [ref=f1e83]:
+                                - /url: "#/health/getHealth"
+                        - generic "Copy path to clipboard":
+                            - button "Copy path to clipboard"
+                        - button "get /api/v1/health" [ref=f1e85]
+                - generic [ref=f1e89]:
+                    - heading [level=3] [ref=f1e90] [cursor=pointer]:
+                        - link "default" [ref=f1e91]:
+                            - /url: "#/default"
+                        - button "Collapse operation" [expanded] [ref=f1e92]
+                    - generic [ref=f1e96]:
+                        - generic [ref=f1e99] [cursor=pointer]:
+                            - button "POST /api/v1/auth/login" [ref=f1e100]:
+                                - generic [ref=f1e101]: POST
+                                - link "/api/v1/auth/login" [ref=f1e104]:
+                                    - /url: "#/default/login"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "post /api/v1/auth/login" [ref=f1e106]
+                        - generic [ref=f1e111] [cursor=pointer]:
+                            - button "POST /api/v1/auth/logout" [ref=f1e112]:
+                                - generic [ref=f1e113]: POST
+                                - link "/api/v1/auth/logout" [ref=f1e116]:
+                                    - /url: "#/default/logout"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "post /api/v1/auth/logout" [ref=f1e118]
+                        - generic [ref=f1e123] [cursor=pointer]:
+                            - button "GET /api/v1/auth/me" [ref=f1e124]:
+                                - generic [ref=f1e125]: GET
+                                - link "/api/v1/auth/me" [ref=f1e128]:
+                                    - /url: "#/default/me"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "get /api/v1/auth/me" [ref=f1e130]
+                        - generic [ref=f1e135] [cursor=pointer]:
+                            - button "POST /api/v1/auth/refresh" [ref=f1e136]:
+                                - generic [ref=f1e137]: POST
+                                - link "/api/v1/auth/refresh" [ref=f1e140]:
+                                    - /url: "#/default/refresh"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "post /api/v1/auth/refresh" [ref=f1e142]
+                        - generic [ref=f1e147] [cursor=pointer]:
+                            - button "GET /api/v1/common/conventions" [ref=f1e148]:
+                                - generic [ref=f1e149]: GET
+                                - link "/api/v1/common/conventions" [ref=f1e152]:
+                                    - /url: "#/default/getCommonConventions"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "get /api/v1/common/conventions" [ref=f1e154]
+            - generic [ref=f1e159]:
+                - heading [level=4] [ref=f1e160] [cursor=pointer]:
+                    - button "Schemas" [expanded] [ref=f1e161]
+                - generic [ref=f1e165]:
+                    - button [ref=f1e168] [cursor=pointer]:
+                        - strong [ref=f1e171]: Common.AuthUser
+                    - button [ref=f1e175] [cursor=pointer]:
+                        - strong [ref=f1e178]: Common.ErrorBody
+                    - button [ref=f1e182] [cursor=pointer]:
+                        - strong [ref=f1e185]: Common.ErrorDetail
+                    - button [ref=f1e189] [cursor=pointer]:
+                        - strong [ref=f1e192]: Common.ErrorResponse
+                    - button [ref=f1e196] [cursor=pointer]:
+                        - strong [ref=f1e199]: Common.HealthStatus
+                    - button [ref=f1e203] [cursor=pointer]:
+                        - strong [ref=f1e206]: Common.LoginRequest
+                    - button [ref=f1e210] [cursor=pointer]:
+                        - strong [ref=f1e213]: Common.LoginResponse
+                    - button [ref=f1e217] [cursor=pointer]:
+                        - strong [ref=f1e220]: Common.LogoutRequest
+                    - button [ref=f1e224] [cursor=pointer]:
+                        - strong [ref=f1e227]: Common.Permission
+                    - button [ref=f1e231] [cursor=pointer]:
+                        - strong [ref=f1e234]: Common.RefreshRequest
+                    - button [ref=f1e238] [cursor=pointer]:
+                        - strong [ref=f1e241]: Common.TokenPair

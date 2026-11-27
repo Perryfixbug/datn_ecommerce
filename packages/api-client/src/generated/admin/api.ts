@@ -21,18 +21,3971 @@ import type {
 } from "@tanstack/react-query"
 
 import type {
+  AccountsListAdminAccounts200,
+  AccountsListAdminAccountsParams,
+  AdminAccountsAccountDetail,
+  AdminAccountsAccountId,
+  AdminAccountsAccountMutation,
+  AdminAccountsAccountReason,
+  AdminCasesCaseDetail,
+  AdminCasesCaseId,
+  AdminCasesResolution,
+  AdminCategoriesCategory,
+  AdminCategoriesCategoryId,
+  AdminCategoriesCategoryInput,
+  AdminCategoriesCategoryUpdate,
+  AdminHomepageCategoryInput,
+  AdminHomepageChange,
+  AdminHomepageConfig,
+  AdminHomepageItemId,
+  AdminHomepageMediaInput,
+  AdminHomepageOrder,
+  AdminHomepagePreview,
+  AdminModerationApproval,
+  AdminModerationModerationResult,
+  AdminModerationProductDetail,
+  AdminModerationProductId,
+  AdminModerationRejection,
+  AdminReportsReportId,
+  AdminReportsReportResolution,
+  AdminReportsResolution,
+  AdminStoresStoreDetail,
+  AdminStoresStoreId,
+  AdminStoresStoreMutation,
+  AdminStoresStoreReason,
+  CasesListAdminCases200,
+  CasesListAdminCasesParams,
+  CategoriesDeleteAdminCategory200,
+  CategoriesListAdminCategories200,
+  CategoriesListAdminCategoriesParams,
   CommonAuthUser,
+  CommonErrorResponse,
   CommonHealthStatus,
   CommonLoginRequest,
   CommonLoginResponse,
   CommonLogoutRequest,
   CommonRefreshRequest,
   GetCommonConventions200,
+  HomepageDeleteHomepageAdParams,
+  HomepageDeleteHomepageBannerParams,
+  HomepageDeleteHomepageCategorySectionParams,
+  HomepagePreviewHomepageParams,
   Logout200,
+  ProductModerationListProductModeration200,
+  ProductModerationListProductModerationParams,
+  StoresListAdminStores200,
+  StoresListAdminStoresParams,
 } from "./models"
 
 import { customAxiosInstance } from "../../lib/axios-instance"
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1]
+
+export const accountsListAdminAccounts = (
+  params?: AccountsListAdminAccountsParams,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AccountsListAdminAccounts200>(
+    { url: `/api/v1/admin/accounts`, method: "GET", params, signal },
+    options
+  )
+}
+
+export const getAccountsListAdminAccountsQueryKey = (
+  params?: AccountsListAdminAccountsParams
+) => {
+  return [`/api/v1/admin/accounts`, ...(params ? [params] : [])] as const
+}
+
+export const getAccountsListAdminAccountsQueryOptions = <
+  TData = Awaited<ReturnType<typeof accountsListAdminAccounts>>,
+  TError = CommonErrorResponse,
+>(
+  params?: AccountsListAdminAccountsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof accountsListAdminAccounts>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  }
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {}
+
+  const queryKey =
+    queryOptions?.queryKey ?? getAccountsListAdminAccountsQueryKey(params)
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof accountsListAdminAccounts>>
+  > = ({ signal }) => accountsListAdminAccounts(params, requestOptions, signal)
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof accountsListAdminAccounts>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type AccountsListAdminAccountsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof accountsListAdminAccounts>>
+>
+export type AccountsListAdminAccountsQueryError = CommonErrorResponse
+
+export function useAccountsListAdminAccounts<
+  TData = Awaited<ReturnType<typeof accountsListAdminAccounts>>,
+  TError = CommonErrorResponse,
+>(
+  params: undefined | AccountsListAdminAccountsParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof accountsListAdminAccounts>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof accountsListAdminAccounts>>,
+          TError,
+          Awaited<ReturnType<typeof accountsListAdminAccounts>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useAccountsListAdminAccounts<
+  TData = Awaited<ReturnType<typeof accountsListAdminAccounts>>,
+  TError = CommonErrorResponse,
+>(
+  params?: AccountsListAdminAccountsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof accountsListAdminAccounts>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof accountsListAdminAccounts>>,
+          TError,
+          Awaited<ReturnType<typeof accountsListAdminAccounts>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useAccountsListAdminAccounts<
+  TData = Awaited<ReturnType<typeof accountsListAdminAccounts>>,
+  TError = CommonErrorResponse,
+>(
+  params?: AccountsListAdminAccountsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof accountsListAdminAccounts>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+
+export function useAccountsListAdminAccounts<
+  TData = Awaited<ReturnType<typeof accountsListAdminAccounts>>,
+  TError = CommonErrorResponse,
+>(
+  params?: AccountsListAdminAccountsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof accountsListAdminAccounts>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions = getAccountsListAdminAccountsQueryOptions(params, options)
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return { ...query, queryKey: queryOptions.queryKey }
+}
+
+export const accountsGetAdminAccount = (
+  accountId: AdminAccountsAccountId,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminAccountsAccountDetail>(
+    { url: `/api/v1/admin/accounts/${accountId}`, method: "GET", signal },
+    options
+  )
+}
+
+export const getAccountsGetAdminAccountQueryKey = (
+  accountId: AdminAccountsAccountId
+) => {
+  return [`/api/v1/admin/accounts/${accountId}`] as const
+}
+
+export const getAccountsGetAdminAccountQueryOptions = <
+  TData = Awaited<ReturnType<typeof accountsGetAdminAccount>>,
+  TError = CommonErrorResponse,
+>(
+  accountId: AdminAccountsAccountId,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof accountsGetAdminAccount>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  }
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {}
+
+  const queryKey =
+    queryOptions?.queryKey ?? getAccountsGetAdminAccountQueryKey(accountId)
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof accountsGetAdminAccount>>
+  > = ({ signal }) => accountsGetAdminAccount(accountId, requestOptions, signal)
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: accountId !== null && accountId !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof accountsGetAdminAccount>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type AccountsGetAdminAccountQueryResult = NonNullable<
+  Awaited<ReturnType<typeof accountsGetAdminAccount>>
+>
+export type AccountsGetAdminAccountQueryError = CommonErrorResponse
+
+export function useAccountsGetAdminAccount<
+  TData = Awaited<ReturnType<typeof accountsGetAdminAccount>>,
+  TError = CommonErrorResponse,
+>(
+  accountId: AdminAccountsAccountId,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof accountsGetAdminAccount>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof accountsGetAdminAccount>>,
+          TError,
+          Awaited<ReturnType<typeof accountsGetAdminAccount>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useAccountsGetAdminAccount<
+  TData = Awaited<ReturnType<typeof accountsGetAdminAccount>>,
+  TError = CommonErrorResponse,
+>(
+  accountId: AdminAccountsAccountId,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof accountsGetAdminAccount>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof accountsGetAdminAccount>>,
+          TError,
+          Awaited<ReturnType<typeof accountsGetAdminAccount>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useAccountsGetAdminAccount<
+  TData = Awaited<ReturnType<typeof accountsGetAdminAccount>>,
+  TError = CommonErrorResponse,
+>(
+  accountId: AdminAccountsAccountId,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof accountsGetAdminAccount>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+
+export function useAccountsGetAdminAccount<
+  TData = Awaited<ReturnType<typeof accountsGetAdminAccount>>,
+  TError = CommonErrorResponse,
+>(
+  accountId: AdminAccountsAccountId,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof accountsGetAdminAccount>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions = getAccountsGetAdminAccountQueryOptions(
+    accountId,
+    options
+  )
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return { ...query, queryKey: queryOptions.queryKey }
+}
+
+export const accountsLockAdminAccount = (
+  accountId: AdminAccountsAccountId,
+  adminAccountsAccountReason: AdminAccountsAccountReason,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminAccountsAccountMutation>(
+    {
+      url: `/api/v1/admin/accounts/${accountId}/lock`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: adminAccountsAccountReason,
+      signal,
+    },
+    options
+  )
+}
+
+export const getAccountsLockAdminAccountMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof accountsLockAdminAccount>>,
+    TError,
+    { accountId: AdminAccountsAccountId; data: AdminAccountsAccountReason },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof accountsLockAdminAccount>>,
+  TError,
+  { accountId: AdminAccountsAccountId; data: AdminAccountsAccountReason },
+  TContext
+> => {
+  const mutationKey = ["accountsLockAdminAccount"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof accountsLockAdminAccount>>,
+    { accountId: AdminAccountsAccountId; data: AdminAccountsAccountReason }
+  > = (props) => {
+    const { accountId, data } = props ?? {}
+
+    return accountsLockAdminAccount(accountId, data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type AccountsLockAdminAccountMutationResult = NonNullable<
+  Awaited<ReturnType<typeof accountsLockAdminAccount>>
+>
+export type AccountsLockAdminAccountMutationBody = AdminAccountsAccountReason
+export type AccountsLockAdminAccountMutationError = CommonErrorResponse
+
+export const useAccountsLockAdminAccount = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof accountsLockAdminAccount>>,
+      TError,
+      { accountId: AdminAccountsAccountId; data: AdminAccountsAccountReason },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof accountsLockAdminAccount>>,
+  TError,
+  { accountId: AdminAccountsAccountId; data: AdminAccountsAccountReason },
+  TContext
+> => {
+  return useMutation(
+    getAccountsLockAdminAccountMutationOptions(options),
+    queryClient
+  )
+}
+
+export const accountsUnlockAdminAccount = (
+  accountId: AdminAccountsAccountId,
+  adminAccountsAccountReason: AdminAccountsAccountReason,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminAccountsAccountMutation>(
+    {
+      url: `/api/v1/admin/accounts/${accountId}/unlock`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: adminAccountsAccountReason,
+      signal,
+    },
+    options
+  )
+}
+
+export const getAccountsUnlockAdminAccountMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof accountsUnlockAdminAccount>>,
+    TError,
+    { accountId: AdminAccountsAccountId; data: AdminAccountsAccountReason },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof accountsUnlockAdminAccount>>,
+  TError,
+  { accountId: AdminAccountsAccountId; data: AdminAccountsAccountReason },
+  TContext
+> => {
+  const mutationKey = ["accountsUnlockAdminAccount"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof accountsUnlockAdminAccount>>,
+    { accountId: AdminAccountsAccountId; data: AdminAccountsAccountReason }
+  > = (props) => {
+    const { accountId, data } = props ?? {}
+
+    return accountsUnlockAdminAccount(accountId, data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type AccountsUnlockAdminAccountMutationResult = NonNullable<
+  Awaited<ReturnType<typeof accountsUnlockAdminAccount>>
+>
+export type AccountsUnlockAdminAccountMutationBody = AdminAccountsAccountReason
+export type AccountsUnlockAdminAccountMutationError = CommonErrorResponse
+
+export const useAccountsUnlockAdminAccount = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof accountsUnlockAdminAccount>>,
+      TError,
+      { accountId: AdminAccountsAccountId; data: AdminAccountsAccountReason },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof accountsUnlockAdminAccount>>,
+  TError,
+  { accountId: AdminAccountsAccountId; data: AdminAccountsAccountReason },
+  TContext
+> => {
+  return useMutation(
+    getAccountsUnlockAdminAccountMutationOptions(options),
+    queryClient
+  )
+}
+
+export const casesListAdminCases = (
+  params?: CasesListAdminCasesParams,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<CasesListAdminCases200>(
+    { url: `/api/v1/admin/cases`, method: "GET", params, signal },
+    options
+  )
+}
+
+export const getCasesListAdminCasesQueryKey = (
+  params?: CasesListAdminCasesParams
+) => {
+  return [`/api/v1/admin/cases`, ...(params ? [params] : [])] as const
+}
+
+export const getCasesListAdminCasesQueryOptions = <
+  TData = Awaited<ReturnType<typeof casesListAdminCases>>,
+  TError = CommonErrorResponse,
+>(
+  params?: CasesListAdminCasesParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof casesListAdminCases>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  }
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {}
+
+  const queryKey =
+    queryOptions?.queryKey ?? getCasesListAdminCasesQueryKey(params)
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof casesListAdminCases>>
+  > = ({ signal }) => casesListAdminCases(params, requestOptions, signal)
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof casesListAdminCases>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type CasesListAdminCasesQueryResult = NonNullable<
+  Awaited<ReturnType<typeof casesListAdminCases>>
+>
+export type CasesListAdminCasesQueryError = CommonErrorResponse
+
+export function useCasesListAdminCases<
+  TData = Awaited<ReturnType<typeof casesListAdminCases>>,
+  TError = CommonErrorResponse,
+>(
+  params: undefined | CasesListAdminCasesParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof casesListAdminCases>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof casesListAdminCases>>,
+          TError,
+          Awaited<ReturnType<typeof casesListAdminCases>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useCasesListAdminCases<
+  TData = Awaited<ReturnType<typeof casesListAdminCases>>,
+  TError = CommonErrorResponse,
+>(
+  params?: CasesListAdminCasesParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof casesListAdminCases>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof casesListAdminCases>>,
+          TError,
+          Awaited<ReturnType<typeof casesListAdminCases>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useCasesListAdminCases<
+  TData = Awaited<ReturnType<typeof casesListAdminCases>>,
+  TError = CommonErrorResponse,
+>(
+  params?: CasesListAdminCasesParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof casesListAdminCases>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+
+export function useCasesListAdminCases<
+  TData = Awaited<ReturnType<typeof casesListAdminCases>>,
+  TError = CommonErrorResponse,
+>(
+  params?: CasesListAdminCasesParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof casesListAdminCases>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions = getCasesListAdminCasesQueryOptions(params, options)
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return { ...query, queryKey: queryOptions.queryKey }
+}
+
+export const casesGetAdminCase = (
+  caseId: AdminCasesCaseId,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminCasesCaseDetail>(
+    { url: `/api/v1/admin/cases/${caseId}`, method: "GET", signal },
+    options
+  )
+}
+
+export const getCasesGetAdminCaseQueryKey = (caseId: AdminCasesCaseId) => {
+  return [`/api/v1/admin/cases/${caseId}`] as const
+}
+
+export const getCasesGetAdminCaseQueryOptions = <
+  TData = Awaited<ReturnType<typeof casesGetAdminCase>>,
+  TError = CommonErrorResponse,
+>(
+  caseId: AdminCasesCaseId,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof casesGetAdminCase>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  }
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {}
+
+  const queryKey =
+    queryOptions?.queryKey ?? getCasesGetAdminCaseQueryKey(caseId)
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof casesGetAdminCase>>
+  > = ({ signal }) => casesGetAdminCase(caseId, requestOptions, signal)
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: caseId !== null && caseId !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof casesGetAdminCase>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type CasesGetAdminCaseQueryResult = NonNullable<
+  Awaited<ReturnType<typeof casesGetAdminCase>>
+>
+export type CasesGetAdminCaseQueryError = CommonErrorResponse
+
+export function useCasesGetAdminCase<
+  TData = Awaited<ReturnType<typeof casesGetAdminCase>>,
+  TError = CommonErrorResponse,
+>(
+  caseId: AdminCasesCaseId,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof casesGetAdminCase>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof casesGetAdminCase>>,
+          TError,
+          Awaited<ReturnType<typeof casesGetAdminCase>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useCasesGetAdminCase<
+  TData = Awaited<ReturnType<typeof casesGetAdminCase>>,
+  TError = CommonErrorResponse,
+>(
+  caseId: AdminCasesCaseId,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof casesGetAdminCase>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof casesGetAdminCase>>,
+          TError,
+          Awaited<ReturnType<typeof casesGetAdminCase>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useCasesGetAdminCase<
+  TData = Awaited<ReturnType<typeof casesGetAdminCase>>,
+  TError = CommonErrorResponse,
+>(
+  caseId: AdminCasesCaseId,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof casesGetAdminCase>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+
+export function useCasesGetAdminCase<
+  TData = Awaited<ReturnType<typeof casesGetAdminCase>>,
+  TError = CommonErrorResponse,
+>(
+  caseId: AdminCasesCaseId,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof casesGetAdminCase>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions = getCasesGetAdminCaseQueryOptions(caseId, options)
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return { ...query, queryKey: queryOptions.queryKey }
+}
+
+export const casesResolveAdminCase = (
+  caseId: AdminCasesCaseId,
+  adminCasesResolution: AdminCasesResolution,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminCasesCaseDetail>(
+    {
+      url: `/api/v1/admin/cases/${caseId}/resolution`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: adminCasesResolution,
+      signal,
+    },
+    options
+  )
+}
+
+export const getCasesResolveAdminCaseMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof casesResolveAdminCase>>,
+    TError,
+    { caseId: AdminCasesCaseId; data: AdminCasesResolution },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof casesResolveAdminCase>>,
+  TError,
+  { caseId: AdminCasesCaseId; data: AdminCasesResolution },
+  TContext
+> => {
+  const mutationKey = ["casesResolveAdminCase"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof casesResolveAdminCase>>,
+    { caseId: AdminCasesCaseId; data: AdminCasesResolution }
+  > = (props) => {
+    const { caseId, data } = props ?? {}
+
+    return casesResolveAdminCase(caseId, data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type CasesResolveAdminCaseMutationResult = NonNullable<
+  Awaited<ReturnType<typeof casesResolveAdminCase>>
+>
+export type CasesResolveAdminCaseMutationBody = AdminCasesResolution
+export type CasesResolveAdminCaseMutationError = CommonErrorResponse
+
+export const useCasesResolveAdminCase = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof casesResolveAdminCase>>,
+      TError,
+      { caseId: AdminCasesCaseId; data: AdminCasesResolution },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof casesResolveAdminCase>>,
+  TError,
+  { caseId: AdminCasesCaseId; data: AdminCasesResolution },
+  TContext
+> => {
+  return useMutation(
+    getCasesResolveAdminCaseMutationOptions(options),
+    queryClient
+  )
+}
+
+export const categoriesListAdminCategories = (
+  params?: CategoriesListAdminCategoriesParams,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<CategoriesListAdminCategories200>(
+    { url: `/api/v1/admin/catalog/categories`, method: "GET", params, signal },
+    options
+  )
+}
+
+export const getCategoriesListAdminCategoriesQueryKey = (
+  params?: CategoriesListAdminCategoriesParams
+) => {
+  return [
+    `/api/v1/admin/catalog/categories`,
+    ...(params ? [params] : []),
+  ] as const
+}
+
+export const getCategoriesListAdminCategoriesQueryOptions = <
+  TData = Awaited<ReturnType<typeof categoriesListAdminCategories>>,
+  TError = CommonErrorResponse,
+>(
+  params?: CategoriesListAdminCategoriesParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof categoriesListAdminCategories>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  }
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {}
+
+  const queryKey =
+    queryOptions?.queryKey ?? getCategoriesListAdminCategoriesQueryKey(params)
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof categoriesListAdminCategories>>
+  > = ({ signal }) =>
+    categoriesListAdminCategories(params, requestOptions, signal)
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof categoriesListAdminCategories>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type CategoriesListAdminCategoriesQueryResult = NonNullable<
+  Awaited<ReturnType<typeof categoriesListAdminCategories>>
+>
+export type CategoriesListAdminCategoriesQueryError = CommonErrorResponse
+
+export function useCategoriesListAdminCategories<
+  TData = Awaited<ReturnType<typeof categoriesListAdminCategories>>,
+  TError = CommonErrorResponse,
+>(
+  params: undefined | CategoriesListAdminCategoriesParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof categoriesListAdminCategories>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof categoriesListAdminCategories>>,
+          TError,
+          Awaited<ReturnType<typeof categoriesListAdminCategories>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useCategoriesListAdminCategories<
+  TData = Awaited<ReturnType<typeof categoriesListAdminCategories>>,
+  TError = CommonErrorResponse,
+>(
+  params?: CategoriesListAdminCategoriesParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof categoriesListAdminCategories>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof categoriesListAdminCategories>>,
+          TError,
+          Awaited<ReturnType<typeof categoriesListAdminCategories>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useCategoriesListAdminCategories<
+  TData = Awaited<ReturnType<typeof categoriesListAdminCategories>>,
+  TError = CommonErrorResponse,
+>(
+  params?: CategoriesListAdminCategoriesParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof categoriesListAdminCategories>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+
+export function useCategoriesListAdminCategories<
+  TData = Awaited<ReturnType<typeof categoriesListAdminCategories>>,
+  TError = CommonErrorResponse,
+>(
+  params?: CategoriesListAdminCategoriesParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof categoriesListAdminCategories>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions = getCategoriesListAdminCategoriesQueryOptions(
+    params,
+    options
+  )
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return { ...query, queryKey: queryOptions.queryKey }
+}
+
+export const categoriesCreateAdminCategory = (
+  adminCategoriesCategoryInput: AdminCategoriesCategoryInput,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminCategoriesCategory>(
+    {
+      url: `/api/v1/admin/catalog/categories`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: adminCategoriesCategoryInput,
+      signal,
+    },
+    options
+  )
+}
+
+export const getCategoriesCreateAdminCategoryMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof categoriesCreateAdminCategory>>,
+    TError,
+    { data: AdminCategoriesCategoryInput },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof categoriesCreateAdminCategory>>,
+  TError,
+  { data: AdminCategoriesCategoryInput },
+  TContext
+> => {
+  const mutationKey = ["categoriesCreateAdminCategory"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof categoriesCreateAdminCategory>>,
+    { data: AdminCategoriesCategoryInput }
+  > = (props) => {
+    const { data } = props ?? {}
+
+    return categoriesCreateAdminCategory(data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type CategoriesCreateAdminCategoryMutationResult = NonNullable<
+  Awaited<ReturnType<typeof categoriesCreateAdminCategory>>
+>
+export type CategoriesCreateAdminCategoryMutationBody =
+  AdminCategoriesCategoryInput
+export type CategoriesCreateAdminCategoryMutationError = CommonErrorResponse
+
+export const useCategoriesCreateAdminCategory = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof categoriesCreateAdminCategory>>,
+      TError,
+      { data: AdminCategoriesCategoryInput },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof categoriesCreateAdminCategory>>,
+  TError,
+  { data: AdminCategoriesCategoryInput },
+  TContext
+> => {
+  return useMutation(
+    getCategoriesCreateAdminCategoryMutationOptions(options),
+    queryClient
+  )
+}
+
+export const categoriesUpdateAdminCategory = (
+  categoryId: AdminCategoriesCategoryId,
+  adminCategoriesCategoryUpdate: AdminCategoriesCategoryUpdate,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminCategoriesCategory>(
+    {
+      url: `/api/v1/admin/catalog/categories/${categoryId}`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: adminCategoriesCategoryUpdate,
+      signal,
+    },
+    options
+  )
+}
+
+export const getCategoriesUpdateAdminCategoryMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof categoriesUpdateAdminCategory>>,
+    TError,
+    {
+      categoryId: AdminCategoriesCategoryId
+      data: AdminCategoriesCategoryUpdate
+    },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof categoriesUpdateAdminCategory>>,
+  TError,
+  {
+    categoryId: AdminCategoriesCategoryId
+    data: AdminCategoriesCategoryUpdate
+  },
+  TContext
+> => {
+  const mutationKey = ["categoriesUpdateAdminCategory"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof categoriesUpdateAdminCategory>>,
+    {
+      categoryId: AdminCategoriesCategoryId
+      data: AdminCategoriesCategoryUpdate
+    }
+  > = (props) => {
+    const { categoryId, data } = props ?? {}
+
+    return categoriesUpdateAdminCategory(categoryId, data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type CategoriesUpdateAdminCategoryMutationResult = NonNullable<
+  Awaited<ReturnType<typeof categoriesUpdateAdminCategory>>
+>
+export type CategoriesUpdateAdminCategoryMutationBody =
+  AdminCategoriesCategoryUpdate
+export type CategoriesUpdateAdminCategoryMutationError = CommonErrorResponse
+
+export const useCategoriesUpdateAdminCategory = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof categoriesUpdateAdminCategory>>,
+      TError,
+      {
+        categoryId: AdminCategoriesCategoryId
+        data: AdminCategoriesCategoryUpdate
+      },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof categoriesUpdateAdminCategory>>,
+  TError,
+  {
+    categoryId: AdminCategoriesCategoryId
+    data: AdminCategoriesCategoryUpdate
+  },
+  TContext
+> => {
+  return useMutation(
+    getCategoriesUpdateAdminCategoryMutationOptions(options),
+    queryClient
+  )
+}
+
+export const categoriesDeleteAdminCategory = (
+  categoryId: AdminCategoriesCategoryId,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<CategoriesDeleteAdminCategory200>(
+    {
+      url: `/api/v1/admin/catalog/categories/${categoryId}`,
+      method: "DELETE",
+      signal,
+    },
+    options
+  )
+}
+
+export const getCategoriesDeleteAdminCategoryMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof categoriesDeleteAdminCategory>>,
+    TError,
+    { categoryId: AdminCategoriesCategoryId },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof categoriesDeleteAdminCategory>>,
+  TError,
+  { categoryId: AdminCategoriesCategoryId },
+  TContext
+> => {
+  const mutationKey = ["categoriesDeleteAdminCategory"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof categoriesDeleteAdminCategory>>,
+    { categoryId: AdminCategoriesCategoryId }
+  > = (props) => {
+    const { categoryId } = props ?? {}
+
+    return categoriesDeleteAdminCategory(categoryId, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type CategoriesDeleteAdminCategoryMutationResult = NonNullable<
+  Awaited<ReturnType<typeof categoriesDeleteAdminCategory>>
+>
+
+export type CategoriesDeleteAdminCategoryMutationError = CommonErrorResponse
+
+export const useCategoriesDeleteAdminCategory = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof categoriesDeleteAdminCategory>>,
+      TError,
+      { categoryId: AdminCategoriesCategoryId },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof categoriesDeleteAdminCategory>>,
+  TError,
+  { categoryId: AdminCategoriesCategoryId },
+  TContext
+> => {
+  return useMutation(
+    getCategoriesDeleteAdminCategoryMutationOptions(options),
+    queryClient
+  )
+}
+
+export const homepageGetHomepage = (
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminHomepageConfig>(
+    { url: `/api/v1/admin/homepage`, method: "GET", signal },
+    options
+  )
+}
+
+export const getHomepageGetHomepageQueryKey = () => {
+  return [`/api/v1/admin/homepage`] as const
+}
+
+export const getHomepageGetHomepageQueryOptions = <
+  TData = Awaited<ReturnType<typeof homepageGetHomepage>>,
+  TError = CommonErrorResponse,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof homepageGetHomepage>>,
+      TError,
+      TData
+    >
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getHomepageGetHomepageQueryKey()
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof homepageGetHomepage>>
+  > = ({ signal }) => homepageGetHomepage(requestOptions, signal)
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof homepageGetHomepage>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type HomepageGetHomepageQueryResult = NonNullable<
+  Awaited<ReturnType<typeof homepageGetHomepage>>
+>
+export type HomepageGetHomepageQueryError = CommonErrorResponse
+
+export function useHomepageGetHomepage<
+  TData = Awaited<ReturnType<typeof homepageGetHomepage>>,
+  TError = CommonErrorResponse,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof homepageGetHomepage>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof homepageGetHomepage>>,
+          TError,
+          Awaited<ReturnType<typeof homepageGetHomepage>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useHomepageGetHomepage<
+  TData = Awaited<ReturnType<typeof homepageGetHomepage>>,
+  TError = CommonErrorResponse,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof homepageGetHomepage>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof homepageGetHomepage>>,
+          TError,
+          Awaited<ReturnType<typeof homepageGetHomepage>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useHomepageGetHomepage<
+  TData = Awaited<ReturnType<typeof homepageGetHomepage>>,
+  TError = CommonErrorResponse,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof homepageGetHomepage>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+
+export function useHomepageGetHomepage<
+  TData = Awaited<ReturnType<typeof homepageGetHomepage>>,
+  TError = CommonErrorResponse,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof homepageGetHomepage>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions = getHomepageGetHomepageQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return { ...query, queryKey: queryOptions.queryKey }
+}
+
+export const homepageCreateHomepageAd = (
+  adminHomepageMediaInput: AdminHomepageMediaInput,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminHomepageConfig>(
+    {
+      url: `/api/v1/admin/homepage/ads`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: adminHomepageMediaInput,
+      signal,
+    },
+    options
+  )
+}
+
+export const getHomepageCreateHomepageAdMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof homepageCreateHomepageAd>>,
+    TError,
+    { data: AdminHomepageMediaInput },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof homepageCreateHomepageAd>>,
+  TError,
+  { data: AdminHomepageMediaInput },
+  TContext
+> => {
+  const mutationKey = ["homepageCreateHomepageAd"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof homepageCreateHomepageAd>>,
+    { data: AdminHomepageMediaInput }
+  > = (props) => {
+    const { data } = props ?? {}
+
+    return homepageCreateHomepageAd(data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type HomepageCreateHomepageAdMutationResult = NonNullable<
+  Awaited<ReturnType<typeof homepageCreateHomepageAd>>
+>
+export type HomepageCreateHomepageAdMutationBody = AdminHomepageMediaInput
+export type HomepageCreateHomepageAdMutationError = CommonErrorResponse
+
+export const useHomepageCreateHomepageAd = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof homepageCreateHomepageAd>>,
+      TError,
+      { data: AdminHomepageMediaInput },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof homepageCreateHomepageAd>>,
+  TError,
+  { data: AdminHomepageMediaInput },
+  TContext
+> => {
+  return useMutation(
+    getHomepageCreateHomepageAdMutationOptions(options),
+    queryClient
+  )
+}
+
+export const homepageUpdateHomepageAd = (
+  itemId: AdminHomepageItemId,
+  adminHomepageMediaInput: AdminHomepageMediaInput,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminHomepageConfig>(
+    {
+      url: `/api/v1/admin/homepage/ads/${itemId}`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: adminHomepageMediaInput,
+      signal,
+    },
+    options
+  )
+}
+
+export const getHomepageUpdateHomepageAdMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof homepageUpdateHomepageAd>>,
+    TError,
+    { itemId: AdminHomepageItemId; data: AdminHomepageMediaInput },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof homepageUpdateHomepageAd>>,
+  TError,
+  { itemId: AdminHomepageItemId; data: AdminHomepageMediaInput },
+  TContext
+> => {
+  const mutationKey = ["homepageUpdateHomepageAd"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof homepageUpdateHomepageAd>>,
+    { itemId: AdminHomepageItemId; data: AdminHomepageMediaInput }
+  > = (props) => {
+    const { itemId, data } = props ?? {}
+
+    return homepageUpdateHomepageAd(itemId, data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type HomepageUpdateHomepageAdMutationResult = NonNullable<
+  Awaited<ReturnType<typeof homepageUpdateHomepageAd>>
+>
+export type HomepageUpdateHomepageAdMutationBody = AdminHomepageMediaInput
+export type HomepageUpdateHomepageAdMutationError = CommonErrorResponse
+
+export const useHomepageUpdateHomepageAd = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof homepageUpdateHomepageAd>>,
+      TError,
+      { itemId: AdminHomepageItemId; data: AdminHomepageMediaInput },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof homepageUpdateHomepageAd>>,
+  TError,
+  { itemId: AdminHomepageItemId; data: AdminHomepageMediaInput },
+  TContext
+> => {
+  return useMutation(
+    getHomepageUpdateHomepageAdMutationOptions(options),
+    queryClient
+  )
+}
+
+export const homepageDeleteHomepageAd = (
+  itemId: AdminHomepageItemId,
+  params: HomepageDeleteHomepageAdParams,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminHomepageConfig>(
+    {
+      url: `/api/v1/admin/homepage/ads/${itemId}`,
+      method: "DELETE",
+      params,
+      signal,
+    },
+    options
+  )
+}
+
+export const getHomepageDeleteHomepageAdMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof homepageDeleteHomepageAd>>,
+    TError,
+    { itemId: AdminHomepageItemId; params: HomepageDeleteHomepageAdParams },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof homepageDeleteHomepageAd>>,
+  TError,
+  { itemId: AdminHomepageItemId; params: HomepageDeleteHomepageAdParams },
+  TContext
+> => {
+  const mutationKey = ["homepageDeleteHomepageAd"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof homepageDeleteHomepageAd>>,
+    { itemId: AdminHomepageItemId; params: HomepageDeleteHomepageAdParams }
+  > = (props) => {
+    const { itemId, params } = props ?? {}
+
+    return homepageDeleteHomepageAd(itemId, params, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type HomepageDeleteHomepageAdMutationResult = NonNullable<
+  Awaited<ReturnType<typeof homepageDeleteHomepageAd>>
+>
+
+export type HomepageDeleteHomepageAdMutationError = CommonErrorResponse
+
+export const useHomepageDeleteHomepageAd = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof homepageDeleteHomepageAd>>,
+      TError,
+      { itemId: AdminHomepageItemId; params: HomepageDeleteHomepageAdParams },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof homepageDeleteHomepageAd>>,
+  TError,
+  { itemId: AdminHomepageItemId; params: HomepageDeleteHomepageAdParams },
+  TContext
+> => {
+  return useMutation(
+    getHomepageDeleteHomepageAdMutationOptions(options),
+    queryClient
+  )
+}
+
+export const homepageCreateHomepageBanner = (
+  adminHomepageMediaInput: AdminHomepageMediaInput,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminHomepageConfig>(
+    {
+      url: `/api/v1/admin/homepage/banners`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: adminHomepageMediaInput,
+      signal,
+    },
+    options
+  )
+}
+
+export const getHomepageCreateHomepageBannerMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof homepageCreateHomepageBanner>>,
+    TError,
+    { data: AdminHomepageMediaInput },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof homepageCreateHomepageBanner>>,
+  TError,
+  { data: AdminHomepageMediaInput },
+  TContext
+> => {
+  const mutationKey = ["homepageCreateHomepageBanner"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof homepageCreateHomepageBanner>>,
+    { data: AdminHomepageMediaInput }
+  > = (props) => {
+    const { data } = props ?? {}
+
+    return homepageCreateHomepageBanner(data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type HomepageCreateHomepageBannerMutationResult = NonNullable<
+  Awaited<ReturnType<typeof homepageCreateHomepageBanner>>
+>
+export type HomepageCreateHomepageBannerMutationBody = AdminHomepageMediaInput
+export type HomepageCreateHomepageBannerMutationError = CommonErrorResponse
+
+export const useHomepageCreateHomepageBanner = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof homepageCreateHomepageBanner>>,
+      TError,
+      { data: AdminHomepageMediaInput },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof homepageCreateHomepageBanner>>,
+  TError,
+  { data: AdminHomepageMediaInput },
+  TContext
+> => {
+  return useMutation(
+    getHomepageCreateHomepageBannerMutationOptions(options),
+    queryClient
+  )
+}
+
+export const homepageUpdateHomepageBanner = (
+  itemId: AdminHomepageItemId,
+  adminHomepageMediaInput: AdminHomepageMediaInput,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminHomepageConfig>(
+    {
+      url: `/api/v1/admin/homepage/banners/${itemId}`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: adminHomepageMediaInput,
+      signal,
+    },
+    options
+  )
+}
+
+export const getHomepageUpdateHomepageBannerMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof homepageUpdateHomepageBanner>>,
+    TError,
+    { itemId: AdminHomepageItemId; data: AdminHomepageMediaInput },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof homepageUpdateHomepageBanner>>,
+  TError,
+  { itemId: AdminHomepageItemId; data: AdminHomepageMediaInput },
+  TContext
+> => {
+  const mutationKey = ["homepageUpdateHomepageBanner"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof homepageUpdateHomepageBanner>>,
+    { itemId: AdminHomepageItemId; data: AdminHomepageMediaInput }
+  > = (props) => {
+    const { itemId, data } = props ?? {}
+
+    return homepageUpdateHomepageBanner(itemId, data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type HomepageUpdateHomepageBannerMutationResult = NonNullable<
+  Awaited<ReturnType<typeof homepageUpdateHomepageBanner>>
+>
+export type HomepageUpdateHomepageBannerMutationBody = AdminHomepageMediaInput
+export type HomepageUpdateHomepageBannerMutationError = CommonErrorResponse
+
+export const useHomepageUpdateHomepageBanner = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof homepageUpdateHomepageBanner>>,
+      TError,
+      { itemId: AdminHomepageItemId; data: AdminHomepageMediaInput },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof homepageUpdateHomepageBanner>>,
+  TError,
+  { itemId: AdminHomepageItemId; data: AdminHomepageMediaInput },
+  TContext
+> => {
+  return useMutation(
+    getHomepageUpdateHomepageBannerMutationOptions(options),
+    queryClient
+  )
+}
+
+export const homepageDeleteHomepageBanner = (
+  itemId: AdminHomepageItemId,
+  params: HomepageDeleteHomepageBannerParams,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminHomepageConfig>(
+    {
+      url: `/api/v1/admin/homepage/banners/${itemId}`,
+      method: "DELETE",
+      params,
+      signal,
+    },
+    options
+  )
+}
+
+export const getHomepageDeleteHomepageBannerMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof homepageDeleteHomepageBanner>>,
+    TError,
+    { itemId: AdminHomepageItemId; params: HomepageDeleteHomepageBannerParams },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof homepageDeleteHomepageBanner>>,
+  TError,
+  { itemId: AdminHomepageItemId; params: HomepageDeleteHomepageBannerParams },
+  TContext
+> => {
+  const mutationKey = ["homepageDeleteHomepageBanner"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof homepageDeleteHomepageBanner>>,
+    { itemId: AdminHomepageItemId; params: HomepageDeleteHomepageBannerParams }
+  > = (props) => {
+    const { itemId, params } = props ?? {}
+
+    return homepageDeleteHomepageBanner(itemId, params, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type HomepageDeleteHomepageBannerMutationResult = NonNullable<
+  Awaited<ReturnType<typeof homepageDeleteHomepageBanner>>
+>
+
+export type HomepageDeleteHomepageBannerMutationError = CommonErrorResponse
+
+export const useHomepageDeleteHomepageBanner = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof homepageDeleteHomepageBanner>>,
+      TError,
+      {
+        itemId: AdminHomepageItemId
+        params: HomepageDeleteHomepageBannerParams
+      },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof homepageDeleteHomepageBanner>>,
+  TError,
+  { itemId: AdminHomepageItemId; params: HomepageDeleteHomepageBannerParams },
+  TContext
+> => {
+  return useMutation(
+    getHomepageDeleteHomepageBannerMutationOptions(options),
+    queryClient
+  )
+}
+
+export const homepageCreateHomepageCategorySection = (
+  adminHomepageCategoryInput: AdminHomepageCategoryInput,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminHomepageConfig>(
+    {
+      url: `/api/v1/admin/homepage/category-sections`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: adminHomepageCategoryInput,
+      signal,
+    },
+    options
+  )
+}
+
+export const getHomepageCreateHomepageCategorySectionMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof homepageCreateHomepageCategorySection>>,
+    TError,
+    { data: AdminHomepageCategoryInput },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof homepageCreateHomepageCategorySection>>,
+  TError,
+  { data: AdminHomepageCategoryInput },
+  TContext
+> => {
+  const mutationKey = ["homepageCreateHomepageCategorySection"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof homepageCreateHomepageCategorySection>>,
+    { data: AdminHomepageCategoryInput }
+  > = (props) => {
+    const { data } = props ?? {}
+
+    return homepageCreateHomepageCategorySection(data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type HomepageCreateHomepageCategorySectionMutationResult = NonNullable<
+  Awaited<ReturnType<typeof homepageCreateHomepageCategorySection>>
+>
+export type HomepageCreateHomepageCategorySectionMutationBody =
+  AdminHomepageCategoryInput
+export type HomepageCreateHomepageCategorySectionMutationError =
+  CommonErrorResponse
+
+export const useHomepageCreateHomepageCategorySection = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof homepageCreateHomepageCategorySection>>,
+      TError,
+      { data: AdminHomepageCategoryInput },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof homepageCreateHomepageCategorySection>>,
+  TError,
+  { data: AdminHomepageCategoryInput },
+  TContext
+> => {
+  return useMutation(
+    getHomepageCreateHomepageCategorySectionMutationOptions(options),
+    queryClient
+  )
+}
+
+export const homepageUpdateHomepageCategorySection = (
+  itemId: AdminHomepageItemId,
+  adminHomepageCategoryInput: AdminHomepageCategoryInput,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminHomepageConfig>(
+    {
+      url: `/api/v1/admin/homepage/category-sections/${itemId}`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: adminHomepageCategoryInput,
+      signal,
+    },
+    options
+  )
+}
+
+export const getHomepageUpdateHomepageCategorySectionMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof homepageUpdateHomepageCategorySection>>,
+    TError,
+    { itemId: AdminHomepageItemId; data: AdminHomepageCategoryInput },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof homepageUpdateHomepageCategorySection>>,
+  TError,
+  { itemId: AdminHomepageItemId; data: AdminHomepageCategoryInput },
+  TContext
+> => {
+  const mutationKey = ["homepageUpdateHomepageCategorySection"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof homepageUpdateHomepageCategorySection>>,
+    { itemId: AdminHomepageItemId; data: AdminHomepageCategoryInput }
+  > = (props) => {
+    const { itemId, data } = props ?? {}
+
+    return homepageUpdateHomepageCategorySection(itemId, data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type HomepageUpdateHomepageCategorySectionMutationResult = NonNullable<
+  Awaited<ReturnType<typeof homepageUpdateHomepageCategorySection>>
+>
+export type HomepageUpdateHomepageCategorySectionMutationBody =
+  AdminHomepageCategoryInput
+export type HomepageUpdateHomepageCategorySectionMutationError =
+  CommonErrorResponse
+
+export const useHomepageUpdateHomepageCategorySection = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof homepageUpdateHomepageCategorySection>>,
+      TError,
+      { itemId: AdminHomepageItemId; data: AdminHomepageCategoryInput },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof homepageUpdateHomepageCategorySection>>,
+  TError,
+  { itemId: AdminHomepageItemId; data: AdminHomepageCategoryInput },
+  TContext
+> => {
+  return useMutation(
+    getHomepageUpdateHomepageCategorySectionMutationOptions(options),
+    queryClient
+  )
+}
+
+export const homepageDeleteHomepageCategorySection = (
+  itemId: AdminHomepageItemId,
+  params: HomepageDeleteHomepageCategorySectionParams,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminHomepageConfig>(
+    {
+      url: `/api/v1/admin/homepage/category-sections/${itemId}`,
+      method: "DELETE",
+      params,
+      signal,
+    },
+    options
+  )
+}
+
+export const getHomepageDeleteHomepageCategorySectionMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof homepageDeleteHomepageCategorySection>>,
+    TError,
+    {
+      itemId: AdminHomepageItemId
+      params: HomepageDeleteHomepageCategorySectionParams
+    },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof homepageDeleteHomepageCategorySection>>,
+  TError,
+  {
+    itemId: AdminHomepageItemId
+    params: HomepageDeleteHomepageCategorySectionParams
+  },
+  TContext
+> => {
+  const mutationKey = ["homepageDeleteHomepageCategorySection"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof homepageDeleteHomepageCategorySection>>,
+    {
+      itemId: AdminHomepageItemId
+      params: HomepageDeleteHomepageCategorySectionParams
+    }
+  > = (props) => {
+    const { itemId, params } = props ?? {}
+
+    return homepageDeleteHomepageCategorySection(itemId, params, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type HomepageDeleteHomepageCategorySectionMutationResult = NonNullable<
+  Awaited<ReturnType<typeof homepageDeleteHomepageCategorySection>>
+>
+
+export type HomepageDeleteHomepageCategorySectionMutationError =
+  CommonErrorResponse
+
+export const useHomepageDeleteHomepageCategorySection = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof homepageDeleteHomepageCategorySection>>,
+      TError,
+      {
+        itemId: AdminHomepageItemId
+        params: HomepageDeleteHomepageCategorySectionParams
+      },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof homepageDeleteHomepageCategorySection>>,
+  TError,
+  {
+    itemId: AdminHomepageItemId
+    params: HomepageDeleteHomepageCategorySectionParams
+  },
+  TContext
+> => {
+  return useMutation(
+    getHomepageDeleteHomepageCategorySectionMutationOptions(options),
+    queryClient
+  )
+}
+
+export const homepageReorderHomepage = (
+  adminHomepageOrder: AdminHomepageOrder,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminHomepageConfig>(
+    {
+      url: `/api/v1/admin/homepage/order`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: adminHomepageOrder,
+      signal,
+    },
+    options
+  )
+}
+
+export const getHomepageReorderHomepageMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof homepageReorderHomepage>>,
+    TError,
+    { data: AdminHomepageOrder },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof homepageReorderHomepage>>,
+  TError,
+  { data: AdminHomepageOrder },
+  TContext
+> => {
+  const mutationKey = ["homepageReorderHomepage"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof homepageReorderHomepage>>,
+    { data: AdminHomepageOrder }
+  > = (props) => {
+    const { data } = props ?? {}
+
+    return homepageReorderHomepage(data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type HomepageReorderHomepageMutationResult = NonNullable<
+  Awaited<ReturnType<typeof homepageReorderHomepage>>
+>
+export type HomepageReorderHomepageMutationBody = AdminHomepageOrder
+export type HomepageReorderHomepageMutationError = CommonErrorResponse
+
+export const useHomepageReorderHomepage = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof homepageReorderHomepage>>,
+      TError,
+      { data: AdminHomepageOrder },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof homepageReorderHomepage>>,
+  TError,
+  { data: AdminHomepageOrder },
+  TContext
+> => {
+  return useMutation(
+    getHomepageReorderHomepageMutationOptions(options),
+    queryClient
+  )
+}
+
+export const homepagePreviewHomepage = (
+  params?: HomepagePreviewHomepageParams,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminHomepagePreview>(
+    { url: `/api/v1/admin/homepage/preview`, method: "GET", params, signal },
+    options
+  )
+}
+
+export const getHomepagePreviewHomepageQueryKey = (
+  params?: HomepagePreviewHomepageParams
+) => {
+  return [
+    `/api/v1/admin/homepage/preview`,
+    ...(params ? [params] : []),
+  ] as const
+}
+
+export const getHomepagePreviewHomepageQueryOptions = <
+  TData = Awaited<ReturnType<typeof homepagePreviewHomepage>>,
+  TError = CommonErrorResponse,
+>(
+  params?: HomepagePreviewHomepageParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof homepagePreviewHomepage>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  }
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {}
+
+  const queryKey =
+    queryOptions?.queryKey ?? getHomepagePreviewHomepageQueryKey(params)
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof homepagePreviewHomepage>>
+  > = ({ signal }) => homepagePreviewHomepage(params, requestOptions, signal)
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof homepagePreviewHomepage>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type HomepagePreviewHomepageQueryResult = NonNullable<
+  Awaited<ReturnType<typeof homepagePreviewHomepage>>
+>
+export type HomepagePreviewHomepageQueryError = CommonErrorResponse
+
+export function useHomepagePreviewHomepage<
+  TData = Awaited<ReturnType<typeof homepagePreviewHomepage>>,
+  TError = CommonErrorResponse,
+>(
+  params: undefined | HomepagePreviewHomepageParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof homepagePreviewHomepage>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof homepagePreviewHomepage>>,
+          TError,
+          Awaited<ReturnType<typeof homepagePreviewHomepage>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useHomepagePreviewHomepage<
+  TData = Awaited<ReturnType<typeof homepagePreviewHomepage>>,
+  TError = CommonErrorResponse,
+>(
+  params?: HomepagePreviewHomepageParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof homepagePreviewHomepage>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof homepagePreviewHomepage>>,
+          TError,
+          Awaited<ReturnType<typeof homepagePreviewHomepage>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useHomepagePreviewHomepage<
+  TData = Awaited<ReturnType<typeof homepagePreviewHomepage>>,
+  TError = CommonErrorResponse,
+>(
+  params?: HomepagePreviewHomepageParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof homepagePreviewHomepage>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+
+export function useHomepagePreviewHomepage<
+  TData = Awaited<ReturnType<typeof homepagePreviewHomepage>>,
+  TError = CommonErrorResponse,
+>(
+  params?: HomepagePreviewHomepageParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof homepagePreviewHomepage>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions = getHomepagePreviewHomepageQueryOptions(params, options)
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return { ...query, queryKey: queryOptions.queryKey }
+}
+
+export const homepagePublishHomepage = (
+  adminHomepageChange: AdminHomepageChange,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminHomepageConfig>(
+    {
+      url: `/api/v1/admin/homepage/publish`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: adminHomepageChange,
+      signal,
+    },
+    options
+  )
+}
+
+export const getHomepagePublishHomepageMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof homepagePublishHomepage>>,
+    TError,
+    { data: AdminHomepageChange },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof homepagePublishHomepage>>,
+  TError,
+  { data: AdminHomepageChange },
+  TContext
+> => {
+  const mutationKey = ["homepagePublishHomepage"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof homepagePublishHomepage>>,
+    { data: AdminHomepageChange }
+  > = (props) => {
+    const { data } = props ?? {}
+
+    return homepagePublishHomepage(data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type HomepagePublishHomepageMutationResult = NonNullable<
+  Awaited<ReturnType<typeof homepagePublishHomepage>>
+>
+export type HomepagePublishHomepageMutationBody = AdminHomepageChange
+export type HomepagePublishHomepageMutationError = CommonErrorResponse
+
+export const useHomepagePublishHomepage = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof homepagePublishHomepage>>,
+      TError,
+      { data: AdminHomepageChange },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof homepagePublishHomepage>>,
+  TError,
+  { data: AdminHomepageChange },
+  TContext
+> => {
+  return useMutation(
+    getHomepagePublishHomepageMutationOptions(options),
+    queryClient
+  )
+}
+
+export const productModerationListProductModeration = (
+  params?: ProductModerationListProductModerationParams,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<ProductModerationListProductModeration200>(
+    { url: `/api/v1/admin/product-moderation`, method: "GET", params, signal },
+    options
+  )
+}
+
+export const getProductModerationListProductModerationQueryKey = (
+  params?: ProductModerationListProductModerationParams
+) => {
+  return [
+    `/api/v1/admin/product-moderation`,
+    ...(params ? [params] : []),
+  ] as const
+}
+
+export const getProductModerationListProductModerationQueryOptions = <
+  TData = Awaited<ReturnType<typeof productModerationListProductModeration>>,
+  TError = CommonErrorResponse,
+>(
+  params?: ProductModerationListProductModerationParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof productModerationListProductModeration>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  }
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {}
+
+  const queryKey =
+    queryOptions?.queryKey ??
+    getProductModerationListProductModerationQueryKey(params)
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof productModerationListProductModeration>>
+  > = ({ signal }) =>
+    productModerationListProductModeration(params, requestOptions, signal)
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof productModerationListProductModeration>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ProductModerationListProductModerationQueryResult = NonNullable<
+  Awaited<ReturnType<typeof productModerationListProductModeration>>
+>
+export type ProductModerationListProductModerationQueryError =
+  CommonErrorResponse
+
+export function useProductModerationListProductModeration<
+  TData = Awaited<ReturnType<typeof productModerationListProductModeration>>,
+  TError = CommonErrorResponse,
+>(
+  params: undefined | ProductModerationListProductModerationParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof productModerationListProductModeration>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof productModerationListProductModeration>>,
+          TError,
+          Awaited<ReturnType<typeof productModerationListProductModeration>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useProductModerationListProductModeration<
+  TData = Awaited<ReturnType<typeof productModerationListProductModeration>>,
+  TError = CommonErrorResponse,
+>(
+  params?: ProductModerationListProductModerationParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof productModerationListProductModeration>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof productModerationListProductModeration>>,
+          TError,
+          Awaited<ReturnType<typeof productModerationListProductModeration>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useProductModerationListProductModeration<
+  TData = Awaited<ReturnType<typeof productModerationListProductModeration>>,
+  TError = CommonErrorResponse,
+>(
+  params?: ProductModerationListProductModerationParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof productModerationListProductModeration>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+
+export function useProductModerationListProductModeration<
+  TData = Awaited<ReturnType<typeof productModerationListProductModeration>>,
+  TError = CommonErrorResponse,
+>(
+  params?: ProductModerationListProductModerationParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof productModerationListProductModeration>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions = getProductModerationListProductModerationQueryOptions(
+    params,
+    options
+  )
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return { ...query, queryKey: queryOptions.queryKey }
+}
+
+export const productModerationGetProductModeration = (
+  productId: AdminModerationProductId,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminModerationProductDetail>(
+    {
+      url: `/api/v1/admin/product-moderation/${productId}`,
+      method: "GET",
+      signal,
+    },
+    options
+  )
+}
+
+export const getProductModerationGetProductModerationQueryKey = (
+  productId: AdminModerationProductId
+) => {
+  return [`/api/v1/admin/product-moderation/${productId}`] as const
+}
+
+export const getProductModerationGetProductModerationQueryOptions = <
+  TData = Awaited<ReturnType<typeof productModerationGetProductModeration>>,
+  TError = CommonErrorResponse,
+>(
+  productId: AdminModerationProductId,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof productModerationGetProductModeration>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  }
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {}
+
+  const queryKey =
+    queryOptions?.queryKey ??
+    getProductModerationGetProductModerationQueryKey(productId)
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof productModerationGetProductModeration>>
+  > = ({ signal }) =>
+    productModerationGetProductModeration(productId, requestOptions, signal)
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: productId !== null && productId !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof productModerationGetProductModeration>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ProductModerationGetProductModerationQueryResult = NonNullable<
+  Awaited<ReturnType<typeof productModerationGetProductModeration>>
+>
+export type ProductModerationGetProductModerationQueryError =
+  CommonErrorResponse
+
+export function useProductModerationGetProductModeration<
+  TData = Awaited<ReturnType<typeof productModerationGetProductModeration>>,
+  TError = CommonErrorResponse,
+>(
+  productId: AdminModerationProductId,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof productModerationGetProductModeration>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof productModerationGetProductModeration>>,
+          TError,
+          Awaited<ReturnType<typeof productModerationGetProductModeration>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useProductModerationGetProductModeration<
+  TData = Awaited<ReturnType<typeof productModerationGetProductModeration>>,
+  TError = CommonErrorResponse,
+>(
+  productId: AdminModerationProductId,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof productModerationGetProductModeration>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof productModerationGetProductModeration>>,
+          TError,
+          Awaited<ReturnType<typeof productModerationGetProductModeration>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useProductModerationGetProductModeration<
+  TData = Awaited<ReturnType<typeof productModerationGetProductModeration>>,
+  TError = CommonErrorResponse,
+>(
+  productId: AdminModerationProductId,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof productModerationGetProductModeration>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+
+export function useProductModerationGetProductModeration<
+  TData = Awaited<ReturnType<typeof productModerationGetProductModeration>>,
+  TError = CommonErrorResponse,
+>(
+  productId: AdminModerationProductId,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof productModerationGetProductModeration>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions = getProductModerationGetProductModerationQueryOptions(
+    productId,
+    options
+  )
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return { ...query, queryKey: queryOptions.queryKey }
+}
+
+export const productModerationApproveProductModeration = (
+  productId: AdminModerationProductId,
+  adminModerationApproval: AdminModerationApproval,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminModerationModerationResult>(
+    {
+      url: `/api/v1/admin/product-moderation/${productId}/approval`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: adminModerationApproval,
+      signal,
+    },
+    options
+  )
+}
+
+export const getProductModerationApproveProductModerationMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof productModerationApproveProductModeration>>,
+    TError,
+    { productId: AdminModerationProductId; data: AdminModerationApproval },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof productModerationApproveProductModeration>>,
+  TError,
+  { productId: AdminModerationProductId; data: AdminModerationApproval },
+  TContext
+> => {
+  const mutationKey = ["productModerationApproveProductModeration"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof productModerationApproveProductModeration>>,
+    { productId: AdminModerationProductId; data: AdminModerationApproval }
+  > = (props) => {
+    const { productId, data } = props ?? {}
+
+    return productModerationApproveProductModeration(
+      productId,
+      data,
+      requestOptions
+    )
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type ProductModerationApproveProductModerationMutationResult =
+  NonNullable<
+    Awaited<ReturnType<typeof productModerationApproveProductModeration>>
+  >
+export type ProductModerationApproveProductModerationMutationBody =
+  AdminModerationApproval
+export type ProductModerationApproveProductModerationMutationError =
+  CommonErrorResponse
+
+export const useProductModerationApproveProductModeration = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof productModerationApproveProductModeration>>,
+      TError,
+      { productId: AdminModerationProductId; data: AdminModerationApproval },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof productModerationApproveProductModeration>>,
+  TError,
+  { productId: AdminModerationProductId; data: AdminModerationApproval },
+  TContext
+> => {
+  return useMutation(
+    getProductModerationApproveProductModerationMutationOptions(options),
+    queryClient
+  )
+}
+
+export const productModerationRejectProductModeration = (
+  productId: AdminModerationProductId,
+  adminModerationRejection: AdminModerationRejection,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminModerationModerationResult>(
+    {
+      url: `/api/v1/admin/product-moderation/${productId}/rejection`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: adminModerationRejection,
+      signal,
+    },
+    options
+  )
+}
+
+export const getProductModerationRejectProductModerationMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof productModerationRejectProductModeration>>,
+    TError,
+    { productId: AdminModerationProductId; data: AdminModerationRejection },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof productModerationRejectProductModeration>>,
+  TError,
+  { productId: AdminModerationProductId; data: AdminModerationRejection },
+  TContext
+> => {
+  const mutationKey = ["productModerationRejectProductModeration"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof productModerationRejectProductModeration>>,
+    { productId: AdminModerationProductId; data: AdminModerationRejection }
+  > = (props) => {
+    const { productId, data } = props ?? {}
+
+    return productModerationRejectProductModeration(
+      productId,
+      data,
+      requestOptions
+    )
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type ProductModerationRejectProductModerationMutationResult =
+  NonNullable<
+    Awaited<ReturnType<typeof productModerationRejectProductModeration>>
+  >
+export type ProductModerationRejectProductModerationMutationBody =
+  AdminModerationRejection
+export type ProductModerationRejectProductModerationMutationError =
+  CommonErrorResponse
+
+export const useProductModerationRejectProductModeration = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof productModerationRejectProductModeration>>,
+      TError,
+      { productId: AdminModerationProductId; data: AdminModerationRejection },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof productModerationRejectProductModeration>>,
+  TError,
+  { productId: AdminModerationProductId; data: AdminModerationRejection },
+  TContext
+> => {
+  return useMutation(
+    getProductModerationRejectProductModerationMutationOptions(options),
+    queryClient
+  )
+}
+
+/**
+ * Chỉ QuanTriVien/KiemDuyetVien được kết luận báo cáo sản phẩm; không tự ẩn sản phẩm hay khóa tài khoản/cửa hàng. Ghi lịch sử và thông báo nguyên tử; đã kết luận trả 409.
+ */
+export const reportsResolveAdminReport = (
+  reportId: AdminReportsReportId,
+  adminReportsResolution: AdminReportsResolution,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminReportsReportResolution>(
+    {
+      url: `/api/v1/admin/reports/${reportId}/resolution`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: adminReportsResolution,
+      signal,
+    },
+    options
+  )
+}
+
+export const getReportsResolveAdminReportMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof reportsResolveAdminReport>>,
+    TError,
+    { reportId: AdminReportsReportId; data: AdminReportsResolution },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof reportsResolveAdminReport>>,
+  TError,
+  { reportId: AdminReportsReportId; data: AdminReportsResolution },
+  TContext
+> => {
+  const mutationKey = ["reportsResolveAdminReport"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof reportsResolveAdminReport>>,
+    { reportId: AdminReportsReportId; data: AdminReportsResolution }
+  > = (props) => {
+    const { reportId, data } = props ?? {}
+
+    return reportsResolveAdminReport(reportId, data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type ReportsResolveAdminReportMutationResult = NonNullable<
+  Awaited<ReturnType<typeof reportsResolveAdminReport>>
+>
+export type ReportsResolveAdminReportMutationBody = AdminReportsResolution
+export type ReportsResolveAdminReportMutationError = CommonErrorResponse
+
+export const useReportsResolveAdminReport = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof reportsResolveAdminReport>>,
+      TError,
+      { reportId: AdminReportsReportId; data: AdminReportsResolution },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof reportsResolveAdminReport>>,
+  TError,
+  { reportId: AdminReportsReportId; data: AdminReportsResolution },
+  TContext
+> => {
+  return useMutation(
+    getReportsResolveAdminReportMutationOptions(options),
+    queryClient
+  )
+}
+
+export const storesListAdminStores = (
+  params?: StoresListAdminStoresParams,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<StoresListAdminStores200>(
+    { url: `/api/v1/admin/stores`, method: "GET", params, signal },
+    options
+  )
+}
+
+export const getStoresListAdminStoresQueryKey = (
+  params?: StoresListAdminStoresParams
+) => {
+  return [`/api/v1/admin/stores`, ...(params ? [params] : [])] as const
+}
+
+export const getStoresListAdminStoresQueryOptions = <
+  TData = Awaited<ReturnType<typeof storesListAdminStores>>,
+  TError = CommonErrorResponse,
+>(
+  params?: StoresListAdminStoresParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof storesListAdminStores>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  }
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {}
+
+  const queryKey =
+    queryOptions?.queryKey ?? getStoresListAdminStoresQueryKey(params)
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof storesListAdminStores>>
+  > = ({ signal }) => storesListAdminStores(params, requestOptions, signal)
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof storesListAdminStores>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type StoresListAdminStoresQueryResult = NonNullable<
+  Awaited<ReturnType<typeof storesListAdminStores>>
+>
+export type StoresListAdminStoresQueryError = CommonErrorResponse
+
+export function useStoresListAdminStores<
+  TData = Awaited<ReturnType<typeof storesListAdminStores>>,
+  TError = CommonErrorResponse,
+>(
+  params: undefined | StoresListAdminStoresParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof storesListAdminStores>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof storesListAdminStores>>,
+          TError,
+          Awaited<ReturnType<typeof storesListAdminStores>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useStoresListAdminStores<
+  TData = Awaited<ReturnType<typeof storesListAdminStores>>,
+  TError = CommonErrorResponse,
+>(
+  params?: StoresListAdminStoresParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof storesListAdminStores>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof storesListAdminStores>>,
+          TError,
+          Awaited<ReturnType<typeof storesListAdminStores>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useStoresListAdminStores<
+  TData = Awaited<ReturnType<typeof storesListAdminStores>>,
+  TError = CommonErrorResponse,
+>(
+  params?: StoresListAdminStoresParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof storesListAdminStores>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+
+export function useStoresListAdminStores<
+  TData = Awaited<ReturnType<typeof storesListAdminStores>>,
+  TError = CommonErrorResponse,
+>(
+  params?: StoresListAdminStoresParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof storesListAdminStores>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions = getStoresListAdminStoresQueryOptions(params, options)
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return { ...query, queryKey: queryOptions.queryKey }
+}
+
+export const storesGetAdminStore = (
+  storeId: AdminStoresStoreId,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminStoresStoreDetail>(
+    { url: `/api/v1/admin/stores/${storeId}`, method: "GET", signal },
+    options
+  )
+}
+
+export const getStoresGetAdminStoreQueryKey = (storeId: AdminStoresStoreId) => {
+  return [`/api/v1/admin/stores/${storeId}`] as const
+}
+
+export const getStoresGetAdminStoreQueryOptions = <
+  TData = Awaited<ReturnType<typeof storesGetAdminStore>>,
+  TError = CommonErrorResponse,
+>(
+  storeId: AdminStoresStoreId,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof storesGetAdminStore>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  }
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {}
+
+  const queryKey =
+    queryOptions?.queryKey ?? getStoresGetAdminStoreQueryKey(storeId)
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof storesGetAdminStore>>
+  > = ({ signal }) => storesGetAdminStore(storeId, requestOptions, signal)
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: storeId !== null && storeId !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof storesGetAdminStore>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type StoresGetAdminStoreQueryResult = NonNullable<
+  Awaited<ReturnType<typeof storesGetAdminStore>>
+>
+export type StoresGetAdminStoreQueryError = CommonErrorResponse
+
+export function useStoresGetAdminStore<
+  TData = Awaited<ReturnType<typeof storesGetAdminStore>>,
+  TError = CommonErrorResponse,
+>(
+  storeId: AdminStoresStoreId,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof storesGetAdminStore>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof storesGetAdminStore>>,
+          TError,
+          Awaited<ReturnType<typeof storesGetAdminStore>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useStoresGetAdminStore<
+  TData = Awaited<ReturnType<typeof storesGetAdminStore>>,
+  TError = CommonErrorResponse,
+>(
+  storeId: AdminStoresStoreId,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof storesGetAdminStore>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof storesGetAdminStore>>,
+          TError,
+          Awaited<ReturnType<typeof storesGetAdminStore>>
+        >,
+        "initialData"
+      >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useStoresGetAdminStore<
+  TData = Awaited<ReturnType<typeof storesGetAdminStore>>,
+  TError = CommonErrorResponse,
+>(
+  storeId: AdminStoresStoreId,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof storesGetAdminStore>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+
+export function useStoresGetAdminStore<
+  TData = Awaited<ReturnType<typeof storesGetAdminStore>>,
+  TError = CommonErrorResponse,
+>(
+  storeId: AdminStoresStoreId,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof storesGetAdminStore>>,
+        TError,
+        TData
+      >
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions = getStoresGetAdminStoreQueryOptions(storeId, options)
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return { ...query, queryKey: queryOptions.queryKey }
+}
+
+export const storesApproveAdminStore = (
+  storeId: AdminStoresStoreId,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminStoresStoreMutation>(
+    { url: `/api/v1/admin/stores/${storeId}/approval`, method: "POST", signal },
+    options
+  )
+}
+
+export const getStoresApproveAdminStoreMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof storesApproveAdminStore>>,
+    TError,
+    { storeId: AdminStoresStoreId },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof storesApproveAdminStore>>,
+  TError,
+  { storeId: AdminStoresStoreId },
+  TContext
+> => {
+  const mutationKey = ["storesApproveAdminStore"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof storesApproveAdminStore>>,
+    { storeId: AdminStoresStoreId }
+  > = (props) => {
+    const { storeId } = props ?? {}
+
+    return storesApproveAdminStore(storeId, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type StoresApproveAdminStoreMutationResult = NonNullable<
+  Awaited<ReturnType<typeof storesApproveAdminStore>>
+>
+
+export type StoresApproveAdminStoreMutationError = CommonErrorResponse
+
+export const useStoresApproveAdminStore = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof storesApproveAdminStore>>,
+      TError,
+      { storeId: AdminStoresStoreId },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof storesApproveAdminStore>>,
+  TError,
+  { storeId: AdminStoresStoreId },
+  TContext
+> => {
+  return useMutation(
+    getStoresApproveAdminStoreMutationOptions(options),
+    queryClient
+  )
+}
+
+export const storesLockAdminStore = (
+  storeId: AdminStoresStoreId,
+  adminStoresStoreReason: AdminStoresStoreReason,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminStoresStoreMutation>(
+    {
+      url: `/api/v1/admin/stores/${storeId}/lock`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: adminStoresStoreReason,
+      signal,
+    },
+    options
+  )
+}
+
+export const getStoresLockAdminStoreMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof storesLockAdminStore>>,
+    TError,
+    { storeId: AdminStoresStoreId; data: AdminStoresStoreReason },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof storesLockAdminStore>>,
+  TError,
+  { storeId: AdminStoresStoreId; data: AdminStoresStoreReason },
+  TContext
+> => {
+  const mutationKey = ["storesLockAdminStore"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof storesLockAdminStore>>,
+    { storeId: AdminStoresStoreId; data: AdminStoresStoreReason }
+  > = (props) => {
+    const { storeId, data } = props ?? {}
+
+    return storesLockAdminStore(storeId, data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type StoresLockAdminStoreMutationResult = NonNullable<
+  Awaited<ReturnType<typeof storesLockAdminStore>>
+>
+export type StoresLockAdminStoreMutationBody = AdminStoresStoreReason
+export type StoresLockAdminStoreMutationError = CommonErrorResponse
+
+export const useStoresLockAdminStore = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof storesLockAdminStore>>,
+      TError,
+      { storeId: AdminStoresStoreId; data: AdminStoresStoreReason },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof storesLockAdminStore>>,
+  TError,
+  { storeId: AdminStoresStoreId; data: AdminStoresStoreReason },
+  TContext
+> => {
+  return useMutation(
+    getStoresLockAdminStoreMutationOptions(options),
+    queryClient
+  )
+}
+
+export const storesRejectAdminStore = (
+  storeId: AdminStoresStoreId,
+  adminStoresStoreReason: AdminStoresStoreReason,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminStoresStoreMutation>(
+    {
+      url: `/api/v1/admin/stores/${storeId}/rejection`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: adminStoresStoreReason,
+      signal,
+    },
+    options
+  )
+}
+
+export const getStoresRejectAdminStoreMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof storesRejectAdminStore>>,
+    TError,
+    { storeId: AdminStoresStoreId; data: AdminStoresStoreReason },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof storesRejectAdminStore>>,
+  TError,
+  { storeId: AdminStoresStoreId; data: AdminStoresStoreReason },
+  TContext
+> => {
+  const mutationKey = ["storesRejectAdminStore"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof storesRejectAdminStore>>,
+    { storeId: AdminStoresStoreId; data: AdminStoresStoreReason }
+  > = (props) => {
+    const { storeId, data } = props ?? {}
+
+    return storesRejectAdminStore(storeId, data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type StoresRejectAdminStoreMutationResult = NonNullable<
+  Awaited<ReturnType<typeof storesRejectAdminStore>>
+>
+export type StoresRejectAdminStoreMutationBody = AdminStoresStoreReason
+export type StoresRejectAdminStoreMutationError = CommonErrorResponse
+
+export const useStoresRejectAdminStore = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof storesRejectAdminStore>>,
+      TError,
+      { storeId: AdminStoresStoreId; data: AdminStoresStoreReason },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof storesRejectAdminStore>>,
+  TError,
+  { storeId: AdminStoresStoreId; data: AdminStoresStoreReason },
+  TContext
+> => {
+  return useMutation(
+    getStoresRejectAdminStoreMutationOptions(options),
+    queryClient
+  )
+}
+
+export const storesUnlockAdminStore = (
+  storeId: AdminStoresStoreId,
+  options?: SecondParameter<typeof customAxiosInstance>,
+  signal?: AbortSignal
+) => {
+  return customAxiosInstance<AdminStoresStoreMutation>(
+    { url: `/api/v1/admin/stores/${storeId}/unlock`, method: "POST", signal },
+    options
+  )
+}
+
+export const getStoresUnlockAdminStoreMutationOptions = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof storesUnlockAdminStore>>,
+    TError,
+    { storeId: AdminStoresStoreId },
+    TContext
+  >
+  request?: SecondParameter<typeof customAxiosInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof storesUnlockAdminStore>>,
+  TError,
+  { storeId: AdminStoresStoreId },
+  TContext
+> => {
+  const mutationKey = ["storesUnlockAdminStore"]
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof storesUnlockAdminStore>>,
+    { storeId: AdminStoresStoreId }
+  > = (props) => {
+    const { storeId } = props ?? {}
+
+    return storesUnlockAdminStore(storeId, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type StoresUnlockAdminStoreMutationResult = NonNullable<
+  Awaited<ReturnType<typeof storesUnlockAdminStore>>
+>
+
+export type StoresUnlockAdminStoreMutationError = CommonErrorResponse
+
+export const useStoresUnlockAdminStore = <
+  TError = CommonErrorResponse,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof storesUnlockAdminStore>>,
+      TError,
+      { storeId: AdminStoresStoreId },
+      TContext
+    >
+    request?: SecondParameter<typeof customAxiosInstance>
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof storesUnlockAdminStore>>,
+  TError,
+  { storeId: AdminStoresStoreId },
+  TContext
+> => {
+  return useMutation(
+    getStoresUnlockAdminStoreMutationOptions(options),
+    queryClient
+  )
+}
 
 export const login = (
   commonLoginRequest: CommonLoginRequest,

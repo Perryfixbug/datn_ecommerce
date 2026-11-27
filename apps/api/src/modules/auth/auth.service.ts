@@ -46,11 +46,7 @@ export class AuthService {
         message: "Email hoặc mật khẩu không đúng",
       })
     const publicUser = this.toAuthUser(user)
-    const tokens = await this.issueTokens(publicUser)
-    await this.prisma.nguoiDung.update({
-      where: { idNguoiDung: user.idNguoiDung },
-      data: { lanDangNhapCuoi: new Date() },
-    })
+    const tokens = await this.issueTokens(publicUser, user.authVersion)
     return { ...tokens, user: publicUser }
   }
 
@@ -73,6 +69,19 @@ export class AuthService {
     const user = this.toAuthUser(current.nguoiDung)
     const nextRaw = this.createRefreshToken()
     const next = await this.prisma.$transaction(async (tx) => {
+      const active = await tx.nguoiDung.updateMany({
+        where: {
+          idNguoiDung: current.idNguoiDung,
+          trangThai: "HoatDong",
+          authVersion: current.nguoiDung.authVersion,
+        },
+        data: { lanDangNhapCuoi: new Date() },
+      })
+      if (active.count !== 1)
+        throw new UnauthorizedException({
+          code: "INVALID_REFRESH_TOKEN",
+          message: "Refresh token không hợp lệ",
+        })
       const created = await tx.refreshToken.create({
         data: {
           id: this.nextId(),
@@ -92,7 +101,10 @@ export class AuthService {
         })
       return created
     })
-    const accessToken = await this.jwt.signAccessToken(user)
+    const accessToken = await this.jwt.signAccessToken(
+      user,
+      current.nguoiDung.authVersion
+    )
     void next
     return { accessToken, refreshToken: nextRaw, user }
   }
@@ -126,17 +138,38 @@ export class AuthService {
     return user
   }
 
-  private async issueTokens(user: AuthUser): Promise<TokenPair> {
+  private async issueTokens(
+    user: AuthUser,
+    authVersion: number
+  ): Promise<TokenPair> {
     const refreshToken = this.createRefreshToken()
-    await this.prisma.refreshToken.create({
-      data: {
-        id: this.nextId(),
-        tokenHash: this.hashRefreshToken(refreshToken),
-        idNguoiDung: BigInt(user.id),
-        expiresAt: this.refreshExpiry(),
-      },
+    await this.prisma.$transaction(async (tx) => {
+      const active = await tx.nguoiDung.updateMany({
+        where: {
+          idNguoiDung: BigInt(user.id),
+          trangThai: "HoatDong",
+          authVersion,
+        },
+        data: { lanDangNhapCuoi: new Date() },
+      })
+      if (active.count !== 1)
+        throw new UnauthorizedException({
+          code: "INVALID_CREDENTIALS",
+          message: "Tài khoản không còn hoạt động",
+        })
+      await tx.refreshToken.create({
+        data: {
+          id: this.nextId(),
+          tokenHash: this.hashRefreshToken(refreshToken),
+          idNguoiDung: BigInt(user.id),
+          expiresAt: this.refreshExpiry(),
+        },
+      })
     })
-    return { accessToken: await this.jwt.signAccessToken(user), refreshToken }
+    return {
+      accessToken: await this.jwt.signAccessToken(user, authVersion),
+      refreshToken,
+    }
   }
 
   private toAuthUser(user: {

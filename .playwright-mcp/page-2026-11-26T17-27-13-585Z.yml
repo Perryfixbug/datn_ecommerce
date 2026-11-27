@@ -1,0 +1,503 @@
+- generic [ref=e3]:
+    - link "Skip to operations" [ref=e4] [cursor=pointer]:
+        - /url: "#operations"
+    - banner [ref=e5]:
+        - button "Switch to dark mode" [ref=e45] [cursor=pointer]
+    - generic [ref=e49]:
+        - generic [ref=e54]:
+            - heading "Furniture admin API 0.0.0 OAS 3.0" [level=1] [ref=e55]:
+                - text: Furniture admin API
+                - generic [ref=e56]:
+                    - generic [ref=e57]: 0.0.0
+                    - generic [ref=e59]: OAS 3.0
+            - link "/docs/admin/openapi.yaml" [ref=e61] [cursor=pointer]:
+                - /url: /docs/admin/openapi.yaml
+        - button "Authorize" [ref=e66] [cursor=pointer]
+        - main [ref=e70]:
+            - generic [ref=e73]:
+                - generic [ref=e75]:
+                    - heading [level=3] [ref=e76] [cursor=pointer]:
+                        - link "health" [ref=e77]:
+                            - /url: "#/health"
+                        - button "Collapse operation" [expanded] [ref=e78]
+                    - generic [ref=e85] [cursor=pointer]:
+                        - button "GET /api/v1/health" [ref=e86]:
+                            - generic [ref=e87]: GET
+                            - link "/api/v1/health" [ref=e90]:
+                                - /url: "#/health/getHealth"
+                        - generic "Copy path to clipboard":
+                            - button "Copy path to clipboard"
+                        - button "get /api/v1/health" [ref=e92]
+                - generic [ref=e96]:
+                    - heading [level=3] [ref=e97] [cursor=pointer]:
+                        - link "default" [ref=e98]:
+                            - /url: "#/default"
+                        - button "Collapse operation" [expanded] [ref=e99]
+                    - generic [ref=e103]:
+                        - generic [ref=e106] [cursor=pointer]:
+                            - button "GET /api/v1/admin/accounts" [ref=e107]:
+                                - generic [ref=e108]: GET
+                                - link "/api/v1/admin/accounts" [ref=e111]:
+                                    - /url: "#/default/Accounts_listAdminAccounts"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e113]
+                            - button "get /api/v1/admin/accounts" [ref=e116]
+                        - generic [ref=e121] [cursor=pointer]:
+                            - 'button "GET /api/v1/admin/accounts/{accountId}" [ref=e122]':
+                                - generic [ref=e123]: GET
+                                - 'link "/api/v1/admin/accounts/{accountId}" [ref=e126]':
+                                    - /url: "#/default/Accounts_getAdminAccount"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e128]
+                            - 'button "get /api/v1/admin/accounts/{accountId}" [ref=e131]'
+                        - generic [ref=e136] [cursor=pointer]:
+                            - 'button "POST /api/v1/admin/accounts/{accountId}/lock" [ref=e137]':
+                                - generic [ref=e138]: POST
+                                - 'link "/api/v1/admin/accounts/{accountId}/lock" [ref=e141]':
+                                    - /url: "#/default/Accounts_lockAdminAccount"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e143]
+                            - 'button "post /api/v1/admin/accounts/{accountId}/lock" [ref=e146]'
+                        - generic [ref=e151] [cursor=pointer]:
+                            - 'button "POST /api/v1/admin/accounts/{accountId}/unlock" [ref=e152]':
+                                - generic [ref=e153]: POST
+                                - 'link "/api/v1/admin/accounts/{accountId}/unlock" [ref=e156]':
+                                    - /url: "#/default/Accounts_unlockAdminAccount"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e158]
+                            - 'button "post /api/v1/admin/accounts/{accountId}/unlock" [ref=e161]'
+                        - generic [ref=e166] [cursor=pointer]:
+                            - button "GET /api/v1/admin/cases" [ref=e167]:
+                                - generic [ref=e168]: GET
+                                - link "/api/v1/admin/cases" [ref=e171]:
+                                    - /url: "#/default/Cases_listAdminCases"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e173]
+                            - button "get /api/v1/admin/cases" [ref=e176]
+                        - generic [ref=e181] [cursor=pointer]:
+                            - 'button "GET /api/v1/admin/cases/{caseId}" [ref=e182]':
+                                - generic [ref=e183]: GET
+                                - 'link "/api/v1/admin/cases/{caseId}" [ref=e186]':
+                                    - /url: "#/default/Cases_getAdminCase"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e188]
+                            - 'button "get /api/v1/admin/cases/{caseId}" [ref=e191]'
+                        - generic [ref=e196] [cursor=pointer]:
+                            - 'button "POST /api/v1/admin/cases/{caseId}/resolution" [ref=e197]':
+                                - generic [ref=e198]: POST
+                                - 'link "/api/v1/admin/cases/{caseId}/resolution" [ref=e201]':
+                                    - /url: "#/default/Cases_resolveAdminCase"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e203]
+                            - 'button "post /api/v1/admin/cases/{caseId}/resolution" [ref=e206]'
+                        - generic [ref=e211] [cursor=pointer]:
+                            - button "GET /api/v1/admin/catalog/categories" [ref=e212]:
+                                - generic [ref=e213]: GET
+                                - link "/api/v1/admin/catalog/categories" [ref=e216]:
+                                    - /url: "#/default/Categories_listAdminCategories"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e218]
+                            - button "get /api/v1/admin/catalog/categories" [ref=e221]
+                        - generic [ref=e226] [cursor=pointer]:
+                            - button "POST /api/v1/admin/catalog/categories" [ref=e227]:
+                                - generic [ref=e228]: POST
+                                - link "/api/v1/admin/catalog/categories" [ref=e231]:
+                                    - /url: "#/default/Categories_createAdminCategory"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e233]
+                            - button "post /api/v1/admin/catalog/categories" [ref=e236]
+                        - generic [ref=e241] [cursor=pointer]:
+                            - 'button "PATCH /api/v1/admin/catalog/categories/{categoryId}" [ref=e242]':
+                                - generic [ref=e243]: PATCH
+                                - 'link "/api/v1/admin/catalog/categories/{categoryId}" [ref=e246]':
+                                    - /url: "#/default/Categories_updateAdminCategory"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e248]
+                            - 'button "patch /api/v1/admin/catalog/categories/{categoryId}" [ref=e251]'
+                        - generic [ref=e256] [cursor=pointer]:
+                            - 'button "DELETE /api/v1/admin/catalog/categories/{categoryId}" [ref=e257]':
+                                - generic [ref=e258]: DELETE
+                                - 'link "/api/v1/admin/catalog/categories/{categoryId}" [ref=e261]':
+                                    - /url: "#/default/Categories_deleteAdminCategory"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e263]
+                            - 'button "delete /api/v1/admin/catalog/categories/{categoryId}" [ref=e266]'
+                        - generic [ref=e271] [cursor=pointer]:
+                            - button "GET /api/v1/admin/homepage" [ref=e272]:
+                                - generic [ref=e273]: GET
+                                - link "/api/v1/admin/homepage" [ref=e276]:
+                                    - /url: "#/default/Homepage_getHomepage"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e278]
+                            - button "get /api/v1/admin/homepage" [ref=e281]
+                        - generic [ref=e286] [cursor=pointer]:
+                            - button "POST /api/v1/admin/homepage/ads" [ref=e287]:
+                                - generic [ref=e288]: POST
+                                - link "/api/v1/admin/homepage/ads" [ref=e291]:
+                                    - /url: "#/default/Homepage_createHomepageAd"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e293]
+                            - button "post /api/v1/admin/homepage/ads" [ref=e296]
+                        - generic [ref=e301] [cursor=pointer]:
+                            - 'button "PATCH /api/v1/admin/homepage/ads/{itemId}" [ref=e302]':
+                                - generic [ref=e303]: PATCH
+                                - 'link "/api/v1/admin/homepage/ads/{itemId}" [ref=e306]':
+                                    - /url: "#/default/Homepage_updateHomepageAd"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e308]
+                            - 'button "patch /api/v1/admin/homepage/ads/{itemId}" [ref=e311]'
+                        - generic [ref=e316] [cursor=pointer]:
+                            - 'button "DELETE /api/v1/admin/homepage/ads/{itemId}" [ref=e317]':
+                                - generic [ref=e318]: DELETE
+                                - 'link "/api/v1/admin/homepage/ads/{itemId}" [ref=e321]':
+                                    - /url: "#/default/Homepage_deleteHomepageAd"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e323]
+                            - 'button "delete /api/v1/admin/homepage/ads/{itemId}" [ref=e326]'
+                        - generic [ref=e331] [cursor=pointer]:
+                            - button "POST /api/v1/admin/homepage/banners" [ref=e332]:
+                                - generic [ref=e333]: POST
+                                - link "/api/v1/admin/homepage/banners" [ref=e336]:
+                                    - /url: "#/default/Homepage_createHomepageBanner"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e338]
+                            - button "post /api/v1/admin/homepage/banners" [ref=e341]
+                        - generic [ref=e346] [cursor=pointer]:
+                            - 'button "PATCH /api/v1/admin/homepage/banners/{itemId}" [ref=e347]':
+                                - generic [ref=e348]: PATCH
+                                - 'link "/api/v1/admin/homepage/banners/{itemId}" [ref=e351]':
+                                    - /url: "#/default/Homepage_updateHomepageBanner"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e353]
+                            - 'button "patch /api/v1/admin/homepage/banners/{itemId}" [ref=e356]'
+                        - generic [ref=e361] [cursor=pointer]:
+                            - 'button "DELETE /api/v1/admin/homepage/banners/{itemId}" [ref=e362]':
+                                - generic [ref=e363]: DELETE
+                                - 'link "/api/v1/admin/homepage/banners/{itemId}" [ref=e366]':
+                                    - /url: "#/default/Homepage_deleteHomepageBanner"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e368]
+                            - 'button "delete /api/v1/admin/homepage/banners/{itemId}" [ref=e371]'
+                        - generic [ref=e376] [cursor=pointer]:
+                            - button "POST /api/v1/admin/homepage/category-sections" [ref=e377]:
+                                - generic [ref=e378]: POST
+                                - link "/api/v1/admin/homepage/category-sections" [ref=e381]:
+                                    - /url: "#/default/Homepage_createHomepageCategorySection"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e383]
+                            - button "post /api/v1/admin/homepage/category-sections" [ref=e386]
+                        - generic [ref=e391] [cursor=pointer]:
+                            - 'button "PATCH /api/v1/admin/homepage/category-sections/{itemId}" [ref=e392]':
+                                - generic [ref=e393]: PATCH
+                                - 'link "/api/v1/admin/homepage/category-sections/{itemId}" [ref=e396]':
+                                    - /url: "#/default/Homepage_updateHomepageCategorySection"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e398]
+                            - 'button "patch /api/v1/admin/homepage/category-sections/{itemId}" [ref=e401]'
+                        - generic [ref=e406] [cursor=pointer]:
+                            - 'button "DELETE /api/v1/admin/homepage/category-sections/{itemId}" [ref=e407]':
+                                - generic [ref=e408]: DELETE
+                                - 'link "/api/v1/admin/homepage/category-sections/{itemId}" [ref=e411]':
+                                    - /url: "#/default/Homepage_deleteHomepageCategorySection"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e413]
+                            - 'button "delete /api/v1/admin/homepage/category-sections/{itemId}" [ref=e416]'
+                        - generic [ref=e421] [cursor=pointer]:
+                            - button "POST /api/v1/admin/homepage/order" [ref=e422]:
+                                - generic [ref=e423]: POST
+                                - link "/api/v1/admin/homepage/order" [ref=e426]:
+                                    - /url: "#/default/Homepage_reorderHomepage"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e428]
+                            - button "post /api/v1/admin/homepage/order" [ref=e431]
+                        - generic [ref=e436] [cursor=pointer]:
+                            - button "GET /api/v1/admin/homepage/preview" [ref=e437]:
+                                - generic [ref=e438]: GET
+                                - link "/api/v1/admin/homepage/preview" [ref=e441]:
+                                    - /url: "#/default/Homepage_previewHomepage"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e443]
+                            - button "get /api/v1/admin/homepage/preview" [ref=e446]
+                        - generic [ref=e451] [cursor=pointer]:
+                            - button "POST /api/v1/admin/homepage/publish" [ref=e452]:
+                                - generic [ref=e453]: POST
+                                - link "/api/v1/admin/homepage/publish" [ref=e456]:
+                                    - /url: "#/default/Homepage_publishHomepage"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e458]
+                            - button "post /api/v1/admin/homepage/publish" [ref=e461]
+                        - generic [ref=e466] [cursor=pointer]:
+                            - button "GET /api/v1/admin/product-moderation" [ref=e467]:
+                                - generic [ref=e468]: GET
+                                - link "/api/v1/admin/product-moderation" [ref=e471]:
+                                    - /url: "#/default/ProductModeration_listProductModeration"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e473]
+                            - button "get /api/v1/admin/product-moderation" [ref=e476]
+                        - generic [ref=e481] [cursor=pointer]:
+                            - 'button "GET /api/v1/admin/product-moderation/{productId}" [ref=e482]':
+                                - generic [ref=e483]: GET
+                                - 'link "/api/v1/admin/product-moderation/{productId}" [ref=e486]':
+                                    - /url: "#/default/ProductModeration_getProductModeration"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e488]
+                            - 'button "get /api/v1/admin/product-moderation/{productId}" [ref=e491]'
+                        - generic [ref=e496] [cursor=pointer]:
+                            - 'button "POST /api/v1/admin/product-moderation/{productId}/approval" [ref=e497]':
+                                - generic [ref=e498]: POST
+                                - 'link "/api/v1/admin/product-moderation/{productId}/approval" [ref=e501]':
+                                    - /url: "#/default/ProductModeration_approveProductModeration"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e503]
+                            - 'button "post /api/v1/admin/product-moderation/{productId}/approval" [ref=e506]'
+                        - generic [ref=e511] [cursor=pointer]:
+                            - 'button "POST /api/v1/admin/product-moderation/{productId}/rejection" [ref=e512]':
+                                - generic [ref=e513]: POST
+                                - 'link "/api/v1/admin/product-moderation/{productId}/rejection" [ref=e516]':
+                                    - /url: "#/default/ProductModeration_rejectProductModeration"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e518]
+                            - 'button "post /api/v1/admin/product-moderation/{productId}/rejection" [ref=e521]'
+                        - generic [ref=e526] [cursor=pointer]:
+                            - 'button "POST /api/v1/admin/reports/{reportId}/resolution" [ref=e527]':
+                                - generic [ref=e528]: POST
+                                - 'link "/api/v1/admin/reports/{reportId}/resolution" [ref=e531]':
+                                    - /url: "#/default/Reports_resolveAdminReport"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e533]
+                            - 'button "post /api/v1/admin/reports/{reportId}/resolution" [ref=e536]'
+                        - generic [ref=e541] [cursor=pointer]:
+                            - button "GET /api/v1/admin/stores" [ref=e542]:
+                                - generic [ref=e543]: GET
+                                - link "/api/v1/admin/stores" [ref=e546]:
+                                    - /url: "#/default/Stores_listAdminStores"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e548]
+                            - button "get /api/v1/admin/stores" [ref=e551]
+                        - generic [ref=e556] [cursor=pointer]:
+                            - 'button "GET /api/v1/admin/stores/{storeId}" [ref=e557]':
+                                - generic [ref=e558]: GET
+                                - 'link "/api/v1/admin/stores/{storeId}" [ref=e561]':
+                                    - /url: "#/default/Stores_getAdminStore"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e563]
+                            - 'button "get /api/v1/admin/stores/{storeId}" [ref=e566]'
+                        - generic [ref=e571] [cursor=pointer]:
+                            - 'button "POST /api/v1/admin/stores/{storeId}/approval" [ref=e572]':
+                                - generic [ref=e573]: POST
+                                - 'link "/api/v1/admin/stores/{storeId}/approval" [ref=e576]':
+                                    - /url: "#/default/Stores_approveAdminStore"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e578]
+                            - 'button "post /api/v1/admin/stores/{storeId}/approval" [ref=e581]'
+                        - generic [ref=e586] [cursor=pointer]:
+                            - 'button "POST /api/v1/admin/stores/{storeId}/lock" [ref=e587]':
+                                - generic [ref=e588]: POST
+                                - 'link "/api/v1/admin/stores/{storeId}/lock" [ref=e591]':
+                                    - /url: "#/default/Stores_lockAdminStore"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e593]
+                            - 'button "post /api/v1/admin/stores/{storeId}/lock" [ref=e596]'
+                        - generic [ref=e601] [cursor=pointer]:
+                            - 'button "POST /api/v1/admin/stores/{storeId}/rejection" [ref=e602]':
+                                - generic [ref=e603]: POST
+                                - 'link "/api/v1/admin/stores/{storeId}/rejection" [ref=e606]':
+                                    - /url: "#/default/Stores_rejectAdminStore"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e608]
+                            - 'button "post /api/v1/admin/stores/{storeId}/rejection" [ref=e611]'
+                        - generic [ref=e616] [cursor=pointer]:
+                            - 'button "POST /api/v1/admin/stores/{storeId}/unlock" [ref=e617]':
+                                - generic [ref=e618]: POST
+                                - 'link "/api/v1/admin/stores/{storeId}/unlock" [ref=e621]':
+                                    - /url: "#/default/Stores_unlockAdminStore"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "authorization button unlocked" [ref=e623]
+                            - 'button "post /api/v1/admin/stores/{storeId}/unlock" [ref=e626]'
+                        - generic [ref=e631] [cursor=pointer]:
+                            - button "POST /api/v1/auth/login" [ref=e632]:
+                                - generic [ref=e633]: POST
+                                - link "/api/v1/auth/login" [ref=e636]:
+                                    - /url: "#/default/login"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "post /api/v1/auth/login" [ref=e638]
+                        - generic [ref=e643] [cursor=pointer]:
+                            - button "POST /api/v1/auth/logout" [ref=e644]:
+                                - generic [ref=e645]: POST
+                                - link "/api/v1/auth/logout" [ref=e648]:
+                                    - /url: "#/default/logout"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "post /api/v1/auth/logout" [ref=e650]
+                        - generic [ref=e655] [cursor=pointer]:
+                            - button "GET /api/v1/auth/me" [ref=e656]:
+                                - generic [ref=e657]: GET
+                                - link "/api/v1/auth/me" [ref=e660]:
+                                    - /url: "#/default/me"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "get /api/v1/auth/me" [ref=e662]
+                        - generic [ref=e667] [cursor=pointer]:
+                            - button "POST /api/v1/auth/refresh" [ref=e668]:
+                                - generic [ref=e669]: POST
+                                - link "/api/v1/auth/refresh" [ref=e672]:
+                                    - /url: "#/default/refresh"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "post /api/v1/auth/refresh" [ref=e674]
+                        - generic [ref=e679] [cursor=pointer]:
+                            - button "GET /api/v1/common/conventions" [ref=e680]:
+                                - generic [ref=e681]: GET
+                                - link "/api/v1/common/conventions" [ref=e684]:
+                                    - /url: "#/default/getCommonConventions"
+                            - generic "Copy path to clipboard":
+                                - button "Copy path to clipboard"
+                            - button "get /api/v1/common/conventions" [ref=e686]
+            - generic [ref=e691]:
+                - heading [level=4] [ref=e692] [cursor=pointer]:
+                    - button "Schemas" [expanded] [ref=e693]
+                - generic [ref=e697]:
+                    - button [ref=e700] [cursor=pointer]:
+                        - strong [ref=e703]: AdminAccounts.AccountDetail
+                    - button [ref=e707] [cursor=pointer]:
+                        - strong [ref=e710]: AdminAccounts.AccountId
+                    - button [ref=e714] [cursor=pointer]:
+                        - strong [ref=e717]: AdminAccounts.AccountMutation
+                    - button [ref=e721] [cursor=pointer]:
+                        - strong [ref=e724]: AdminAccounts.AccountReason
+                    - button [ref=e728] [cursor=pointer]:
+                        - strong [ref=e731]: AdminAccounts.AccountSummary
+                    - button [ref=e735] [cursor=pointer]:
+                        - strong [ref=e738]: AdminCases.CaseDetail
+                    - button [ref=e742] [cursor=pointer]:
+                        - strong [ref=e745]: AdminCases.CaseHistory
+                    - button [ref=e749] [cursor=pointer]:
+                        - strong [ref=e752]: AdminCases.CaseId
+                    - button [ref=e756] [cursor=pointer]:
+                        - strong [ref=e759]: AdminCases.CaseSummary
+                    - button [ref=e763] [cursor=pointer]:
+                        - strong [ref=e766]: AdminCases.Resolution
+                    - button [ref=e770] [cursor=pointer]:
+                        - strong [ref=e773]: AdminCategories.Category
+                    - button [ref=e777] [cursor=pointer]:
+                        - strong [ref=e780]: AdminCategories.CategoryId
+                    - button [ref=e784] [cursor=pointer]:
+                        - strong [ref=e787]: AdminCategories.CategoryInput
+                    - button [ref=e791] [cursor=pointer]:
+                        - strong [ref=e794]: AdminCategories.CategoryUpdate
+                    - button [ref=e798] [cursor=pointer]:
+                        - strong [ref=e801]: AdminHomepage.CategoryInput
+                    - button [ref=e805] [cursor=pointer]:
+                        - strong [ref=e808]: AdminHomepage.Change
+                    - button [ref=e812] [cursor=pointer]:
+                        - strong [ref=e815]: AdminHomepage.Config
+                    - button [ref=e819] [cursor=pointer]:
+                        - strong [ref=e822]: AdminHomepage.Content
+                    - button [ref=e826] [cursor=pointer]:
+                        - strong [ref=e829]: AdminHomepage.HomepageItem
+                    - button [ref=e833] [cursor=pointer]:
+                        - strong [ref=e836]: AdminHomepage.InternalLink
+                    - button [ref=e840] [cursor=pointer]:
+                        - strong [ref=e843]: AdminHomepage.ItemId
+                    - button [ref=e847] [cursor=pointer]:
+                        - strong [ref=e850]: AdminHomepage.MediaInput
+                    - button [ref=e854] [cursor=pointer]:
+                        - strong [ref=e857]: AdminHomepage.MediaUrl
+                    - button [ref=e861] [cursor=pointer]:
+                        - strong [ref=e864]: AdminHomepage.Order
+                    - button [ref=e868] [cursor=pointer]:
+                        - strong [ref=e871]: AdminHomepage.Preview
+                    - button [ref=e875] [cursor=pointer]:
+                        - strong [ref=e878]: AdminHomepage.Title
+                    - button [ref=e882] [cursor=pointer]:
+                        - strong [ref=e885]: AdminHomepage.Version
+                    - button [ref=e889] [cursor=pointer]:
+                        - strong [ref=e892]: AdminModeration.Approval
+                    - button [ref=e896] [cursor=pointer]:
+                        - strong [ref=e899]: AdminModeration.ModerationResult
+                    - button [ref=e903] [cursor=pointer]:
+                        - strong [ref=e906]: AdminModeration.ProductDetail
+                    - button [ref=e910] [cursor=pointer]:
+                        - strong [ref=e913]: AdminModeration.ProductId
+                    - button [ref=e917] [cursor=pointer]:
+                        - strong [ref=e920]: AdminModeration.ProductSummary
+                    - button [ref=e924] [cursor=pointer]:
+                        - strong [ref=e927]: AdminModeration.Rejection
+                    - button [ref=e931] [cursor=pointer]:
+                        - strong [ref=e934]: AdminModeration.Variant
+                    - button [ref=e938] [cursor=pointer]:
+                        - strong [ref=e941]: AdminReports.ReportId
+                    - button [ref=e945] [cursor=pointer]:
+                        - strong [ref=e948]: AdminReports.ReportResolution
+                    - button [ref=e952] [cursor=pointer]:
+                        - strong [ref=e955]: AdminReports.Resolution
+                    - button [ref=e959] [cursor=pointer]:
+                        - strong [ref=e962]: AdminStores.StoreDetail
+                    - button [ref=e966] [cursor=pointer]:
+                        - strong [ref=e969]: AdminStores.StoreId
+                    - button [ref=e973] [cursor=pointer]:
+                        - strong [ref=e976]: AdminStores.StoreMutation
+                    - button [ref=e980] [cursor=pointer]:
+                        - strong [ref=e983]: AdminStores.StoreReason
+                    - button [ref=e987] [cursor=pointer]:
+                        - strong [ref=e990]: AdminStores.StoreSummary
+                    - button [ref=e994] [cursor=pointer]:
+                        - strong [ref=e997]: Common.AuthUser
+                    - button [ref=e1001] [cursor=pointer]:
+                        - strong [ref=e1004]: Common.ErrorBody
+                    - button [ref=e1008] [cursor=pointer]:
+                        - strong [ref=e1011]: Common.ErrorDetail
+                    - button [ref=e1015] [cursor=pointer]:
+                        - strong [ref=e1018]: Common.ErrorResponse
+                    - button [ref=e1022] [cursor=pointer]:
+                        - strong [ref=e1025]: Common.HealthStatus
+                    - button [ref=e1029] [cursor=pointer]:
+                        - strong [ref=e1032]: Common.LoginRequest
+                    - button [ref=e1036] [cursor=pointer]:
+                        - strong [ref=e1039]: Common.LoginResponse
+                    - button [ref=e1043] [cursor=pointer]:
+                        - strong [ref=e1046]: Common.LogoutRequest
+                    - button [ref=e1050] [cursor=pointer]:
+                        - strong [ref=e1053]: Common.Permission
+                    - button [ref=e1057] [cursor=pointer]:
+                        - strong [ref=e1060]: Common.RefreshRequest
+                    - button [ref=e1064] [cursor=pointer]:
+                        - strong [ref=e1067]: Common.TokenPair
+                    - button [ref=e1071] [cursor=pointer]:
+                        - strong [ref=e1074]: Common.VndAmount

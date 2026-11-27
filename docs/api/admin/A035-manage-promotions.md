@@ -1,5 +1,7 @@
 ﻿# A-035 Khuyến mãi toàn sàn
 
+> Trạng thái triển khai: **CẦN XÁC NHẬN**: chưa triển khai; phạm vi hoặc chính sách còn điểm chưa chốt. Xem [bảng tiến độ và mức kiểm chứng](../admin-api.md#tổng-quan-tiến-độ).
+
 | Trường                  | Nội dung                                                                         |
 | ----------------------- | -------------------------------------------------------------------------------- |
 | Mã chức năng/use case   | `A-035`, `U22`                                                                   |

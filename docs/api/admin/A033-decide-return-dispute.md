@@ -1,5 +1,7 @@
 ﻿# A-033 Quyết định tranh chấp hoàn hàng
 
+> Trạng thái triển khai: **TẠM BỎ QUA**: chưa triển khai, theo yêu cầu người dùng. Xem [bảng tiến độ và mức kiểm chứng](../admin-api.md#tổng-quan-tiến-độ).
+
 | Trường                  | Nội dung                                                                         |
 | ----------------------- | -------------------------------------------------------------------------------- |
 | Mã chức năng/use case   | `A-033`, `U20`                                                                   |

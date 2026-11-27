@@ -8,7 +8,7 @@ import {
 import { randomUUID } from "node:crypto"
 import type { ErrorResponse } from "../response/response.js"
 
-type RequestHeaders = { get: (name: string) => string | null }
+type RequestHeaders = Record<string, string | string[] | undefined>
 
 @Catch()
 export class ApiExceptionFilter implements ExceptionFilter {
@@ -30,8 +30,8 @@ export class ApiExceptionFilter implements ExceptionFilter {
   }
 
   private getCorrelationId(request: { headers: RequestHeaders }): string {
-    const value = request.headers.get("x-correlation-id")
-    return value ?? randomUUID()
+    const value = request.headers["x-correlation-id"]
+    return typeof value === "string" ? value : randomUUID()
   }
 
   private toErrorResponse(

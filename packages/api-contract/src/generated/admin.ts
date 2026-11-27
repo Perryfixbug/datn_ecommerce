@@ -6,6 +6,3324 @@
  */
 import * as zod from "zod"
 
+export const accountsListAdminAccountsQueryCursorRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+export const accountsListAdminAccountsQueryLimitDefault = 20
+export const accountsListAdminAccountsQueryLimitMax = 100
+
+export const accountsListAdminAccountsQuerySearchMax = 100
+
+export const accountsListAdminAccountsQuerySearchRegExp = new RegExp("\\S")
+
+export const AccountsListAdminAccountsQueryParams = zod.object({
+  cursor: zod
+    .string()
+    .regex(accountsListAdminAccountsQueryCursorRegExp)
+    .optional(),
+  limit: zod
+    .number()
+    .min(1)
+    .max(accountsListAdminAccountsQueryLimitMax)
+    .default(accountsListAdminAccountsQueryLimitDefault),
+  search: zod
+    .string()
+    .min(1)
+    .max(accountsListAdminAccountsQuerySearchMax)
+    .regex(accountsListAdminAccountsQuerySearchRegExp)
+    .optional(),
+  role: zod.enum(["NguoiMua", "NguoiBan", "NhanVien"]).optional(),
+  status: zod.enum(["HoatDong", "BiKhoa"]).optional(),
+})
+
+export const accountsListAdminAccountsResponseItemsItemAccountIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+
+export const AccountsListAdminAccountsResponse = zod.object({
+  nextCursor: zod.string().nullable(),
+  total: zod.number(),
+  items: zod.array(
+    zod.object({
+      accountId: zod
+        .string()
+        .regex(accountsListAdminAccountsResponseItemsItemAccountIdRegExp),
+      name: zod.string(),
+      email: zod.string(),
+      phone: zod.string(),
+      role: zod.enum(["NguoiMua", "NguoiBan", "NhanVien"]),
+      status: zod.enum(["HoatDong", "BiKhoa"]),
+      createdAt: zod.iso.datetime({ offset: true }),
+    })
+  ),
+})
+
+export const accountsGetAdminAccountPathAccountIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const AccountsGetAdminAccountParams = zod.object({
+  accountId: zod.string().regex(accountsGetAdminAccountPathAccountIdRegExp),
+})
+
+export const accountsGetAdminAccountResponseOneAccountIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const AccountsGetAdminAccountResponse = zod
+  .object({
+    accountId: zod
+      .string()
+      .regex(accountsGetAdminAccountResponseOneAccountIdRegExp),
+    name: zod.string(),
+    email: zod.string(),
+    phone: zod.string(),
+    role: zod.enum(["NguoiMua", "NguoiBan", "NhanVien"]),
+    status: zod.enum(["HoatDong", "BiKhoa"]),
+    createdAt: zod.iso.datetime({ offset: true }),
+  })
+  .and(
+    zod.object({
+      updatedAt: zod.iso.datetime({ offset: true }),
+      lastLoginAt: zod.iso.datetime({ offset: true }).nullable(),
+    })
+  )
+
+export const accountsLockAdminAccountPathAccountIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const AccountsLockAdminAccountParams = zod.object({
+  accountId: zod.string().regex(accountsLockAdminAccountPathAccountIdRegExp),
+})
+
+export const accountsLockAdminAccountBodyReasonMax = 500
+
+export const accountsLockAdminAccountBodyReasonRegExp = new RegExp("\\S")
+
+export const AccountsLockAdminAccountBody = zod.object({
+  reason: zod
+    .string()
+    .min(1)
+    .max(accountsLockAdminAccountBodyReasonMax)
+    .regex(accountsLockAdminAccountBodyReasonRegExp),
+})
+
+export const accountsLockAdminAccountResponseAccountIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const AccountsLockAdminAccountResponse = zod.object({
+  accountId: zod
+    .string()
+    .regex(accountsLockAdminAccountResponseAccountIdRegExp),
+  status: zod.enum(["HoatDong", "BiKhoa"]),
+  updatedAt: zod.iso.datetime({ offset: true }),
+})
+
+export const accountsUnlockAdminAccountPathAccountIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const AccountsUnlockAdminAccountParams = zod.object({
+  accountId: zod.string().regex(accountsUnlockAdminAccountPathAccountIdRegExp),
+})
+
+export const accountsUnlockAdminAccountBodyReasonMax = 500
+
+export const accountsUnlockAdminAccountBodyReasonRegExp = new RegExp("\\S")
+
+export const AccountsUnlockAdminAccountBody = zod.object({
+  reason: zod
+    .string()
+    .min(1)
+    .max(accountsUnlockAdminAccountBodyReasonMax)
+    .regex(accountsUnlockAdminAccountBodyReasonRegExp),
+})
+
+export const accountsUnlockAdminAccountResponseAccountIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const AccountsUnlockAdminAccountResponse = zod.object({
+  accountId: zod
+    .string()
+    .regex(accountsUnlockAdminAccountResponseAccountIdRegExp),
+  status: zod.enum(["HoatDong", "BiKhoa"]),
+  updatedAt: zod.iso.datetime({ offset: true }),
+})
+
+export const casesListAdminCasesQueryCursorRegExp = new RegExp(
+  "^(complaint:[1-9][0-9]{0,18}|report:[1-9][0-9]{0,18}|dispute:[1-9][0-9]{0,18}:[1-9][0-9]{0,18})$"
+)
+export const casesListAdminCasesQueryLimitDefault = 20
+export const casesListAdminCasesQueryLimitMax = 100
+
+export const CasesListAdminCasesQueryParams = zod.object({
+  cursor: zod.string().regex(casesListAdminCasesQueryCursorRegExp).optional(),
+  limit: zod
+    .number()
+    .min(1)
+    .max(casesListAdminCasesQueryLimitMax)
+    .default(casesListAdminCasesQueryLimitDefault),
+  kind: zod.enum(["complaint", "report", "dispute"]).optional(),
+  status: zod.enum(["ChoXuLy", "DaXuLy"]).optional(),
+})
+
+export const casesListAdminCasesResponseItemsItemCaseIdRegExp = new RegExp(
+  "^(complaint:[1-9][0-9]{0,18}|report:[1-9][0-9]{0,18}|dispute:[1-9][0-9]{0,18}:[1-9][0-9]{0,18})$"
+)
+
+export const CasesListAdminCasesResponse = zod.object({
+  nextCursor: zod.string().nullable(),
+  total: zod.number(),
+  items: zod.array(
+    zod.object({
+      caseId: zod
+        .string()
+        .regex(casesListAdminCasesResponseItemsItemCaseIdRegExp)
+        .describe(
+          "ID có tiền tố complaint:id, report:id hoặc dispute:orderId:storeId; các thành phần số thuộc bigint dương PostgreSQL."
+        ),
+      kind: zod.enum(["complaint", "report", "dispute"]),
+      status: zod.enum(["ChoXuLy", "DaXuLy"]),
+      requesterId: zod.string(),
+      requesterName: zod.string(),
+      orderId: zod.string().nullable(),
+      storeId: zod.string().nullable(),
+      productId: zod.string().nullable(),
+      createdAt: zod.iso.datetime({ offset: true }),
+      closedAt: zod.iso.datetime({ offset: true }).nullable(),
+    })
+  ),
+})
+
+export const casesGetAdminCasePathCaseIdRegExp = new RegExp(
+  "^(complaint:[1-9][0-9]{0,18}|report:[1-9][0-9]{0,18}|dispute:[1-9][0-9]{0,18}:[1-9][0-9]{0,18})$"
+)
+
+export const CasesGetAdminCaseParams = zod.object({
+  caseId: zod.string().regex(casesGetAdminCasePathCaseIdRegExp),
+})
+
+export const casesGetAdminCaseResponseOneCaseIdRegExp = new RegExp(
+  "^(complaint:[1-9][0-9]{0,18}|report:[1-9][0-9]{0,18}|dispute:[1-9][0-9]{0,18}:[1-9][0-9]{0,18})$"
+)
+
+export const CasesGetAdminCaseResponse = zod
+  .object({
+    caseId: zod
+      .string()
+      .regex(casesGetAdminCaseResponseOneCaseIdRegExp)
+      .describe(
+        "ID có tiền tố complaint:id, report:id hoặc dispute:orderId:storeId; các thành phần số thuộc bigint dương PostgreSQL."
+      ),
+    kind: zod.enum(["complaint", "report", "dispute"]),
+    status: zod.enum(["ChoXuLy", "DaXuLy"]),
+    requesterId: zod.string(),
+    requesterName: zod.string(),
+    orderId: zod.string().nullable(),
+    storeId: zod.string().nullable(),
+    productId: zod.string().nullable(),
+    createdAt: zod.iso.datetime({ offset: true }),
+    closedAt: zod.iso.datetime({ offset: true }).nullable(),
+  })
+  .and(
+    zod.object({
+      content: zod.string(),
+      evidence: zod
+        .string()
+        .nullable()
+        .describe(
+          "Bằng chứng lưu trong nguồn dữ liệu, không tự tải hoặc diễn giải URL."
+        ),
+      outcome: zod.string().nullable(),
+      reason: zod.string().nullable(),
+      handlerId: zod.string().nullable(),
+      history: zod.array(
+        zod.object({
+          historyId: zod.string(),
+          actorId: zod.string(),
+          action: zod.string(),
+          reason: zod.string().nullable(),
+          createdAt: zod.iso.datetime({ offset: true }),
+        })
+      ),
+    })
+  )
+
+export const casesResolveAdminCasePathCaseIdRegExp = new RegExp(
+  "^(complaint:[1-9][0-9]{0,18}|report:[1-9][0-9]{0,18}|dispute:[1-9][0-9]{0,18}:[1-9][0-9]{0,18})$"
+)
+
+export const CasesResolveAdminCaseParams = zod.object({
+  caseId: zod.string().regex(casesResolveAdminCasePathCaseIdRegExp),
+})
+
+export const casesResolveAdminCaseBodyReasonMax = 1000
+
+export const casesResolveAdminCaseBodyReasonRegExp = new RegExp("\\S")
+
+export const CasesResolveAdminCaseBody = zod.object({
+  outcome: zod.enum(["ChapNhan", "TuChoi"]),
+  reason: zod
+    .string()
+    .min(1)
+    .max(casesResolveAdminCaseBodyReasonMax)
+    .regex(casesResolveAdminCaseBodyReasonRegExp),
+})
+
+export const casesResolveAdminCaseResponseOneCaseIdRegExp = new RegExp(
+  "^(complaint:[1-9][0-9]{0,18}|report:[1-9][0-9]{0,18}|dispute:[1-9][0-9]{0,18}:[1-9][0-9]{0,18})$"
+)
+
+export const CasesResolveAdminCaseResponse = zod
+  .object({
+    caseId: zod
+      .string()
+      .regex(casesResolveAdminCaseResponseOneCaseIdRegExp)
+      .describe(
+        "ID có tiền tố complaint:id, report:id hoặc dispute:orderId:storeId; các thành phần số thuộc bigint dương PostgreSQL."
+      ),
+    kind: zod.enum(["complaint", "report", "dispute"]),
+    status: zod.enum(["ChoXuLy", "DaXuLy"]),
+    requesterId: zod.string(),
+    requesterName: zod.string(),
+    orderId: zod.string().nullable(),
+    storeId: zod.string().nullable(),
+    productId: zod.string().nullable(),
+    createdAt: zod.iso.datetime({ offset: true }),
+    closedAt: zod.iso.datetime({ offset: true }).nullable(),
+  })
+  .and(
+    zod.object({
+      content: zod.string(),
+      evidence: zod
+        .string()
+        .nullable()
+        .describe(
+          "Bằng chứng lưu trong nguồn dữ liệu, không tự tải hoặc diễn giải URL."
+        ),
+      outcome: zod.string().nullable(),
+      reason: zod.string().nullable(),
+      handlerId: zod.string().nullable(),
+      history: zod.array(
+        zod.object({
+          historyId: zod.string(),
+          actorId: zod.string(),
+          action: zod.string(),
+          reason: zod.string().nullable(),
+          createdAt: zod.iso.datetime({ offset: true }),
+        })
+      ),
+    })
+  )
+
+export const categoriesListAdminCategoriesQueryCursorRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+export const categoriesListAdminCategoriesQueryLimitDefault = 20
+export const categoriesListAdminCategoriesQueryLimitMax = 100
+
+export const categoriesListAdminCategoriesQueryParentIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+export const categoriesListAdminCategoriesQuerySearchMax = 100
+
+export const categoriesListAdminCategoriesQuerySearchRegExp = new RegExp("\\S")
+
+export const CategoriesListAdminCategoriesQueryParams = zod.object({
+  cursor: zod
+    .string()
+    .regex(categoriesListAdminCategoriesQueryCursorRegExp)
+    .optional(),
+  limit: zod
+    .number()
+    .min(1)
+    .max(categoriesListAdminCategoriesQueryLimitMax)
+    .default(categoriesListAdminCategoriesQueryLimitDefault),
+  parentId: zod
+    .string()
+    .regex(categoriesListAdminCategoriesQueryParentIdRegExp)
+    .optional(),
+  search: zod
+    .string()
+    .min(1)
+    .max(categoriesListAdminCategoriesQuerySearchMax)
+    .regex(categoriesListAdminCategoriesQuerySearchRegExp)
+    .optional(),
+})
+
+export const categoriesListAdminCategoriesResponseItemsItemCategoryIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const categoriesListAdminCategoriesResponseItemsItemParentIdOneRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+
+export const CategoriesListAdminCategoriesResponse = zod.object({
+  nextCursor: zod.string().nullable(),
+  total: zod.number(),
+  items: zod.array(
+    zod.object({
+      categoryId: zod
+        .string()
+        .regex(categoriesListAdminCategoriesResponseItemsItemCategoryIdRegExp),
+      name: zod.string(),
+      parentId: zod
+        .string()
+        .regex(categoriesListAdminCategoriesResponseItemsItemParentIdOneRegExp)
+        .nullable(),
+      createdAt: zod.iso.datetime({ offset: true }),
+      updatedAt: zod.iso.datetime({ offset: true }),
+    })
+  ),
+})
+
+export const categoriesCreateAdminCategoryBodyNameMax = 100
+
+export const categoriesCreateAdminCategoryBodyNameRegExp = new RegExp("\\S")
+export const categoriesCreateAdminCategoryBodyParentIdOneRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const CategoriesCreateAdminCategoryBody = zod.object({
+  name: zod
+    .string()
+    .min(1)
+    .max(categoriesCreateAdminCategoryBodyNameMax)
+    .regex(categoriesCreateAdminCategoryBodyNameRegExp),
+  parentId: zod
+    .string()
+    .regex(categoriesCreateAdminCategoryBodyParentIdOneRegExp)
+    .nullable(),
+})
+
+export const categoriesCreateAdminCategoryResponseCategoryIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+export const categoriesCreateAdminCategoryResponseParentIdOneRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+
+export const CategoriesCreateAdminCategoryResponse = zod.object({
+  categoryId: zod
+    .string()
+    .regex(categoriesCreateAdminCategoryResponseCategoryIdRegExp),
+  name: zod.string(),
+  parentId: zod
+    .string()
+    .regex(categoriesCreateAdminCategoryResponseParentIdOneRegExp)
+    .nullable(),
+  createdAt: zod.iso.datetime({ offset: true }),
+  updatedAt: zod.iso.datetime({ offset: true }),
+})
+
+export const categoriesUpdateAdminCategoryPathCategoryIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const CategoriesUpdateAdminCategoryParams = zod.object({
+  categoryId: zod
+    .string()
+    .regex(categoriesUpdateAdminCategoryPathCategoryIdRegExp),
+})
+
+export const categoriesUpdateAdminCategoryBodyOneNameMax = 100
+
+export const categoriesUpdateAdminCategoryBodyOneNameRegExp = new RegExp("\\S")
+export const categoriesUpdateAdminCategoryBodyOneParentIdOneRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const CategoriesUpdateAdminCategoryBody = zod
+  .object({
+    name: zod
+      .string()
+      .min(1)
+      .max(categoriesUpdateAdminCategoryBodyOneNameMax)
+      .regex(categoriesUpdateAdminCategoryBodyOneNameRegExp),
+    parentId: zod
+      .string()
+      .regex(categoriesUpdateAdminCategoryBodyOneParentIdOneRegExp)
+      .nullable(),
+  })
+  .describe("PATCH gửi tên và cha mong muốn; null đưa danh mục về gốc.")
+
+export const categoriesUpdateAdminCategoryResponseCategoryIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+export const categoriesUpdateAdminCategoryResponseParentIdOneRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+
+export const CategoriesUpdateAdminCategoryResponse = zod.object({
+  categoryId: zod
+    .string()
+    .regex(categoriesUpdateAdminCategoryResponseCategoryIdRegExp),
+  name: zod.string(),
+  parentId: zod
+    .string()
+    .regex(categoriesUpdateAdminCategoryResponseParentIdOneRegExp)
+    .nullable(),
+  createdAt: zod.iso.datetime({ offset: true }),
+  updatedAt: zod.iso.datetime({ offset: true }),
+})
+
+export const categoriesDeleteAdminCategoryPathCategoryIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const CategoriesDeleteAdminCategoryParams = zod.object({
+  categoryId: zod
+    .string()
+    .regex(categoriesDeleteAdminCategoryPathCategoryIdRegExp),
+})
+
+export const categoriesDeleteAdminCategoryResponseCategoryIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const CategoriesDeleteAdminCategoryResponse = zod.object({
+  categoryId: zod
+    .string()
+    .regex(categoriesDeleteAdminCategoryResponseCategoryIdRegExp),
+})
+
+export const homepageGetHomepageResponseVersionMin = 0
+export const homepageGetHomepageResponseVersionMax = 2147483646
+
+export const homepageGetHomepageResponseDraftItemsItemItemIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+export const homepageGetHomepageResponseDraftItemsItemTitleMax = 200
+
+export const homepageGetHomepageResponseDraftItemsItemTitleRegExp = new RegExp(
+  "\\S"
+)
+export const homepageGetHomepageResponseDraftItemsItemImageUrlOneMax = 2048
+
+export const homepageGetHomepageResponseDraftItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageGetHomepageResponseDraftItemsItemTargetUrlOneMax = 2048
+
+export const homepageGetHomepageResponseDraftItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageGetHomepageResponseDraftItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageGetHomepageResponseDraftItemsMax = 100
+
+export const homepageGetHomepageResponsePublishedOneItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageGetHomepageResponsePublishedOneItemsItemTitleMax = 200
+
+export const homepageGetHomepageResponsePublishedOneItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageGetHomepageResponsePublishedOneItemsItemImageUrlOneMax = 2048
+
+export const homepageGetHomepageResponsePublishedOneItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageGetHomepageResponsePublishedOneItemsItemTargetUrlOneMax = 2048
+
+export const homepageGetHomepageResponsePublishedOneItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageGetHomepageResponsePublishedOneItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageGetHomepageResponsePublishedOneItemsMax = 100
+
+export const homepageGetHomepageResponsePublishedVersionOneMin = 0
+export const homepageGetHomepageResponsePublishedVersionOneMax = 2147483646
+
+export const HomepageGetHomepageResponse = zod.object({
+  version: zod
+    .number()
+    .min(homepageGetHomepageResponseVersionMin)
+    .max(homepageGetHomepageResponseVersionMax),
+  draft: zod.object({
+    items: zod
+      .array(
+        zod.object({
+          itemId: zod
+            .string()
+            .regex(homepageGetHomepageResponseDraftItemsItemItemIdRegExp),
+          kind: zod.enum(["banner", "ad", "category-section"]),
+          title: zod
+            .string()
+            .min(1)
+            .max(homepageGetHomepageResponseDraftItemsItemTitleMax)
+            .regex(homepageGetHomepageResponseDraftItemsItemTitleRegExp),
+          imageUrl: zod
+            .string()
+            .min(1)
+            .max(homepageGetHomepageResponseDraftItemsItemImageUrlOneMax)
+            .regex(homepageGetHomepageResponseDraftItemsItemImageUrlOneRegExp)
+            .nullable(),
+          targetUrl: zod
+            .string()
+            .min(1)
+            .max(homepageGetHomepageResponseDraftItemsItemTargetUrlOneMax)
+            .regex(homepageGetHomepageResponseDraftItemsItemTargetUrlOneRegExp)
+            .nullable(),
+          categoryIds: zod.array(
+            zod
+              .string()
+              .regex(
+                homepageGetHomepageResponseDraftItemsItemCategoryIdsItemRegExp
+              )
+          ),
+          enabled: zod.boolean(),
+          startsAt: zod.iso.datetime({ offset: true }).nullable(),
+          endsAt: zod.iso.datetime({ offset: true }).nullable(),
+        })
+      )
+      .max(homepageGetHomepageResponseDraftItemsMax),
+  }),
+  published: zod
+    .object({
+      items: zod
+        .array(
+          zod.object({
+            itemId: zod
+              .string()
+              .regex(
+                homepageGetHomepageResponsePublishedOneItemsItemItemIdRegExp
+              ),
+            kind: zod.enum(["banner", "ad", "category-section"]),
+            title: zod
+              .string()
+              .min(1)
+              .max(homepageGetHomepageResponsePublishedOneItemsItemTitleMax)
+              .regex(
+                homepageGetHomepageResponsePublishedOneItemsItemTitleRegExp
+              ),
+            imageUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageGetHomepageResponsePublishedOneItemsItemImageUrlOneMax
+              )
+              .regex(
+                homepageGetHomepageResponsePublishedOneItemsItemImageUrlOneRegExp
+              )
+              .nullable(),
+            targetUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageGetHomepageResponsePublishedOneItemsItemTargetUrlOneMax
+              )
+              .regex(
+                homepageGetHomepageResponsePublishedOneItemsItemTargetUrlOneRegExp
+              )
+              .nullable(),
+            categoryIds: zod.array(
+              zod
+                .string()
+                .regex(
+                  homepageGetHomepageResponsePublishedOneItemsItemCategoryIdsItemRegExp
+                )
+            ),
+            enabled: zod.boolean(),
+            startsAt: zod.iso.datetime({ offset: true }).nullable(),
+            endsAt: zod.iso.datetime({ offset: true }).nullable(),
+          })
+        )
+        .max(homepageGetHomepageResponsePublishedOneItemsMax),
+    })
+    .nullable(),
+  publishedVersion: zod
+    .number()
+    .min(homepageGetHomepageResponsePublishedVersionOneMin)
+    .max(homepageGetHomepageResponsePublishedVersionOneMax)
+    .nullable(),
+  publishedAt: zod.iso.datetime({ offset: true }).nullable(),
+})
+
+export const homepageCreateHomepageAdBodyOneVersionMin = 0
+export const homepageCreateHomepageAdBodyOneVersionMax = 2147483646
+
+export const homepageCreateHomepageAdBodyTwoTitleMax = 200
+
+export const homepageCreateHomepageAdBodyTwoTitleRegExp = new RegExp("\\S")
+export const homepageCreateHomepageAdBodyTwoImageUrlMax = 2048
+
+export const homepageCreateHomepageAdBodyTwoImageUrlRegExp = new RegExp(
+  "^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$"
+)
+export const homepageCreateHomepageAdBodyTwoTargetUrlMax = 2048
+
+export const homepageCreateHomepageAdBodyTwoTargetUrlRegExp = new RegExp(
+  "^\/(?!\/)[^\\s]\*$"
+)
+
+export const HomepageCreateHomepageAdBody = zod
+  .object({
+    version: zod
+      .number()
+      .min(homepageCreateHomepageAdBodyOneVersionMin)
+      .max(homepageCreateHomepageAdBodyOneVersionMax),
+  })
+  .and(
+    zod.object({
+      title: zod
+        .string()
+        .min(1)
+        .max(homepageCreateHomepageAdBodyTwoTitleMax)
+        .regex(homepageCreateHomepageAdBodyTwoTitleRegExp),
+      imageUrl: zod
+        .string()
+        .min(1)
+        .max(homepageCreateHomepageAdBodyTwoImageUrlMax)
+        .regex(homepageCreateHomepageAdBodyTwoImageUrlRegExp),
+      targetUrl: zod
+        .string()
+        .min(1)
+        .max(homepageCreateHomepageAdBodyTwoTargetUrlMax)
+        .regex(homepageCreateHomepageAdBodyTwoTargetUrlRegExp),
+      enabled: zod.boolean(),
+      startsAt: zod.iso.datetime({ offset: true }).nullable(),
+      endsAt: zod.iso.datetime({ offset: true }).nullable(),
+    })
+  )
+
+export const homepageCreateHomepageAdResponseVersionMin = 0
+export const homepageCreateHomepageAdResponseVersionMax = 2147483646
+
+export const homepageCreateHomepageAdResponseDraftItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageCreateHomepageAdResponseDraftItemsItemTitleMax = 200
+
+export const homepageCreateHomepageAdResponseDraftItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageCreateHomepageAdResponseDraftItemsItemImageUrlOneMax = 2048
+
+export const homepageCreateHomepageAdResponseDraftItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageCreateHomepageAdResponseDraftItemsItemTargetUrlOneMax = 2048
+
+export const homepageCreateHomepageAdResponseDraftItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageCreateHomepageAdResponseDraftItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageCreateHomepageAdResponseDraftItemsMax = 100
+
+export const homepageCreateHomepageAdResponsePublishedOneItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageCreateHomepageAdResponsePublishedOneItemsItemTitleMax = 200
+
+export const homepageCreateHomepageAdResponsePublishedOneItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageCreateHomepageAdResponsePublishedOneItemsItemImageUrlOneMax = 2048
+
+export const homepageCreateHomepageAdResponsePublishedOneItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageCreateHomepageAdResponsePublishedOneItemsItemTargetUrlOneMax = 2048
+
+export const homepageCreateHomepageAdResponsePublishedOneItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageCreateHomepageAdResponsePublishedOneItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageCreateHomepageAdResponsePublishedOneItemsMax = 100
+
+export const homepageCreateHomepageAdResponsePublishedVersionOneMin = 0
+export const homepageCreateHomepageAdResponsePublishedVersionOneMax = 2147483646
+
+export const HomepageCreateHomepageAdResponse = zod.object({
+  version: zod
+    .number()
+    .min(homepageCreateHomepageAdResponseVersionMin)
+    .max(homepageCreateHomepageAdResponseVersionMax),
+  draft: zod.object({
+    items: zod
+      .array(
+        zod.object({
+          itemId: zod
+            .string()
+            .regex(homepageCreateHomepageAdResponseDraftItemsItemItemIdRegExp),
+          kind: zod.enum(["banner", "ad", "category-section"]),
+          title: zod
+            .string()
+            .min(1)
+            .max(homepageCreateHomepageAdResponseDraftItemsItemTitleMax)
+            .regex(homepageCreateHomepageAdResponseDraftItemsItemTitleRegExp),
+          imageUrl: zod
+            .string()
+            .min(1)
+            .max(homepageCreateHomepageAdResponseDraftItemsItemImageUrlOneMax)
+            .regex(
+              homepageCreateHomepageAdResponseDraftItemsItemImageUrlOneRegExp
+            )
+            .nullable(),
+          targetUrl: zod
+            .string()
+            .min(1)
+            .max(homepageCreateHomepageAdResponseDraftItemsItemTargetUrlOneMax)
+            .regex(
+              homepageCreateHomepageAdResponseDraftItemsItemTargetUrlOneRegExp
+            )
+            .nullable(),
+          categoryIds: zod.array(
+            zod
+              .string()
+              .regex(
+                homepageCreateHomepageAdResponseDraftItemsItemCategoryIdsItemRegExp
+              )
+          ),
+          enabled: zod.boolean(),
+          startsAt: zod.iso.datetime({ offset: true }).nullable(),
+          endsAt: zod.iso.datetime({ offset: true }).nullable(),
+        })
+      )
+      .max(homepageCreateHomepageAdResponseDraftItemsMax),
+  }),
+  published: zod
+    .object({
+      items: zod
+        .array(
+          zod.object({
+            itemId: zod
+              .string()
+              .regex(
+                homepageCreateHomepageAdResponsePublishedOneItemsItemItemIdRegExp
+              ),
+            kind: zod.enum(["banner", "ad", "category-section"]),
+            title: zod
+              .string()
+              .min(1)
+              .max(
+                homepageCreateHomepageAdResponsePublishedOneItemsItemTitleMax
+              )
+              .regex(
+                homepageCreateHomepageAdResponsePublishedOneItemsItemTitleRegExp
+              ),
+            imageUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageCreateHomepageAdResponsePublishedOneItemsItemImageUrlOneMax
+              )
+              .regex(
+                homepageCreateHomepageAdResponsePublishedOneItemsItemImageUrlOneRegExp
+              )
+              .nullable(),
+            targetUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageCreateHomepageAdResponsePublishedOneItemsItemTargetUrlOneMax
+              )
+              .regex(
+                homepageCreateHomepageAdResponsePublishedOneItemsItemTargetUrlOneRegExp
+              )
+              .nullable(),
+            categoryIds: zod.array(
+              zod
+                .string()
+                .regex(
+                  homepageCreateHomepageAdResponsePublishedOneItemsItemCategoryIdsItemRegExp
+                )
+            ),
+            enabled: zod.boolean(),
+            startsAt: zod.iso.datetime({ offset: true }).nullable(),
+            endsAt: zod.iso.datetime({ offset: true }).nullable(),
+          })
+        )
+        .max(homepageCreateHomepageAdResponsePublishedOneItemsMax),
+    })
+    .nullable(),
+  publishedVersion: zod
+    .number()
+    .min(homepageCreateHomepageAdResponsePublishedVersionOneMin)
+    .max(homepageCreateHomepageAdResponsePublishedVersionOneMax)
+    .nullable(),
+  publishedAt: zod.iso.datetime({ offset: true }).nullable(),
+})
+
+export const homepageUpdateHomepageAdPathItemIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const HomepageUpdateHomepageAdParams = zod.object({
+  itemId: zod.string().regex(homepageUpdateHomepageAdPathItemIdRegExp),
+})
+
+export const homepageUpdateHomepageAdBodyOneVersionMin = 0
+export const homepageUpdateHomepageAdBodyOneVersionMax = 2147483646
+
+export const homepageUpdateHomepageAdBodyTwoTitleMax = 200
+
+export const homepageUpdateHomepageAdBodyTwoTitleRegExp = new RegExp("\\S")
+export const homepageUpdateHomepageAdBodyTwoImageUrlMax = 2048
+
+export const homepageUpdateHomepageAdBodyTwoImageUrlRegExp = new RegExp(
+  "^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$"
+)
+export const homepageUpdateHomepageAdBodyTwoTargetUrlMax = 2048
+
+export const homepageUpdateHomepageAdBodyTwoTargetUrlRegExp = new RegExp(
+  "^\/(?!\/)[^\\s]\*$"
+)
+
+export const HomepageUpdateHomepageAdBody = zod
+  .object({
+    version: zod
+      .number()
+      .min(homepageUpdateHomepageAdBodyOneVersionMin)
+      .max(homepageUpdateHomepageAdBodyOneVersionMax),
+  })
+  .and(
+    zod.object({
+      title: zod
+        .string()
+        .min(1)
+        .max(homepageUpdateHomepageAdBodyTwoTitleMax)
+        .regex(homepageUpdateHomepageAdBodyTwoTitleRegExp),
+      imageUrl: zod
+        .string()
+        .min(1)
+        .max(homepageUpdateHomepageAdBodyTwoImageUrlMax)
+        .regex(homepageUpdateHomepageAdBodyTwoImageUrlRegExp),
+      targetUrl: zod
+        .string()
+        .min(1)
+        .max(homepageUpdateHomepageAdBodyTwoTargetUrlMax)
+        .regex(homepageUpdateHomepageAdBodyTwoTargetUrlRegExp),
+      enabled: zod.boolean(),
+      startsAt: zod.iso.datetime({ offset: true }).nullable(),
+      endsAt: zod.iso.datetime({ offset: true }).nullable(),
+    })
+  )
+
+export const homepageUpdateHomepageAdResponseVersionMin = 0
+export const homepageUpdateHomepageAdResponseVersionMax = 2147483646
+
+export const homepageUpdateHomepageAdResponseDraftItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageUpdateHomepageAdResponseDraftItemsItemTitleMax = 200
+
+export const homepageUpdateHomepageAdResponseDraftItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageUpdateHomepageAdResponseDraftItemsItemImageUrlOneMax = 2048
+
+export const homepageUpdateHomepageAdResponseDraftItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageUpdateHomepageAdResponseDraftItemsItemTargetUrlOneMax = 2048
+
+export const homepageUpdateHomepageAdResponseDraftItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageUpdateHomepageAdResponseDraftItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageUpdateHomepageAdResponseDraftItemsMax = 100
+
+export const homepageUpdateHomepageAdResponsePublishedOneItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageUpdateHomepageAdResponsePublishedOneItemsItemTitleMax = 200
+
+export const homepageUpdateHomepageAdResponsePublishedOneItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageUpdateHomepageAdResponsePublishedOneItemsItemImageUrlOneMax = 2048
+
+export const homepageUpdateHomepageAdResponsePublishedOneItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageUpdateHomepageAdResponsePublishedOneItemsItemTargetUrlOneMax = 2048
+
+export const homepageUpdateHomepageAdResponsePublishedOneItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageUpdateHomepageAdResponsePublishedOneItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageUpdateHomepageAdResponsePublishedOneItemsMax = 100
+
+export const homepageUpdateHomepageAdResponsePublishedVersionOneMin = 0
+export const homepageUpdateHomepageAdResponsePublishedVersionOneMax = 2147483646
+
+export const HomepageUpdateHomepageAdResponse = zod.object({
+  version: zod
+    .number()
+    .min(homepageUpdateHomepageAdResponseVersionMin)
+    .max(homepageUpdateHomepageAdResponseVersionMax),
+  draft: zod.object({
+    items: zod
+      .array(
+        zod.object({
+          itemId: zod
+            .string()
+            .regex(homepageUpdateHomepageAdResponseDraftItemsItemItemIdRegExp),
+          kind: zod.enum(["banner", "ad", "category-section"]),
+          title: zod
+            .string()
+            .min(1)
+            .max(homepageUpdateHomepageAdResponseDraftItemsItemTitleMax)
+            .regex(homepageUpdateHomepageAdResponseDraftItemsItemTitleRegExp),
+          imageUrl: zod
+            .string()
+            .min(1)
+            .max(homepageUpdateHomepageAdResponseDraftItemsItemImageUrlOneMax)
+            .regex(
+              homepageUpdateHomepageAdResponseDraftItemsItemImageUrlOneRegExp
+            )
+            .nullable(),
+          targetUrl: zod
+            .string()
+            .min(1)
+            .max(homepageUpdateHomepageAdResponseDraftItemsItemTargetUrlOneMax)
+            .regex(
+              homepageUpdateHomepageAdResponseDraftItemsItemTargetUrlOneRegExp
+            )
+            .nullable(),
+          categoryIds: zod.array(
+            zod
+              .string()
+              .regex(
+                homepageUpdateHomepageAdResponseDraftItemsItemCategoryIdsItemRegExp
+              )
+          ),
+          enabled: zod.boolean(),
+          startsAt: zod.iso.datetime({ offset: true }).nullable(),
+          endsAt: zod.iso.datetime({ offset: true }).nullable(),
+        })
+      )
+      .max(homepageUpdateHomepageAdResponseDraftItemsMax),
+  }),
+  published: zod
+    .object({
+      items: zod
+        .array(
+          zod.object({
+            itemId: zod
+              .string()
+              .regex(
+                homepageUpdateHomepageAdResponsePublishedOneItemsItemItemIdRegExp
+              ),
+            kind: zod.enum(["banner", "ad", "category-section"]),
+            title: zod
+              .string()
+              .min(1)
+              .max(
+                homepageUpdateHomepageAdResponsePublishedOneItemsItemTitleMax
+              )
+              .regex(
+                homepageUpdateHomepageAdResponsePublishedOneItemsItemTitleRegExp
+              ),
+            imageUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageUpdateHomepageAdResponsePublishedOneItemsItemImageUrlOneMax
+              )
+              .regex(
+                homepageUpdateHomepageAdResponsePublishedOneItemsItemImageUrlOneRegExp
+              )
+              .nullable(),
+            targetUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageUpdateHomepageAdResponsePublishedOneItemsItemTargetUrlOneMax
+              )
+              .regex(
+                homepageUpdateHomepageAdResponsePublishedOneItemsItemTargetUrlOneRegExp
+              )
+              .nullable(),
+            categoryIds: zod.array(
+              zod
+                .string()
+                .regex(
+                  homepageUpdateHomepageAdResponsePublishedOneItemsItemCategoryIdsItemRegExp
+                )
+            ),
+            enabled: zod.boolean(),
+            startsAt: zod.iso.datetime({ offset: true }).nullable(),
+            endsAt: zod.iso.datetime({ offset: true }).nullable(),
+          })
+        )
+        .max(homepageUpdateHomepageAdResponsePublishedOneItemsMax),
+    })
+    .nullable(),
+  publishedVersion: zod
+    .number()
+    .min(homepageUpdateHomepageAdResponsePublishedVersionOneMin)
+    .max(homepageUpdateHomepageAdResponsePublishedVersionOneMax)
+    .nullable(),
+  publishedAt: zod.iso.datetime({ offset: true }).nullable(),
+})
+
+export const homepageDeleteHomepageAdPathItemIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const HomepageDeleteHomepageAdParams = zod.object({
+  itemId: zod.string().regex(homepageDeleteHomepageAdPathItemIdRegExp),
+})
+
+export const homepageDeleteHomepageAdQueryVersionMin = 0
+export const homepageDeleteHomepageAdQueryVersionMax = 2147483646
+
+export const HomepageDeleteHomepageAdQueryParams = zod.object({
+  version: zod
+    .number()
+    .min(homepageDeleteHomepageAdQueryVersionMin)
+    .max(homepageDeleteHomepageAdQueryVersionMax),
+})
+
+export const homepageDeleteHomepageAdResponseVersionMin = 0
+export const homepageDeleteHomepageAdResponseVersionMax = 2147483646
+
+export const homepageDeleteHomepageAdResponseDraftItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageDeleteHomepageAdResponseDraftItemsItemTitleMax = 200
+
+export const homepageDeleteHomepageAdResponseDraftItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageDeleteHomepageAdResponseDraftItemsItemImageUrlOneMax = 2048
+
+export const homepageDeleteHomepageAdResponseDraftItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageDeleteHomepageAdResponseDraftItemsItemTargetUrlOneMax = 2048
+
+export const homepageDeleteHomepageAdResponseDraftItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageDeleteHomepageAdResponseDraftItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageDeleteHomepageAdResponseDraftItemsMax = 100
+
+export const homepageDeleteHomepageAdResponsePublishedOneItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageDeleteHomepageAdResponsePublishedOneItemsItemTitleMax = 200
+
+export const homepageDeleteHomepageAdResponsePublishedOneItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageDeleteHomepageAdResponsePublishedOneItemsItemImageUrlOneMax = 2048
+
+export const homepageDeleteHomepageAdResponsePublishedOneItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageDeleteHomepageAdResponsePublishedOneItemsItemTargetUrlOneMax = 2048
+
+export const homepageDeleteHomepageAdResponsePublishedOneItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageDeleteHomepageAdResponsePublishedOneItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageDeleteHomepageAdResponsePublishedOneItemsMax = 100
+
+export const homepageDeleteHomepageAdResponsePublishedVersionOneMin = 0
+export const homepageDeleteHomepageAdResponsePublishedVersionOneMax = 2147483646
+
+export const HomepageDeleteHomepageAdResponse = zod.object({
+  version: zod
+    .number()
+    .min(homepageDeleteHomepageAdResponseVersionMin)
+    .max(homepageDeleteHomepageAdResponseVersionMax),
+  draft: zod.object({
+    items: zod
+      .array(
+        zod.object({
+          itemId: zod
+            .string()
+            .regex(homepageDeleteHomepageAdResponseDraftItemsItemItemIdRegExp),
+          kind: zod.enum(["banner", "ad", "category-section"]),
+          title: zod
+            .string()
+            .min(1)
+            .max(homepageDeleteHomepageAdResponseDraftItemsItemTitleMax)
+            .regex(homepageDeleteHomepageAdResponseDraftItemsItemTitleRegExp),
+          imageUrl: zod
+            .string()
+            .min(1)
+            .max(homepageDeleteHomepageAdResponseDraftItemsItemImageUrlOneMax)
+            .regex(
+              homepageDeleteHomepageAdResponseDraftItemsItemImageUrlOneRegExp
+            )
+            .nullable(),
+          targetUrl: zod
+            .string()
+            .min(1)
+            .max(homepageDeleteHomepageAdResponseDraftItemsItemTargetUrlOneMax)
+            .regex(
+              homepageDeleteHomepageAdResponseDraftItemsItemTargetUrlOneRegExp
+            )
+            .nullable(),
+          categoryIds: zod.array(
+            zod
+              .string()
+              .regex(
+                homepageDeleteHomepageAdResponseDraftItemsItemCategoryIdsItemRegExp
+              )
+          ),
+          enabled: zod.boolean(),
+          startsAt: zod.iso.datetime({ offset: true }).nullable(),
+          endsAt: zod.iso.datetime({ offset: true }).nullable(),
+        })
+      )
+      .max(homepageDeleteHomepageAdResponseDraftItemsMax),
+  }),
+  published: zod
+    .object({
+      items: zod
+        .array(
+          zod.object({
+            itemId: zod
+              .string()
+              .regex(
+                homepageDeleteHomepageAdResponsePublishedOneItemsItemItemIdRegExp
+              ),
+            kind: zod.enum(["banner", "ad", "category-section"]),
+            title: zod
+              .string()
+              .min(1)
+              .max(
+                homepageDeleteHomepageAdResponsePublishedOneItemsItemTitleMax
+              )
+              .regex(
+                homepageDeleteHomepageAdResponsePublishedOneItemsItemTitleRegExp
+              ),
+            imageUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageDeleteHomepageAdResponsePublishedOneItemsItemImageUrlOneMax
+              )
+              .regex(
+                homepageDeleteHomepageAdResponsePublishedOneItemsItemImageUrlOneRegExp
+              )
+              .nullable(),
+            targetUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageDeleteHomepageAdResponsePublishedOneItemsItemTargetUrlOneMax
+              )
+              .regex(
+                homepageDeleteHomepageAdResponsePublishedOneItemsItemTargetUrlOneRegExp
+              )
+              .nullable(),
+            categoryIds: zod.array(
+              zod
+                .string()
+                .regex(
+                  homepageDeleteHomepageAdResponsePublishedOneItemsItemCategoryIdsItemRegExp
+                )
+            ),
+            enabled: zod.boolean(),
+            startsAt: zod.iso.datetime({ offset: true }).nullable(),
+            endsAt: zod.iso.datetime({ offset: true }).nullable(),
+          })
+        )
+        .max(homepageDeleteHomepageAdResponsePublishedOneItemsMax),
+    })
+    .nullable(),
+  publishedVersion: zod
+    .number()
+    .min(homepageDeleteHomepageAdResponsePublishedVersionOneMin)
+    .max(homepageDeleteHomepageAdResponsePublishedVersionOneMax)
+    .nullable(),
+  publishedAt: zod.iso.datetime({ offset: true }).nullable(),
+})
+
+export const homepageCreateHomepageBannerBodyOneVersionMin = 0
+export const homepageCreateHomepageBannerBodyOneVersionMax = 2147483646
+
+export const homepageCreateHomepageBannerBodyTwoTitleMax = 200
+
+export const homepageCreateHomepageBannerBodyTwoTitleRegExp = new RegExp("\\S")
+export const homepageCreateHomepageBannerBodyTwoImageUrlMax = 2048
+
+export const homepageCreateHomepageBannerBodyTwoImageUrlRegExp = new RegExp(
+  "^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$"
+)
+export const homepageCreateHomepageBannerBodyTwoTargetUrlMax = 2048
+
+export const homepageCreateHomepageBannerBodyTwoTargetUrlRegExp = new RegExp(
+  "^\/(?!\/)[^\\s]\*$"
+)
+
+export const HomepageCreateHomepageBannerBody = zod
+  .object({
+    version: zod
+      .number()
+      .min(homepageCreateHomepageBannerBodyOneVersionMin)
+      .max(homepageCreateHomepageBannerBodyOneVersionMax),
+  })
+  .and(
+    zod.object({
+      title: zod
+        .string()
+        .min(1)
+        .max(homepageCreateHomepageBannerBodyTwoTitleMax)
+        .regex(homepageCreateHomepageBannerBodyTwoTitleRegExp),
+      imageUrl: zod
+        .string()
+        .min(1)
+        .max(homepageCreateHomepageBannerBodyTwoImageUrlMax)
+        .regex(homepageCreateHomepageBannerBodyTwoImageUrlRegExp),
+      targetUrl: zod
+        .string()
+        .min(1)
+        .max(homepageCreateHomepageBannerBodyTwoTargetUrlMax)
+        .regex(homepageCreateHomepageBannerBodyTwoTargetUrlRegExp),
+      enabled: zod.boolean(),
+      startsAt: zod.iso.datetime({ offset: true }).nullable(),
+      endsAt: zod.iso.datetime({ offset: true }).nullable(),
+    })
+  )
+
+export const homepageCreateHomepageBannerResponseVersionMin = 0
+export const homepageCreateHomepageBannerResponseVersionMax = 2147483646
+
+export const homepageCreateHomepageBannerResponseDraftItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageCreateHomepageBannerResponseDraftItemsItemTitleMax = 200
+
+export const homepageCreateHomepageBannerResponseDraftItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageCreateHomepageBannerResponseDraftItemsItemImageUrlOneMax = 2048
+
+export const homepageCreateHomepageBannerResponseDraftItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageCreateHomepageBannerResponseDraftItemsItemTargetUrlOneMax = 2048
+
+export const homepageCreateHomepageBannerResponseDraftItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageCreateHomepageBannerResponseDraftItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageCreateHomepageBannerResponseDraftItemsMax = 100
+
+export const homepageCreateHomepageBannerResponsePublishedOneItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageCreateHomepageBannerResponsePublishedOneItemsItemTitleMax = 200
+
+export const homepageCreateHomepageBannerResponsePublishedOneItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageCreateHomepageBannerResponsePublishedOneItemsItemImageUrlOneMax = 2048
+
+export const homepageCreateHomepageBannerResponsePublishedOneItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageCreateHomepageBannerResponsePublishedOneItemsItemTargetUrlOneMax = 2048
+
+export const homepageCreateHomepageBannerResponsePublishedOneItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageCreateHomepageBannerResponsePublishedOneItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageCreateHomepageBannerResponsePublishedOneItemsMax = 100
+
+export const homepageCreateHomepageBannerResponsePublishedVersionOneMin = 0
+export const homepageCreateHomepageBannerResponsePublishedVersionOneMax = 2147483646
+
+export const HomepageCreateHomepageBannerResponse = zod.object({
+  version: zod
+    .number()
+    .min(homepageCreateHomepageBannerResponseVersionMin)
+    .max(homepageCreateHomepageBannerResponseVersionMax),
+  draft: zod.object({
+    items: zod
+      .array(
+        zod.object({
+          itemId: zod
+            .string()
+            .regex(
+              homepageCreateHomepageBannerResponseDraftItemsItemItemIdRegExp
+            ),
+          kind: zod.enum(["banner", "ad", "category-section"]),
+          title: zod
+            .string()
+            .min(1)
+            .max(homepageCreateHomepageBannerResponseDraftItemsItemTitleMax)
+            .regex(
+              homepageCreateHomepageBannerResponseDraftItemsItemTitleRegExp
+            ),
+          imageUrl: zod
+            .string()
+            .min(1)
+            .max(
+              homepageCreateHomepageBannerResponseDraftItemsItemImageUrlOneMax
+            )
+            .regex(
+              homepageCreateHomepageBannerResponseDraftItemsItemImageUrlOneRegExp
+            )
+            .nullable(),
+          targetUrl: zod
+            .string()
+            .min(1)
+            .max(
+              homepageCreateHomepageBannerResponseDraftItemsItemTargetUrlOneMax
+            )
+            .regex(
+              homepageCreateHomepageBannerResponseDraftItemsItemTargetUrlOneRegExp
+            )
+            .nullable(),
+          categoryIds: zod.array(
+            zod
+              .string()
+              .regex(
+                homepageCreateHomepageBannerResponseDraftItemsItemCategoryIdsItemRegExp
+              )
+          ),
+          enabled: zod.boolean(),
+          startsAt: zod.iso.datetime({ offset: true }).nullable(),
+          endsAt: zod.iso.datetime({ offset: true }).nullable(),
+        })
+      )
+      .max(homepageCreateHomepageBannerResponseDraftItemsMax),
+  }),
+  published: zod
+    .object({
+      items: zod
+        .array(
+          zod.object({
+            itemId: zod
+              .string()
+              .regex(
+                homepageCreateHomepageBannerResponsePublishedOneItemsItemItemIdRegExp
+              ),
+            kind: zod.enum(["banner", "ad", "category-section"]),
+            title: zod
+              .string()
+              .min(1)
+              .max(
+                homepageCreateHomepageBannerResponsePublishedOneItemsItemTitleMax
+              )
+              .regex(
+                homepageCreateHomepageBannerResponsePublishedOneItemsItemTitleRegExp
+              ),
+            imageUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageCreateHomepageBannerResponsePublishedOneItemsItemImageUrlOneMax
+              )
+              .regex(
+                homepageCreateHomepageBannerResponsePublishedOneItemsItemImageUrlOneRegExp
+              )
+              .nullable(),
+            targetUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageCreateHomepageBannerResponsePublishedOneItemsItemTargetUrlOneMax
+              )
+              .regex(
+                homepageCreateHomepageBannerResponsePublishedOneItemsItemTargetUrlOneRegExp
+              )
+              .nullable(),
+            categoryIds: zod.array(
+              zod
+                .string()
+                .regex(
+                  homepageCreateHomepageBannerResponsePublishedOneItemsItemCategoryIdsItemRegExp
+                )
+            ),
+            enabled: zod.boolean(),
+            startsAt: zod.iso.datetime({ offset: true }).nullable(),
+            endsAt: zod.iso.datetime({ offset: true }).nullable(),
+          })
+        )
+        .max(homepageCreateHomepageBannerResponsePublishedOneItemsMax),
+    })
+    .nullable(),
+  publishedVersion: zod
+    .number()
+    .min(homepageCreateHomepageBannerResponsePublishedVersionOneMin)
+    .max(homepageCreateHomepageBannerResponsePublishedVersionOneMax)
+    .nullable(),
+  publishedAt: zod.iso.datetime({ offset: true }).nullable(),
+})
+
+export const homepageUpdateHomepageBannerPathItemIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const HomepageUpdateHomepageBannerParams = zod.object({
+  itemId: zod.string().regex(homepageUpdateHomepageBannerPathItemIdRegExp),
+})
+
+export const homepageUpdateHomepageBannerBodyOneVersionMin = 0
+export const homepageUpdateHomepageBannerBodyOneVersionMax = 2147483646
+
+export const homepageUpdateHomepageBannerBodyTwoTitleMax = 200
+
+export const homepageUpdateHomepageBannerBodyTwoTitleRegExp = new RegExp("\\S")
+export const homepageUpdateHomepageBannerBodyTwoImageUrlMax = 2048
+
+export const homepageUpdateHomepageBannerBodyTwoImageUrlRegExp = new RegExp(
+  "^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$"
+)
+export const homepageUpdateHomepageBannerBodyTwoTargetUrlMax = 2048
+
+export const homepageUpdateHomepageBannerBodyTwoTargetUrlRegExp = new RegExp(
+  "^\/(?!\/)[^\\s]\*$"
+)
+
+export const HomepageUpdateHomepageBannerBody = zod
+  .object({
+    version: zod
+      .number()
+      .min(homepageUpdateHomepageBannerBodyOneVersionMin)
+      .max(homepageUpdateHomepageBannerBodyOneVersionMax),
+  })
+  .and(
+    zod.object({
+      title: zod
+        .string()
+        .min(1)
+        .max(homepageUpdateHomepageBannerBodyTwoTitleMax)
+        .regex(homepageUpdateHomepageBannerBodyTwoTitleRegExp),
+      imageUrl: zod
+        .string()
+        .min(1)
+        .max(homepageUpdateHomepageBannerBodyTwoImageUrlMax)
+        .regex(homepageUpdateHomepageBannerBodyTwoImageUrlRegExp),
+      targetUrl: zod
+        .string()
+        .min(1)
+        .max(homepageUpdateHomepageBannerBodyTwoTargetUrlMax)
+        .regex(homepageUpdateHomepageBannerBodyTwoTargetUrlRegExp),
+      enabled: zod.boolean(),
+      startsAt: zod.iso.datetime({ offset: true }).nullable(),
+      endsAt: zod.iso.datetime({ offset: true }).nullable(),
+    })
+  )
+
+export const homepageUpdateHomepageBannerResponseVersionMin = 0
+export const homepageUpdateHomepageBannerResponseVersionMax = 2147483646
+
+export const homepageUpdateHomepageBannerResponseDraftItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageUpdateHomepageBannerResponseDraftItemsItemTitleMax = 200
+
+export const homepageUpdateHomepageBannerResponseDraftItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageUpdateHomepageBannerResponseDraftItemsItemImageUrlOneMax = 2048
+
+export const homepageUpdateHomepageBannerResponseDraftItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageUpdateHomepageBannerResponseDraftItemsItemTargetUrlOneMax = 2048
+
+export const homepageUpdateHomepageBannerResponseDraftItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageUpdateHomepageBannerResponseDraftItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageUpdateHomepageBannerResponseDraftItemsMax = 100
+
+export const homepageUpdateHomepageBannerResponsePublishedOneItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageUpdateHomepageBannerResponsePublishedOneItemsItemTitleMax = 200
+
+export const homepageUpdateHomepageBannerResponsePublishedOneItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageUpdateHomepageBannerResponsePublishedOneItemsItemImageUrlOneMax = 2048
+
+export const homepageUpdateHomepageBannerResponsePublishedOneItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageUpdateHomepageBannerResponsePublishedOneItemsItemTargetUrlOneMax = 2048
+
+export const homepageUpdateHomepageBannerResponsePublishedOneItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageUpdateHomepageBannerResponsePublishedOneItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageUpdateHomepageBannerResponsePublishedOneItemsMax = 100
+
+export const homepageUpdateHomepageBannerResponsePublishedVersionOneMin = 0
+export const homepageUpdateHomepageBannerResponsePublishedVersionOneMax = 2147483646
+
+export const HomepageUpdateHomepageBannerResponse = zod.object({
+  version: zod
+    .number()
+    .min(homepageUpdateHomepageBannerResponseVersionMin)
+    .max(homepageUpdateHomepageBannerResponseVersionMax),
+  draft: zod.object({
+    items: zod
+      .array(
+        zod.object({
+          itemId: zod
+            .string()
+            .regex(
+              homepageUpdateHomepageBannerResponseDraftItemsItemItemIdRegExp
+            ),
+          kind: zod.enum(["banner", "ad", "category-section"]),
+          title: zod
+            .string()
+            .min(1)
+            .max(homepageUpdateHomepageBannerResponseDraftItemsItemTitleMax)
+            .regex(
+              homepageUpdateHomepageBannerResponseDraftItemsItemTitleRegExp
+            ),
+          imageUrl: zod
+            .string()
+            .min(1)
+            .max(
+              homepageUpdateHomepageBannerResponseDraftItemsItemImageUrlOneMax
+            )
+            .regex(
+              homepageUpdateHomepageBannerResponseDraftItemsItemImageUrlOneRegExp
+            )
+            .nullable(),
+          targetUrl: zod
+            .string()
+            .min(1)
+            .max(
+              homepageUpdateHomepageBannerResponseDraftItemsItemTargetUrlOneMax
+            )
+            .regex(
+              homepageUpdateHomepageBannerResponseDraftItemsItemTargetUrlOneRegExp
+            )
+            .nullable(),
+          categoryIds: zod.array(
+            zod
+              .string()
+              .regex(
+                homepageUpdateHomepageBannerResponseDraftItemsItemCategoryIdsItemRegExp
+              )
+          ),
+          enabled: zod.boolean(),
+          startsAt: zod.iso.datetime({ offset: true }).nullable(),
+          endsAt: zod.iso.datetime({ offset: true }).nullable(),
+        })
+      )
+      .max(homepageUpdateHomepageBannerResponseDraftItemsMax),
+  }),
+  published: zod
+    .object({
+      items: zod
+        .array(
+          zod.object({
+            itemId: zod
+              .string()
+              .regex(
+                homepageUpdateHomepageBannerResponsePublishedOneItemsItemItemIdRegExp
+              ),
+            kind: zod.enum(["banner", "ad", "category-section"]),
+            title: zod
+              .string()
+              .min(1)
+              .max(
+                homepageUpdateHomepageBannerResponsePublishedOneItemsItemTitleMax
+              )
+              .regex(
+                homepageUpdateHomepageBannerResponsePublishedOneItemsItemTitleRegExp
+              ),
+            imageUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageUpdateHomepageBannerResponsePublishedOneItemsItemImageUrlOneMax
+              )
+              .regex(
+                homepageUpdateHomepageBannerResponsePublishedOneItemsItemImageUrlOneRegExp
+              )
+              .nullable(),
+            targetUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageUpdateHomepageBannerResponsePublishedOneItemsItemTargetUrlOneMax
+              )
+              .regex(
+                homepageUpdateHomepageBannerResponsePublishedOneItemsItemTargetUrlOneRegExp
+              )
+              .nullable(),
+            categoryIds: zod.array(
+              zod
+                .string()
+                .regex(
+                  homepageUpdateHomepageBannerResponsePublishedOneItemsItemCategoryIdsItemRegExp
+                )
+            ),
+            enabled: zod.boolean(),
+            startsAt: zod.iso.datetime({ offset: true }).nullable(),
+            endsAt: zod.iso.datetime({ offset: true }).nullable(),
+          })
+        )
+        .max(homepageUpdateHomepageBannerResponsePublishedOneItemsMax),
+    })
+    .nullable(),
+  publishedVersion: zod
+    .number()
+    .min(homepageUpdateHomepageBannerResponsePublishedVersionOneMin)
+    .max(homepageUpdateHomepageBannerResponsePublishedVersionOneMax)
+    .nullable(),
+  publishedAt: zod.iso.datetime({ offset: true }).nullable(),
+})
+
+export const homepageDeleteHomepageBannerPathItemIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const HomepageDeleteHomepageBannerParams = zod.object({
+  itemId: zod.string().regex(homepageDeleteHomepageBannerPathItemIdRegExp),
+})
+
+export const homepageDeleteHomepageBannerQueryVersionMin = 0
+export const homepageDeleteHomepageBannerQueryVersionMax = 2147483646
+
+export const HomepageDeleteHomepageBannerQueryParams = zod.object({
+  version: zod
+    .number()
+    .min(homepageDeleteHomepageBannerQueryVersionMin)
+    .max(homepageDeleteHomepageBannerQueryVersionMax),
+})
+
+export const homepageDeleteHomepageBannerResponseVersionMin = 0
+export const homepageDeleteHomepageBannerResponseVersionMax = 2147483646
+
+export const homepageDeleteHomepageBannerResponseDraftItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageDeleteHomepageBannerResponseDraftItemsItemTitleMax = 200
+
+export const homepageDeleteHomepageBannerResponseDraftItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageDeleteHomepageBannerResponseDraftItemsItemImageUrlOneMax = 2048
+
+export const homepageDeleteHomepageBannerResponseDraftItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageDeleteHomepageBannerResponseDraftItemsItemTargetUrlOneMax = 2048
+
+export const homepageDeleteHomepageBannerResponseDraftItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageDeleteHomepageBannerResponseDraftItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageDeleteHomepageBannerResponseDraftItemsMax = 100
+
+export const homepageDeleteHomepageBannerResponsePublishedOneItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageDeleteHomepageBannerResponsePublishedOneItemsItemTitleMax = 200
+
+export const homepageDeleteHomepageBannerResponsePublishedOneItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageDeleteHomepageBannerResponsePublishedOneItemsItemImageUrlOneMax = 2048
+
+export const homepageDeleteHomepageBannerResponsePublishedOneItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageDeleteHomepageBannerResponsePublishedOneItemsItemTargetUrlOneMax = 2048
+
+export const homepageDeleteHomepageBannerResponsePublishedOneItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageDeleteHomepageBannerResponsePublishedOneItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageDeleteHomepageBannerResponsePublishedOneItemsMax = 100
+
+export const homepageDeleteHomepageBannerResponsePublishedVersionOneMin = 0
+export const homepageDeleteHomepageBannerResponsePublishedVersionOneMax = 2147483646
+
+export const HomepageDeleteHomepageBannerResponse = zod.object({
+  version: zod
+    .number()
+    .min(homepageDeleteHomepageBannerResponseVersionMin)
+    .max(homepageDeleteHomepageBannerResponseVersionMax),
+  draft: zod.object({
+    items: zod
+      .array(
+        zod.object({
+          itemId: zod
+            .string()
+            .regex(
+              homepageDeleteHomepageBannerResponseDraftItemsItemItemIdRegExp
+            ),
+          kind: zod.enum(["banner", "ad", "category-section"]),
+          title: zod
+            .string()
+            .min(1)
+            .max(homepageDeleteHomepageBannerResponseDraftItemsItemTitleMax)
+            .regex(
+              homepageDeleteHomepageBannerResponseDraftItemsItemTitleRegExp
+            ),
+          imageUrl: zod
+            .string()
+            .min(1)
+            .max(
+              homepageDeleteHomepageBannerResponseDraftItemsItemImageUrlOneMax
+            )
+            .regex(
+              homepageDeleteHomepageBannerResponseDraftItemsItemImageUrlOneRegExp
+            )
+            .nullable(),
+          targetUrl: zod
+            .string()
+            .min(1)
+            .max(
+              homepageDeleteHomepageBannerResponseDraftItemsItemTargetUrlOneMax
+            )
+            .regex(
+              homepageDeleteHomepageBannerResponseDraftItemsItemTargetUrlOneRegExp
+            )
+            .nullable(),
+          categoryIds: zod.array(
+            zod
+              .string()
+              .regex(
+                homepageDeleteHomepageBannerResponseDraftItemsItemCategoryIdsItemRegExp
+              )
+          ),
+          enabled: zod.boolean(),
+          startsAt: zod.iso.datetime({ offset: true }).nullable(),
+          endsAt: zod.iso.datetime({ offset: true }).nullable(),
+        })
+      )
+      .max(homepageDeleteHomepageBannerResponseDraftItemsMax),
+  }),
+  published: zod
+    .object({
+      items: zod
+        .array(
+          zod.object({
+            itemId: zod
+              .string()
+              .regex(
+                homepageDeleteHomepageBannerResponsePublishedOneItemsItemItemIdRegExp
+              ),
+            kind: zod.enum(["banner", "ad", "category-section"]),
+            title: zod
+              .string()
+              .min(1)
+              .max(
+                homepageDeleteHomepageBannerResponsePublishedOneItemsItemTitleMax
+              )
+              .regex(
+                homepageDeleteHomepageBannerResponsePublishedOneItemsItemTitleRegExp
+              ),
+            imageUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageDeleteHomepageBannerResponsePublishedOneItemsItemImageUrlOneMax
+              )
+              .regex(
+                homepageDeleteHomepageBannerResponsePublishedOneItemsItemImageUrlOneRegExp
+              )
+              .nullable(),
+            targetUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageDeleteHomepageBannerResponsePublishedOneItemsItemTargetUrlOneMax
+              )
+              .regex(
+                homepageDeleteHomepageBannerResponsePublishedOneItemsItemTargetUrlOneRegExp
+              )
+              .nullable(),
+            categoryIds: zod.array(
+              zod
+                .string()
+                .regex(
+                  homepageDeleteHomepageBannerResponsePublishedOneItemsItemCategoryIdsItemRegExp
+                )
+            ),
+            enabled: zod.boolean(),
+            startsAt: zod.iso.datetime({ offset: true }).nullable(),
+            endsAt: zod.iso.datetime({ offset: true }).nullable(),
+          })
+        )
+        .max(homepageDeleteHomepageBannerResponsePublishedOneItemsMax),
+    })
+    .nullable(),
+  publishedVersion: zod
+    .number()
+    .min(homepageDeleteHomepageBannerResponsePublishedVersionOneMin)
+    .max(homepageDeleteHomepageBannerResponsePublishedVersionOneMax)
+    .nullable(),
+  publishedAt: zod.iso.datetime({ offset: true }).nullable(),
+})
+
+export const homepageCreateHomepageCategorySectionBodyOneVersionMin = 0
+export const homepageCreateHomepageCategorySectionBodyOneVersionMax = 2147483646
+
+export const homepageCreateHomepageCategorySectionBodyTwoTitleMax = 200
+
+export const homepageCreateHomepageCategorySectionBodyTwoTitleRegExp =
+  new RegExp("\\S")
+export const homepageCreateHomepageCategorySectionBodyTwoCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageCreateHomepageCategorySectionBodyTwoCategoryIdsMax = 30
+
+export const HomepageCreateHomepageCategorySectionBody = zod
+  .object({
+    version: zod
+      .number()
+      .min(homepageCreateHomepageCategorySectionBodyOneVersionMin)
+      .max(homepageCreateHomepageCategorySectionBodyOneVersionMax),
+  })
+  .and(
+    zod.object({
+      title: zod
+        .string()
+        .min(1)
+        .max(homepageCreateHomepageCategorySectionBodyTwoTitleMax)
+        .regex(homepageCreateHomepageCategorySectionBodyTwoTitleRegExp),
+      categoryIds: zod
+        .array(
+          zod
+            .string()
+            .regex(
+              homepageCreateHomepageCategorySectionBodyTwoCategoryIdsItemRegExp
+            )
+        )
+        .min(1)
+        .max(homepageCreateHomepageCategorySectionBodyTwoCategoryIdsMax),
+      enabled: zod.boolean(),
+      startsAt: zod.iso.datetime({ offset: true }).nullable(),
+      endsAt: zod.iso.datetime({ offset: true }).nullable(),
+    })
+  )
+
+export const homepageCreateHomepageCategorySectionResponseVersionMin = 0
+export const homepageCreateHomepageCategorySectionResponseVersionMax = 2147483646
+
+export const homepageCreateHomepageCategorySectionResponseDraftItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageCreateHomepageCategorySectionResponseDraftItemsItemTitleMax = 200
+
+export const homepageCreateHomepageCategorySectionResponseDraftItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageCreateHomepageCategorySectionResponseDraftItemsItemImageUrlOneMax = 2048
+
+export const homepageCreateHomepageCategorySectionResponseDraftItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageCreateHomepageCategorySectionResponseDraftItemsItemTargetUrlOneMax = 2048
+
+export const homepageCreateHomepageCategorySectionResponseDraftItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageCreateHomepageCategorySectionResponseDraftItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageCreateHomepageCategorySectionResponseDraftItemsMax = 100
+
+export const homepageCreateHomepageCategorySectionResponsePublishedOneItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageCreateHomepageCategorySectionResponsePublishedOneItemsItemTitleMax = 200
+
+export const homepageCreateHomepageCategorySectionResponsePublishedOneItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageCreateHomepageCategorySectionResponsePublishedOneItemsItemImageUrlOneMax = 2048
+
+export const homepageCreateHomepageCategorySectionResponsePublishedOneItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageCreateHomepageCategorySectionResponsePublishedOneItemsItemTargetUrlOneMax = 2048
+
+export const homepageCreateHomepageCategorySectionResponsePublishedOneItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageCreateHomepageCategorySectionResponsePublishedOneItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageCreateHomepageCategorySectionResponsePublishedOneItemsMax = 100
+
+export const homepageCreateHomepageCategorySectionResponsePublishedVersionOneMin = 0
+export const homepageCreateHomepageCategorySectionResponsePublishedVersionOneMax = 2147483646
+
+export const HomepageCreateHomepageCategorySectionResponse = zod.object({
+  version: zod
+    .number()
+    .min(homepageCreateHomepageCategorySectionResponseVersionMin)
+    .max(homepageCreateHomepageCategorySectionResponseVersionMax),
+  draft: zod.object({
+    items: zod
+      .array(
+        zod.object({
+          itemId: zod
+            .string()
+            .regex(
+              homepageCreateHomepageCategorySectionResponseDraftItemsItemItemIdRegExp
+            ),
+          kind: zod.enum(["banner", "ad", "category-section"]),
+          title: zod
+            .string()
+            .min(1)
+            .max(
+              homepageCreateHomepageCategorySectionResponseDraftItemsItemTitleMax
+            )
+            .regex(
+              homepageCreateHomepageCategorySectionResponseDraftItemsItemTitleRegExp
+            ),
+          imageUrl: zod
+            .string()
+            .min(1)
+            .max(
+              homepageCreateHomepageCategorySectionResponseDraftItemsItemImageUrlOneMax
+            )
+            .regex(
+              homepageCreateHomepageCategorySectionResponseDraftItemsItemImageUrlOneRegExp
+            )
+            .nullable(),
+          targetUrl: zod
+            .string()
+            .min(1)
+            .max(
+              homepageCreateHomepageCategorySectionResponseDraftItemsItemTargetUrlOneMax
+            )
+            .regex(
+              homepageCreateHomepageCategorySectionResponseDraftItemsItemTargetUrlOneRegExp
+            )
+            .nullable(),
+          categoryIds: zod.array(
+            zod
+              .string()
+              .regex(
+                homepageCreateHomepageCategorySectionResponseDraftItemsItemCategoryIdsItemRegExp
+              )
+          ),
+          enabled: zod.boolean(),
+          startsAt: zod.iso.datetime({ offset: true }).nullable(),
+          endsAt: zod.iso.datetime({ offset: true }).nullable(),
+        })
+      )
+      .max(homepageCreateHomepageCategorySectionResponseDraftItemsMax),
+  }),
+  published: zod
+    .object({
+      items: zod
+        .array(
+          zod.object({
+            itemId: zod
+              .string()
+              .regex(
+                homepageCreateHomepageCategorySectionResponsePublishedOneItemsItemItemIdRegExp
+              ),
+            kind: zod.enum(["banner", "ad", "category-section"]),
+            title: zod
+              .string()
+              .min(1)
+              .max(
+                homepageCreateHomepageCategorySectionResponsePublishedOneItemsItemTitleMax
+              )
+              .regex(
+                homepageCreateHomepageCategorySectionResponsePublishedOneItemsItemTitleRegExp
+              ),
+            imageUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageCreateHomepageCategorySectionResponsePublishedOneItemsItemImageUrlOneMax
+              )
+              .regex(
+                homepageCreateHomepageCategorySectionResponsePublishedOneItemsItemImageUrlOneRegExp
+              )
+              .nullable(),
+            targetUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageCreateHomepageCategorySectionResponsePublishedOneItemsItemTargetUrlOneMax
+              )
+              .regex(
+                homepageCreateHomepageCategorySectionResponsePublishedOneItemsItemTargetUrlOneRegExp
+              )
+              .nullable(),
+            categoryIds: zod.array(
+              zod
+                .string()
+                .regex(
+                  homepageCreateHomepageCategorySectionResponsePublishedOneItemsItemCategoryIdsItemRegExp
+                )
+            ),
+            enabled: zod.boolean(),
+            startsAt: zod.iso.datetime({ offset: true }).nullable(),
+            endsAt: zod.iso.datetime({ offset: true }).nullable(),
+          })
+        )
+        .max(homepageCreateHomepageCategorySectionResponsePublishedOneItemsMax),
+    })
+    .nullable(),
+  publishedVersion: zod
+    .number()
+    .min(homepageCreateHomepageCategorySectionResponsePublishedVersionOneMin)
+    .max(homepageCreateHomepageCategorySectionResponsePublishedVersionOneMax)
+    .nullable(),
+  publishedAt: zod.iso.datetime({ offset: true }).nullable(),
+})
+
+export const homepageUpdateHomepageCategorySectionPathItemIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const HomepageUpdateHomepageCategorySectionParams = zod.object({
+  itemId: zod
+    .string()
+    .regex(homepageUpdateHomepageCategorySectionPathItemIdRegExp),
+})
+
+export const homepageUpdateHomepageCategorySectionBodyOneVersionMin = 0
+export const homepageUpdateHomepageCategorySectionBodyOneVersionMax = 2147483646
+
+export const homepageUpdateHomepageCategorySectionBodyTwoTitleMax = 200
+
+export const homepageUpdateHomepageCategorySectionBodyTwoTitleRegExp =
+  new RegExp("\\S")
+export const homepageUpdateHomepageCategorySectionBodyTwoCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageUpdateHomepageCategorySectionBodyTwoCategoryIdsMax = 30
+
+export const HomepageUpdateHomepageCategorySectionBody = zod
+  .object({
+    version: zod
+      .number()
+      .min(homepageUpdateHomepageCategorySectionBodyOneVersionMin)
+      .max(homepageUpdateHomepageCategorySectionBodyOneVersionMax),
+  })
+  .and(
+    zod.object({
+      title: zod
+        .string()
+        .min(1)
+        .max(homepageUpdateHomepageCategorySectionBodyTwoTitleMax)
+        .regex(homepageUpdateHomepageCategorySectionBodyTwoTitleRegExp),
+      categoryIds: zod
+        .array(
+          zod
+            .string()
+            .regex(
+              homepageUpdateHomepageCategorySectionBodyTwoCategoryIdsItemRegExp
+            )
+        )
+        .min(1)
+        .max(homepageUpdateHomepageCategorySectionBodyTwoCategoryIdsMax),
+      enabled: zod.boolean(),
+      startsAt: zod.iso.datetime({ offset: true }).nullable(),
+      endsAt: zod.iso.datetime({ offset: true }).nullable(),
+    })
+  )
+
+export const homepageUpdateHomepageCategorySectionResponseVersionMin = 0
+export const homepageUpdateHomepageCategorySectionResponseVersionMax = 2147483646
+
+export const homepageUpdateHomepageCategorySectionResponseDraftItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageUpdateHomepageCategorySectionResponseDraftItemsItemTitleMax = 200
+
+export const homepageUpdateHomepageCategorySectionResponseDraftItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageUpdateHomepageCategorySectionResponseDraftItemsItemImageUrlOneMax = 2048
+
+export const homepageUpdateHomepageCategorySectionResponseDraftItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageUpdateHomepageCategorySectionResponseDraftItemsItemTargetUrlOneMax = 2048
+
+export const homepageUpdateHomepageCategorySectionResponseDraftItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageUpdateHomepageCategorySectionResponseDraftItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageUpdateHomepageCategorySectionResponseDraftItemsMax = 100
+
+export const homepageUpdateHomepageCategorySectionResponsePublishedOneItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageUpdateHomepageCategorySectionResponsePublishedOneItemsItemTitleMax = 200
+
+export const homepageUpdateHomepageCategorySectionResponsePublishedOneItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageUpdateHomepageCategorySectionResponsePublishedOneItemsItemImageUrlOneMax = 2048
+
+export const homepageUpdateHomepageCategorySectionResponsePublishedOneItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageUpdateHomepageCategorySectionResponsePublishedOneItemsItemTargetUrlOneMax = 2048
+
+export const homepageUpdateHomepageCategorySectionResponsePublishedOneItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageUpdateHomepageCategorySectionResponsePublishedOneItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageUpdateHomepageCategorySectionResponsePublishedOneItemsMax = 100
+
+export const homepageUpdateHomepageCategorySectionResponsePublishedVersionOneMin = 0
+export const homepageUpdateHomepageCategorySectionResponsePublishedVersionOneMax = 2147483646
+
+export const HomepageUpdateHomepageCategorySectionResponse = zod.object({
+  version: zod
+    .number()
+    .min(homepageUpdateHomepageCategorySectionResponseVersionMin)
+    .max(homepageUpdateHomepageCategorySectionResponseVersionMax),
+  draft: zod.object({
+    items: zod
+      .array(
+        zod.object({
+          itemId: zod
+            .string()
+            .regex(
+              homepageUpdateHomepageCategorySectionResponseDraftItemsItemItemIdRegExp
+            ),
+          kind: zod.enum(["banner", "ad", "category-section"]),
+          title: zod
+            .string()
+            .min(1)
+            .max(
+              homepageUpdateHomepageCategorySectionResponseDraftItemsItemTitleMax
+            )
+            .regex(
+              homepageUpdateHomepageCategorySectionResponseDraftItemsItemTitleRegExp
+            ),
+          imageUrl: zod
+            .string()
+            .min(1)
+            .max(
+              homepageUpdateHomepageCategorySectionResponseDraftItemsItemImageUrlOneMax
+            )
+            .regex(
+              homepageUpdateHomepageCategorySectionResponseDraftItemsItemImageUrlOneRegExp
+            )
+            .nullable(),
+          targetUrl: zod
+            .string()
+            .min(1)
+            .max(
+              homepageUpdateHomepageCategorySectionResponseDraftItemsItemTargetUrlOneMax
+            )
+            .regex(
+              homepageUpdateHomepageCategorySectionResponseDraftItemsItemTargetUrlOneRegExp
+            )
+            .nullable(),
+          categoryIds: zod.array(
+            zod
+              .string()
+              .regex(
+                homepageUpdateHomepageCategorySectionResponseDraftItemsItemCategoryIdsItemRegExp
+              )
+          ),
+          enabled: zod.boolean(),
+          startsAt: zod.iso.datetime({ offset: true }).nullable(),
+          endsAt: zod.iso.datetime({ offset: true }).nullable(),
+        })
+      )
+      .max(homepageUpdateHomepageCategorySectionResponseDraftItemsMax),
+  }),
+  published: zod
+    .object({
+      items: zod
+        .array(
+          zod.object({
+            itemId: zod
+              .string()
+              .regex(
+                homepageUpdateHomepageCategorySectionResponsePublishedOneItemsItemItemIdRegExp
+              ),
+            kind: zod.enum(["banner", "ad", "category-section"]),
+            title: zod
+              .string()
+              .min(1)
+              .max(
+                homepageUpdateHomepageCategorySectionResponsePublishedOneItemsItemTitleMax
+              )
+              .regex(
+                homepageUpdateHomepageCategorySectionResponsePublishedOneItemsItemTitleRegExp
+              ),
+            imageUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageUpdateHomepageCategorySectionResponsePublishedOneItemsItemImageUrlOneMax
+              )
+              .regex(
+                homepageUpdateHomepageCategorySectionResponsePublishedOneItemsItemImageUrlOneRegExp
+              )
+              .nullable(),
+            targetUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageUpdateHomepageCategorySectionResponsePublishedOneItemsItemTargetUrlOneMax
+              )
+              .regex(
+                homepageUpdateHomepageCategorySectionResponsePublishedOneItemsItemTargetUrlOneRegExp
+              )
+              .nullable(),
+            categoryIds: zod.array(
+              zod
+                .string()
+                .regex(
+                  homepageUpdateHomepageCategorySectionResponsePublishedOneItemsItemCategoryIdsItemRegExp
+                )
+            ),
+            enabled: zod.boolean(),
+            startsAt: zod.iso.datetime({ offset: true }).nullable(),
+            endsAt: zod.iso.datetime({ offset: true }).nullable(),
+          })
+        )
+        .max(homepageUpdateHomepageCategorySectionResponsePublishedOneItemsMax),
+    })
+    .nullable(),
+  publishedVersion: zod
+    .number()
+    .min(homepageUpdateHomepageCategorySectionResponsePublishedVersionOneMin)
+    .max(homepageUpdateHomepageCategorySectionResponsePublishedVersionOneMax)
+    .nullable(),
+  publishedAt: zod.iso.datetime({ offset: true }).nullable(),
+})
+
+export const homepageDeleteHomepageCategorySectionPathItemIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const HomepageDeleteHomepageCategorySectionParams = zod.object({
+  itemId: zod
+    .string()
+    .regex(homepageDeleteHomepageCategorySectionPathItemIdRegExp),
+})
+
+export const homepageDeleteHomepageCategorySectionQueryVersionMin = 0
+export const homepageDeleteHomepageCategorySectionQueryVersionMax = 2147483646
+
+export const HomepageDeleteHomepageCategorySectionQueryParams = zod.object({
+  version: zod
+    .number()
+    .min(homepageDeleteHomepageCategorySectionQueryVersionMin)
+    .max(homepageDeleteHomepageCategorySectionQueryVersionMax),
+})
+
+export const homepageDeleteHomepageCategorySectionResponseVersionMin = 0
+export const homepageDeleteHomepageCategorySectionResponseVersionMax = 2147483646
+
+export const homepageDeleteHomepageCategorySectionResponseDraftItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageDeleteHomepageCategorySectionResponseDraftItemsItemTitleMax = 200
+
+export const homepageDeleteHomepageCategorySectionResponseDraftItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageDeleteHomepageCategorySectionResponseDraftItemsItemImageUrlOneMax = 2048
+
+export const homepageDeleteHomepageCategorySectionResponseDraftItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageDeleteHomepageCategorySectionResponseDraftItemsItemTargetUrlOneMax = 2048
+
+export const homepageDeleteHomepageCategorySectionResponseDraftItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageDeleteHomepageCategorySectionResponseDraftItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageDeleteHomepageCategorySectionResponseDraftItemsMax = 100
+
+export const homepageDeleteHomepageCategorySectionResponsePublishedOneItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageDeleteHomepageCategorySectionResponsePublishedOneItemsItemTitleMax = 200
+
+export const homepageDeleteHomepageCategorySectionResponsePublishedOneItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageDeleteHomepageCategorySectionResponsePublishedOneItemsItemImageUrlOneMax = 2048
+
+export const homepageDeleteHomepageCategorySectionResponsePublishedOneItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageDeleteHomepageCategorySectionResponsePublishedOneItemsItemTargetUrlOneMax = 2048
+
+export const homepageDeleteHomepageCategorySectionResponsePublishedOneItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageDeleteHomepageCategorySectionResponsePublishedOneItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageDeleteHomepageCategorySectionResponsePublishedOneItemsMax = 100
+
+export const homepageDeleteHomepageCategorySectionResponsePublishedVersionOneMin = 0
+export const homepageDeleteHomepageCategorySectionResponsePublishedVersionOneMax = 2147483646
+
+export const HomepageDeleteHomepageCategorySectionResponse = zod.object({
+  version: zod
+    .number()
+    .min(homepageDeleteHomepageCategorySectionResponseVersionMin)
+    .max(homepageDeleteHomepageCategorySectionResponseVersionMax),
+  draft: zod.object({
+    items: zod
+      .array(
+        zod.object({
+          itemId: zod
+            .string()
+            .regex(
+              homepageDeleteHomepageCategorySectionResponseDraftItemsItemItemIdRegExp
+            ),
+          kind: zod.enum(["banner", "ad", "category-section"]),
+          title: zod
+            .string()
+            .min(1)
+            .max(
+              homepageDeleteHomepageCategorySectionResponseDraftItemsItemTitleMax
+            )
+            .regex(
+              homepageDeleteHomepageCategorySectionResponseDraftItemsItemTitleRegExp
+            ),
+          imageUrl: zod
+            .string()
+            .min(1)
+            .max(
+              homepageDeleteHomepageCategorySectionResponseDraftItemsItemImageUrlOneMax
+            )
+            .regex(
+              homepageDeleteHomepageCategorySectionResponseDraftItemsItemImageUrlOneRegExp
+            )
+            .nullable(),
+          targetUrl: zod
+            .string()
+            .min(1)
+            .max(
+              homepageDeleteHomepageCategorySectionResponseDraftItemsItemTargetUrlOneMax
+            )
+            .regex(
+              homepageDeleteHomepageCategorySectionResponseDraftItemsItemTargetUrlOneRegExp
+            )
+            .nullable(),
+          categoryIds: zod.array(
+            zod
+              .string()
+              .regex(
+                homepageDeleteHomepageCategorySectionResponseDraftItemsItemCategoryIdsItemRegExp
+              )
+          ),
+          enabled: zod.boolean(),
+          startsAt: zod.iso.datetime({ offset: true }).nullable(),
+          endsAt: zod.iso.datetime({ offset: true }).nullable(),
+        })
+      )
+      .max(homepageDeleteHomepageCategorySectionResponseDraftItemsMax),
+  }),
+  published: zod
+    .object({
+      items: zod
+        .array(
+          zod.object({
+            itemId: zod
+              .string()
+              .regex(
+                homepageDeleteHomepageCategorySectionResponsePublishedOneItemsItemItemIdRegExp
+              ),
+            kind: zod.enum(["banner", "ad", "category-section"]),
+            title: zod
+              .string()
+              .min(1)
+              .max(
+                homepageDeleteHomepageCategorySectionResponsePublishedOneItemsItemTitleMax
+              )
+              .regex(
+                homepageDeleteHomepageCategorySectionResponsePublishedOneItemsItemTitleRegExp
+              ),
+            imageUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageDeleteHomepageCategorySectionResponsePublishedOneItemsItemImageUrlOneMax
+              )
+              .regex(
+                homepageDeleteHomepageCategorySectionResponsePublishedOneItemsItemImageUrlOneRegExp
+              )
+              .nullable(),
+            targetUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageDeleteHomepageCategorySectionResponsePublishedOneItemsItemTargetUrlOneMax
+              )
+              .regex(
+                homepageDeleteHomepageCategorySectionResponsePublishedOneItemsItemTargetUrlOneRegExp
+              )
+              .nullable(),
+            categoryIds: zod.array(
+              zod
+                .string()
+                .regex(
+                  homepageDeleteHomepageCategorySectionResponsePublishedOneItemsItemCategoryIdsItemRegExp
+                )
+            ),
+            enabled: zod.boolean(),
+            startsAt: zod.iso.datetime({ offset: true }).nullable(),
+            endsAt: zod.iso.datetime({ offset: true }).nullable(),
+          })
+        )
+        .max(homepageDeleteHomepageCategorySectionResponsePublishedOneItemsMax),
+    })
+    .nullable(),
+  publishedVersion: zod
+    .number()
+    .min(homepageDeleteHomepageCategorySectionResponsePublishedVersionOneMin)
+    .max(homepageDeleteHomepageCategorySectionResponsePublishedVersionOneMax)
+    .nullable(),
+  publishedAt: zod.iso.datetime({ offset: true }).nullable(),
+})
+
+export const homepageReorderHomepageBodyOneVersionMin = 0
+export const homepageReorderHomepageBodyOneVersionMax = 2147483646
+
+export const homepageReorderHomepageBodyTwoItemIdsItemRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+export const homepageReorderHomepageBodyTwoItemIdsMax = 100
+
+export const HomepageReorderHomepageBody = zod
+  .object({
+    version: zod
+      .number()
+      .min(homepageReorderHomepageBodyOneVersionMin)
+      .max(homepageReorderHomepageBodyOneVersionMax),
+  })
+  .and(
+    zod.object({
+      itemIds: zod
+        .array(
+          zod.string().regex(homepageReorderHomepageBodyTwoItemIdsItemRegExp)
+        )
+        .max(homepageReorderHomepageBodyTwoItemIdsMax),
+    })
+  )
+
+export const homepageReorderHomepageResponseVersionMin = 0
+export const homepageReorderHomepageResponseVersionMax = 2147483646
+
+export const homepageReorderHomepageResponseDraftItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageReorderHomepageResponseDraftItemsItemTitleMax = 200
+
+export const homepageReorderHomepageResponseDraftItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageReorderHomepageResponseDraftItemsItemImageUrlOneMax = 2048
+
+export const homepageReorderHomepageResponseDraftItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageReorderHomepageResponseDraftItemsItemTargetUrlOneMax = 2048
+
+export const homepageReorderHomepageResponseDraftItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageReorderHomepageResponseDraftItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageReorderHomepageResponseDraftItemsMax = 100
+
+export const homepageReorderHomepageResponsePublishedOneItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageReorderHomepageResponsePublishedOneItemsItemTitleMax = 200
+
+export const homepageReorderHomepageResponsePublishedOneItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepageReorderHomepageResponsePublishedOneItemsItemImageUrlOneMax = 2048
+
+export const homepageReorderHomepageResponsePublishedOneItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepageReorderHomepageResponsePublishedOneItemsItemTargetUrlOneMax = 2048
+
+export const homepageReorderHomepageResponsePublishedOneItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepageReorderHomepageResponsePublishedOneItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepageReorderHomepageResponsePublishedOneItemsMax = 100
+
+export const homepageReorderHomepageResponsePublishedVersionOneMin = 0
+export const homepageReorderHomepageResponsePublishedVersionOneMax = 2147483646
+
+export const HomepageReorderHomepageResponse = zod.object({
+  version: zod
+    .number()
+    .min(homepageReorderHomepageResponseVersionMin)
+    .max(homepageReorderHomepageResponseVersionMax),
+  draft: zod.object({
+    items: zod
+      .array(
+        zod.object({
+          itemId: zod
+            .string()
+            .regex(homepageReorderHomepageResponseDraftItemsItemItemIdRegExp),
+          kind: zod.enum(["banner", "ad", "category-section"]),
+          title: zod
+            .string()
+            .min(1)
+            .max(homepageReorderHomepageResponseDraftItemsItemTitleMax)
+            .regex(homepageReorderHomepageResponseDraftItemsItemTitleRegExp),
+          imageUrl: zod
+            .string()
+            .min(1)
+            .max(homepageReorderHomepageResponseDraftItemsItemImageUrlOneMax)
+            .regex(
+              homepageReorderHomepageResponseDraftItemsItemImageUrlOneRegExp
+            )
+            .nullable(),
+          targetUrl: zod
+            .string()
+            .min(1)
+            .max(homepageReorderHomepageResponseDraftItemsItemTargetUrlOneMax)
+            .regex(
+              homepageReorderHomepageResponseDraftItemsItemTargetUrlOneRegExp
+            )
+            .nullable(),
+          categoryIds: zod.array(
+            zod
+              .string()
+              .regex(
+                homepageReorderHomepageResponseDraftItemsItemCategoryIdsItemRegExp
+              )
+          ),
+          enabled: zod.boolean(),
+          startsAt: zod.iso.datetime({ offset: true }).nullable(),
+          endsAt: zod.iso.datetime({ offset: true }).nullable(),
+        })
+      )
+      .max(homepageReorderHomepageResponseDraftItemsMax),
+  }),
+  published: zod
+    .object({
+      items: zod
+        .array(
+          zod.object({
+            itemId: zod
+              .string()
+              .regex(
+                homepageReorderHomepageResponsePublishedOneItemsItemItemIdRegExp
+              ),
+            kind: zod.enum(["banner", "ad", "category-section"]),
+            title: zod
+              .string()
+              .min(1)
+              .max(homepageReorderHomepageResponsePublishedOneItemsItemTitleMax)
+              .regex(
+                homepageReorderHomepageResponsePublishedOneItemsItemTitleRegExp
+              ),
+            imageUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageReorderHomepageResponsePublishedOneItemsItemImageUrlOneMax
+              )
+              .regex(
+                homepageReorderHomepageResponsePublishedOneItemsItemImageUrlOneRegExp
+              )
+              .nullable(),
+            targetUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepageReorderHomepageResponsePublishedOneItemsItemTargetUrlOneMax
+              )
+              .regex(
+                homepageReorderHomepageResponsePublishedOneItemsItemTargetUrlOneRegExp
+              )
+              .nullable(),
+            categoryIds: zod.array(
+              zod
+                .string()
+                .regex(
+                  homepageReorderHomepageResponsePublishedOneItemsItemCategoryIdsItemRegExp
+                )
+            ),
+            enabled: zod.boolean(),
+            startsAt: zod.iso.datetime({ offset: true }).nullable(),
+            endsAt: zod.iso.datetime({ offset: true }).nullable(),
+          })
+        )
+        .max(homepageReorderHomepageResponsePublishedOneItemsMax),
+    })
+    .nullable(),
+  publishedVersion: zod
+    .number()
+    .min(homepageReorderHomepageResponsePublishedVersionOneMin)
+    .max(homepageReorderHomepageResponsePublishedVersionOneMax)
+    .nullable(),
+  publishedAt: zod.iso.datetime({ offset: true }).nullable(),
+})
+
+export const HomepagePreviewHomepageQueryParams = zod.object({
+  at: zod.iso.datetime({ offset: true }).optional(),
+})
+
+export const homepagePreviewHomepageResponseVersionMin = 0
+export const homepagePreviewHomepageResponseVersionMax = 2147483646
+
+export const homepagePreviewHomepageResponseItemsItemItemIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+export const homepagePreviewHomepageResponseItemsItemTitleMax = 200
+
+export const homepagePreviewHomepageResponseItemsItemTitleRegExp = new RegExp(
+  "\\S"
+)
+export const homepagePreviewHomepageResponseItemsItemImageUrlOneMax = 2048
+
+export const homepagePreviewHomepageResponseItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepagePreviewHomepageResponseItemsItemTargetUrlOneMax = 2048
+
+export const homepagePreviewHomepageResponseItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepagePreviewHomepageResponseItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+
+export const HomepagePreviewHomepageResponse = zod.object({
+  version: zod
+    .number()
+    .min(homepagePreviewHomepageResponseVersionMin)
+    .max(homepagePreviewHomepageResponseVersionMax),
+  at: zod.iso.datetime({ offset: true }),
+  items: zod.array(
+    zod.object({
+      itemId: zod
+        .string()
+        .regex(homepagePreviewHomepageResponseItemsItemItemIdRegExp),
+      kind: zod.enum(["banner", "ad", "category-section"]),
+      title: zod
+        .string()
+        .min(1)
+        .max(homepagePreviewHomepageResponseItemsItemTitleMax)
+        .regex(homepagePreviewHomepageResponseItemsItemTitleRegExp),
+      imageUrl: zod
+        .string()
+        .min(1)
+        .max(homepagePreviewHomepageResponseItemsItemImageUrlOneMax)
+        .regex(homepagePreviewHomepageResponseItemsItemImageUrlOneRegExp)
+        .nullable(),
+      targetUrl: zod
+        .string()
+        .min(1)
+        .max(homepagePreviewHomepageResponseItemsItemTargetUrlOneMax)
+        .regex(homepagePreviewHomepageResponseItemsItemTargetUrlOneRegExp)
+        .nullable(),
+      categoryIds: zod.array(
+        zod
+          .string()
+          .regex(homepagePreviewHomepageResponseItemsItemCategoryIdsItemRegExp)
+      ),
+      enabled: zod.boolean(),
+      startsAt: zod.iso.datetime({ offset: true }).nullable(),
+      endsAt: zod.iso.datetime({ offset: true }).nullable(),
+    })
+  ),
+})
+
+export const homepagePublishHomepageBodyVersionMin = 0
+export const homepagePublishHomepageBodyVersionMax = 2147483646
+
+export const HomepagePublishHomepageBody = zod.object({
+  version: zod
+    .number()
+    .min(homepagePublishHomepageBodyVersionMin)
+    .max(homepagePublishHomepageBodyVersionMax),
+})
+
+export const homepagePublishHomepageResponseVersionMin = 0
+export const homepagePublishHomepageResponseVersionMax = 2147483646
+
+export const homepagePublishHomepageResponseDraftItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepagePublishHomepageResponseDraftItemsItemTitleMax = 200
+
+export const homepagePublishHomepageResponseDraftItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepagePublishHomepageResponseDraftItemsItemImageUrlOneMax = 2048
+
+export const homepagePublishHomepageResponseDraftItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepagePublishHomepageResponseDraftItemsItemTargetUrlOneMax = 2048
+
+export const homepagePublishHomepageResponseDraftItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepagePublishHomepageResponseDraftItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepagePublishHomepageResponseDraftItemsMax = 100
+
+export const homepagePublishHomepageResponsePublishedOneItemsItemItemIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepagePublishHomepageResponsePublishedOneItemsItemTitleMax = 200
+
+export const homepagePublishHomepageResponsePublishedOneItemsItemTitleRegExp =
+  new RegExp("\\S")
+export const homepagePublishHomepageResponsePublishedOneItemsItemImageUrlOneMax = 2048
+
+export const homepagePublishHomepageResponsePublishedOneItemsItemImageUrlOneRegExp =
+  new RegExp("^(https:\/\/[^\/\\s]+\/|\/(?!\/))[^\\s]\*$")
+export const homepagePublishHomepageResponsePublishedOneItemsItemTargetUrlOneMax = 2048
+
+export const homepagePublishHomepageResponsePublishedOneItemsItemTargetUrlOneRegExp =
+  new RegExp("^\/(?!\/)[^\\s]\*$")
+export const homepagePublishHomepageResponsePublishedOneItemsItemCategoryIdsItemRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const homepagePublishHomepageResponsePublishedOneItemsMax = 100
+
+export const homepagePublishHomepageResponsePublishedVersionOneMin = 0
+export const homepagePublishHomepageResponsePublishedVersionOneMax = 2147483646
+
+export const HomepagePublishHomepageResponse = zod.object({
+  version: zod
+    .number()
+    .min(homepagePublishHomepageResponseVersionMin)
+    .max(homepagePublishHomepageResponseVersionMax),
+  draft: zod.object({
+    items: zod
+      .array(
+        zod.object({
+          itemId: zod
+            .string()
+            .regex(homepagePublishHomepageResponseDraftItemsItemItemIdRegExp),
+          kind: zod.enum(["banner", "ad", "category-section"]),
+          title: zod
+            .string()
+            .min(1)
+            .max(homepagePublishHomepageResponseDraftItemsItemTitleMax)
+            .regex(homepagePublishHomepageResponseDraftItemsItemTitleRegExp),
+          imageUrl: zod
+            .string()
+            .min(1)
+            .max(homepagePublishHomepageResponseDraftItemsItemImageUrlOneMax)
+            .regex(
+              homepagePublishHomepageResponseDraftItemsItemImageUrlOneRegExp
+            )
+            .nullable(),
+          targetUrl: zod
+            .string()
+            .min(1)
+            .max(homepagePublishHomepageResponseDraftItemsItemTargetUrlOneMax)
+            .regex(
+              homepagePublishHomepageResponseDraftItemsItemTargetUrlOneRegExp
+            )
+            .nullable(),
+          categoryIds: zod.array(
+            zod
+              .string()
+              .regex(
+                homepagePublishHomepageResponseDraftItemsItemCategoryIdsItemRegExp
+              )
+          ),
+          enabled: zod.boolean(),
+          startsAt: zod.iso.datetime({ offset: true }).nullable(),
+          endsAt: zod.iso.datetime({ offset: true }).nullable(),
+        })
+      )
+      .max(homepagePublishHomepageResponseDraftItemsMax),
+  }),
+  published: zod
+    .object({
+      items: zod
+        .array(
+          zod.object({
+            itemId: zod
+              .string()
+              .regex(
+                homepagePublishHomepageResponsePublishedOneItemsItemItemIdRegExp
+              ),
+            kind: zod.enum(["banner", "ad", "category-section"]),
+            title: zod
+              .string()
+              .min(1)
+              .max(homepagePublishHomepageResponsePublishedOneItemsItemTitleMax)
+              .regex(
+                homepagePublishHomepageResponsePublishedOneItemsItemTitleRegExp
+              ),
+            imageUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepagePublishHomepageResponsePublishedOneItemsItemImageUrlOneMax
+              )
+              .regex(
+                homepagePublishHomepageResponsePublishedOneItemsItemImageUrlOneRegExp
+              )
+              .nullable(),
+            targetUrl: zod
+              .string()
+              .min(1)
+              .max(
+                homepagePublishHomepageResponsePublishedOneItemsItemTargetUrlOneMax
+              )
+              .regex(
+                homepagePublishHomepageResponsePublishedOneItemsItemTargetUrlOneRegExp
+              )
+              .nullable(),
+            categoryIds: zod.array(
+              zod
+                .string()
+                .regex(
+                  homepagePublishHomepageResponsePublishedOneItemsItemCategoryIdsItemRegExp
+                )
+            ),
+            enabled: zod.boolean(),
+            startsAt: zod.iso.datetime({ offset: true }).nullable(),
+            endsAt: zod.iso.datetime({ offset: true }).nullable(),
+          })
+        )
+        .max(homepagePublishHomepageResponsePublishedOneItemsMax),
+    })
+    .nullable(),
+  publishedVersion: zod
+    .number()
+    .min(homepagePublishHomepageResponsePublishedVersionOneMin)
+    .max(homepagePublishHomepageResponsePublishedVersionOneMax)
+    .nullable(),
+  publishedAt: zod.iso.datetime({ offset: true }).nullable(),
+})
+
+export const productModerationListProductModerationQueryCursorRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const productModerationListProductModerationQueryLimitDefault = 20
+export const productModerationListProductModerationQueryLimitMax = 100
+
+export const productModerationListProductModerationQuerySearchMax = 100
+
+export const productModerationListProductModerationQuerySearchRegExp =
+  new RegExp("\\S")
+export const productModerationListProductModerationQueryStoreIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const productModerationListProductModerationQueryStatusDefault = `ChoDuyet`
+
+export const ProductModerationListProductModerationQueryParams = zod.object({
+  cursor: zod
+    .string()
+    .regex(productModerationListProductModerationQueryCursorRegExp)
+    .optional(),
+  limit: zod
+    .number()
+    .min(1)
+    .max(productModerationListProductModerationQueryLimitMax)
+    .default(productModerationListProductModerationQueryLimitDefault),
+  search: zod
+    .string()
+    .min(1)
+    .max(productModerationListProductModerationQuerySearchMax)
+    .regex(productModerationListProductModerationQuerySearchRegExp)
+    .optional(),
+  storeId: zod
+    .string()
+    .regex(productModerationListProductModerationQueryStoreIdRegExp)
+    .optional(),
+  status: zod
+    .enum(["ChoDuyet", "DaDuyet", "TuChoi"])
+    .default(productModerationListProductModerationQueryStatusDefault),
+})
+
+export const productModerationListProductModerationResponseItemsItemProductIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const productModerationListProductModerationResponseItemsItemStoreIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const productModerationListProductModerationResponseItemsItemCategoryIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+
+export const ProductModerationListProductModerationResponse = zod.object({
+  nextCursor: zod.string().nullable(),
+  total: zod.number(),
+  items: zod.array(
+    zod.object({
+      productId: zod
+        .string()
+        .regex(
+          productModerationListProductModerationResponseItemsItemProductIdRegExp
+        ),
+      code: zod.string().nullable(),
+      name: zod.string(),
+      image: zod.string().nullable(),
+      storeId: zod
+        .string()
+        .regex(
+          productModerationListProductModerationResponseItemsItemStoreIdRegExp
+        ),
+      storeName: zod.string(),
+      categoryId: zod
+        .string()
+        .regex(
+          productModerationListProductModerationResponseItemsItemCategoryIdRegExp
+        ),
+      categoryName: zod.string(),
+      visibility: zod.enum(["Hien", "An", "Khoa"]),
+      moderationStatus: zod.enum(["ChoDuyet", "DaDuyet", "TuChoi"]),
+      version: zod.number(),
+      createdAt: zod.iso.datetime({ offset: true }),
+    })
+  ),
+})
+
+export const productModerationGetProductModerationPathProductIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+
+export const ProductModerationGetProductModerationParams = zod.object({
+  productId: zod
+    .string()
+    .regex(productModerationGetProductModerationPathProductIdRegExp),
+})
+
+export const productModerationGetProductModerationResponseOneProductIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const productModerationGetProductModerationResponseOneStoreIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const productModerationGetProductModerationResponseOneCategoryIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+export const productModerationGetProductModerationResponseTwoVariantsItemVariantIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+
+export const ProductModerationGetProductModerationResponse = zod
+  .object({
+    productId: zod
+      .string()
+      .regex(productModerationGetProductModerationResponseOneProductIdRegExp),
+    code: zod.string().nullable(),
+    name: zod.string(),
+    image: zod.string().nullable(),
+    storeId: zod
+      .string()
+      .regex(productModerationGetProductModerationResponseOneStoreIdRegExp),
+    storeName: zod.string(),
+    categoryId: zod
+      .string()
+      .regex(productModerationGetProductModerationResponseOneCategoryIdRegExp),
+    categoryName: zod.string(),
+    visibility: zod.enum(["Hien", "An", "Khoa"]),
+    moderationStatus: zod.enum(["ChoDuyet", "DaDuyet", "TuChoi"]),
+    version: zod.number(),
+    createdAt: zod.iso.datetime({ offset: true }),
+  })
+  .and(
+    zod.object({
+      description: zod.string().nullable(),
+      classification: zod.string().nullable(),
+      updatedAt: zod.iso.datetime({ offset: true }),
+      rejectionReason: zod.string().nullable(),
+      reviewedAt: zod.iso.datetime({ offset: true }).nullable(),
+      variants: zod.array(
+        zod.object({
+          variantId: zod
+            .string()
+            .regex(
+              productModerationGetProductModerationResponseTwoVariantsItemVariantIdRegExp
+            ),
+          name: zod.string(),
+          attributes: zod.string(),
+          image: zod.string().nullable(),
+          price: zod
+            .string()
+            .describe(
+              "Số tiền nguyên theo đơn vị đồng Việt Nam, không dùng số thực trong JSON."
+            )
+            .describe(
+              "Giá nguyên đồng VND, biểu diễn chuỗi để bảo toàn Decimal."
+            ),
+          stock: zod.number(),
+        })
+      ),
+    })
+  )
+
+export const productModerationApproveProductModerationPathProductIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+
+export const ProductModerationApproveProductModerationParams = zod.object({
+  productId: zod
+    .string()
+    .regex(productModerationApproveProductModerationPathProductIdRegExp),
+})
+
+export const productModerationApproveProductModerationBodyVersionMin = 0
+export const productModerationApproveProductModerationBodyVersionMax = 2147483646
+
+export const ProductModerationApproveProductModerationBody = zod.object({
+  version: zod
+    .number()
+    .min(productModerationApproveProductModerationBodyVersionMin)
+    .max(productModerationApproveProductModerationBodyVersionMax)
+    .describe(
+      "Phiên bản kiểm duyệt đã đọc; thay đổi nội dung phải tăng phiên bản này."
+    ),
+})
+
+export const productModerationApproveProductModerationResponseProductIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+
+export const ProductModerationApproveProductModerationResponse = zod.object({
+  productId: zod
+    .string()
+    .regex(productModerationApproveProductModerationResponseProductIdRegExp),
+  moderationStatus: zod.enum(["ChoDuyet", "DaDuyet", "TuChoi"]),
+  version: zod.number(),
+  reviewedAt: zod.iso.datetime({ offset: true }),
+})
+
+export const productModerationRejectProductModerationPathProductIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+
+export const ProductModerationRejectProductModerationParams = zod.object({
+  productId: zod
+    .string()
+    .regex(productModerationRejectProductModerationPathProductIdRegExp),
+})
+
+export const productModerationRejectProductModerationBodyOneVersionMin = 0
+export const productModerationRejectProductModerationBodyOneVersionMax = 2147483646
+
+export const productModerationRejectProductModerationBodyTwoReasonMax = 500
+
+export const productModerationRejectProductModerationBodyTwoReasonRegExp =
+  new RegExp("\\S")
+
+export const ProductModerationRejectProductModerationBody = zod
+  .object({
+    version: zod
+      .number()
+      .min(productModerationRejectProductModerationBodyOneVersionMin)
+      .max(productModerationRejectProductModerationBodyOneVersionMax)
+      .describe(
+        "Phiên bản kiểm duyệt đã đọc; thay đổi nội dung phải tăng phiên bản này."
+      ),
+  })
+  .and(
+    zod.object({
+      reason: zod
+        .string()
+        .min(1)
+        .max(productModerationRejectProductModerationBodyTwoReasonMax)
+        .regex(productModerationRejectProductModerationBodyTwoReasonRegExp),
+    })
+  )
+
+export const productModerationRejectProductModerationResponseProductIdRegExp =
+  new RegExp("^[1-9][0-9]{0,18}$")
+
+export const ProductModerationRejectProductModerationResponse = zod.object({
+  productId: zod
+    .string()
+    .regex(productModerationRejectProductModerationResponseProductIdRegExp),
+  moderationStatus: zod.enum(["ChoDuyet", "DaDuyet", "TuChoi"]),
+  version: zod.number(),
+  reviewedAt: zod.iso.datetime({ offset: true }),
+})
+
+/**
+ * Chỉ QuanTriVien/KiemDuyetVien được kết luận báo cáo sản phẩm; không tự ẩn sản phẩm hay khóa tài khoản/cửa hàng. Ghi lịch sử và thông báo nguyên tử; đã kết luận trả 409.
+ */
+export const reportsResolveAdminReportPathReportIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const ReportsResolveAdminReportParams = zod.object({
+  reportId: zod.string().regex(reportsResolveAdminReportPathReportIdRegExp),
+})
+
+export const reportsResolveAdminReportBodyReasonMax = 1000
+
+export const reportsResolveAdminReportBodyReasonRegExp = new RegExp("\\S")
+
+export const ReportsResolveAdminReportBody = zod.object({
+  outcome: zod.enum(["ViPham", "KhongViPham"]),
+  reason: zod
+    .string()
+    .min(1)
+    .max(reportsResolveAdminReportBodyReasonMax)
+    .regex(reportsResolveAdminReportBodyReasonRegExp),
+})
+
+export const reportsResolveAdminReportResponseReportIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const ReportsResolveAdminReportResponse = zod.object({
+  reportId: zod
+    .string()
+    .regex(reportsResolveAdminReportResponseReportIdRegExp)
+    .describe(
+      "ID báo cáo dạng bigint dương PostgreSQL, tối đa 9223372036854775807."
+    ),
+  status: zod.enum(["DaKetLuan"]),
+  outcome: zod.enum(["ViPham", "KhongViPham"]),
+  reason: zod.string(),
+  handlerId: zod.string(),
+  closedAt: zod.iso.datetime({ offset: true }),
+})
+
+export const storesListAdminStoresQueryCursorRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+export const storesListAdminStoresQueryLimitDefault = 20
+export const storesListAdminStoresQueryLimitMax = 100
+
+export const storesListAdminStoresQuerySearchMax = 100
+
+export const StoresListAdminStoresQueryParams = zod.object({
+  cursor: zod.string().regex(storesListAdminStoresQueryCursorRegExp).optional(),
+  limit: zod
+    .number()
+    .min(1)
+    .max(storesListAdminStoresQueryLimitMax)
+    .default(storesListAdminStoresQueryLimitDefault),
+  search: zod
+    .string()
+    .min(1)
+    .max(storesListAdminStoresQuerySearchMax)
+    .optional(),
+  status: zod.enum(["HoatDong", "TamDong", "BiKhoa"]).optional(),
+  verificationStatus: zod
+    .enum(["ChuaNop", "ChoDuyet", "DaXacMinh", "TuChoi"])
+    .optional(),
+})
+
+export const storesListAdminStoresResponseItemsItemStoreIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+export const storesListAdminStoresResponseItemsItemSellerIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const StoresListAdminStoresResponse = zod.object({
+  nextCursor: zod.string().nullable(),
+  total: zod.number(),
+  items: zod.array(
+    zod.object({
+      storeId: zod
+        .string()
+        .regex(storesListAdminStoresResponseItemsItemStoreIdRegExp),
+      code: zod.string().nullable(),
+      name: zod.string(),
+      image: zod.string().nullable(),
+      province: zod.string(),
+      ward: zod.string(),
+      status: zod.enum(["HoatDong", "TamDong", "BiKhoa"]),
+      sellerId: zod
+        .string()
+        .regex(storesListAdminStoresResponseItemsItemSellerIdRegExp),
+      sellerName: zod.string(),
+      verificationStatus: zod.enum([
+        "ChuaNop",
+        "ChoDuyet",
+        "DaXacMinh",
+        "TuChoi",
+      ]),
+      createdAt: zod.iso.datetime({ offset: true }),
+    })
+  ),
+})
+
+export const storesGetAdminStorePathStoreIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const StoresGetAdminStoreParams = zod.object({
+  storeId: zod.string().regex(storesGetAdminStorePathStoreIdRegExp),
+})
+
+export const storesGetAdminStoreResponseOneStoreIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+export const storesGetAdminStoreResponseOneSellerIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const StoresGetAdminStoreResponse = zod
+  .object({
+    storeId: zod.string().regex(storesGetAdminStoreResponseOneStoreIdRegExp),
+    code: zod.string().nullable(),
+    name: zod.string(),
+    image: zod.string().nullable(),
+    province: zod.string(),
+    ward: zod.string(),
+    status: zod.enum(["HoatDong", "TamDong", "BiKhoa"]),
+    sellerId: zod.string().regex(storesGetAdminStoreResponseOneSellerIdRegExp),
+    sellerName: zod.string(),
+    verificationStatus: zod.enum([
+      "ChuaNop",
+      "ChoDuyet",
+      "DaXacMinh",
+      "TuChoi",
+    ]),
+    createdAt: zod.iso.datetime({ offset: true }),
+  })
+  .and(
+    zod.object({
+      description: zod.string().nullable(),
+      address: zod.string(),
+      phone: zod.string(),
+      openedOn: zod.iso.date(),
+      updatedAt: zod.iso.datetime({ offset: true }),
+      verification: zod.object({
+        taxType: zod.string().nullable(),
+        companyName: zod.string().nullable(),
+        taxCode: zod.string().nullable(),
+        rejectionReason: zod.string().nullable(),
+        submittedAt: zod.iso.datetime({ offset: true }).nullable(),
+        reviewedAt: zod.iso.datetime({ offset: true }).nullable(),
+      }),
+    })
+  )
+
+export const storesApproveAdminStorePathStoreIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const StoresApproveAdminStoreParams = zod.object({
+  storeId: zod.string().regex(storesApproveAdminStorePathStoreIdRegExp),
+})
+
+export const storesApproveAdminStoreResponseStoreIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+export const storesApproveAdminStoreResponseSellerIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const StoresApproveAdminStoreResponse = zod.object({
+  storeId: zod.string().regex(storesApproveAdminStoreResponseStoreIdRegExp),
+  sellerId: zod.string().regex(storesApproveAdminStoreResponseSellerIdRegExp),
+  status: zod.enum(["HoatDong", "TamDong", "BiKhoa"]),
+  verificationStatus: zod.enum(["ChuaNop", "ChoDuyet", "DaXacMinh", "TuChoi"]),
+  updatedAt: zod.iso.datetime({ offset: true }),
+})
+
+export const storesLockAdminStorePathStoreIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const StoresLockAdminStoreParams = zod.object({
+  storeId: zod.string().regex(storesLockAdminStorePathStoreIdRegExp),
+})
+
+export const storesLockAdminStoreBodyReasonMax = 500
+
+export const storesLockAdminStoreBodyReasonRegExp = new RegExp("\\S")
+
+export const StoresLockAdminStoreBody = zod.object({
+  reason: zod
+    .string()
+    .min(1)
+    .max(storesLockAdminStoreBodyReasonMax)
+    .regex(storesLockAdminStoreBodyReasonRegExp),
+})
+
+export const storesLockAdminStoreResponseStoreIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+export const storesLockAdminStoreResponseSellerIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const StoresLockAdminStoreResponse = zod.object({
+  storeId: zod.string().regex(storesLockAdminStoreResponseStoreIdRegExp),
+  sellerId: zod.string().regex(storesLockAdminStoreResponseSellerIdRegExp),
+  status: zod.enum(["HoatDong", "TamDong", "BiKhoa"]),
+  verificationStatus: zod.enum(["ChuaNop", "ChoDuyet", "DaXacMinh", "TuChoi"]),
+  updatedAt: zod.iso.datetime({ offset: true }),
+})
+
+export const storesRejectAdminStorePathStoreIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const StoresRejectAdminStoreParams = zod.object({
+  storeId: zod.string().regex(storesRejectAdminStorePathStoreIdRegExp),
+})
+
+export const storesRejectAdminStoreBodyReasonMax = 500
+
+export const storesRejectAdminStoreBodyReasonRegExp = new RegExp("\\S")
+
+export const StoresRejectAdminStoreBody = zod.object({
+  reason: zod
+    .string()
+    .min(1)
+    .max(storesRejectAdminStoreBodyReasonMax)
+    .regex(storesRejectAdminStoreBodyReasonRegExp),
+})
+
+export const storesRejectAdminStoreResponseStoreIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+export const storesRejectAdminStoreResponseSellerIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const StoresRejectAdminStoreResponse = zod.object({
+  storeId: zod.string().regex(storesRejectAdminStoreResponseStoreIdRegExp),
+  sellerId: zod.string().regex(storesRejectAdminStoreResponseSellerIdRegExp),
+  status: zod.enum(["HoatDong", "TamDong", "BiKhoa"]),
+  verificationStatus: zod.enum(["ChuaNop", "ChoDuyet", "DaXacMinh", "TuChoi"]),
+  updatedAt: zod.iso.datetime({ offset: true }),
+})
+
+export const storesUnlockAdminStorePathStoreIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const StoresUnlockAdminStoreParams = zod.object({
+  storeId: zod.string().regex(storesUnlockAdminStorePathStoreIdRegExp),
+})
+
+export const storesUnlockAdminStoreResponseStoreIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+export const storesUnlockAdminStoreResponseSellerIdRegExp = new RegExp(
+  "^[1-9][0-9]{0,18}$"
+)
+
+export const StoresUnlockAdminStoreResponse = zod.object({
+  storeId: zod.string().regex(storesUnlockAdminStoreResponseStoreIdRegExp),
+  sellerId: zod.string().regex(storesUnlockAdminStoreResponseSellerIdRegExp),
+  status: zod.enum(["HoatDong", "TamDong", "BiKhoa"]),
+  verificationStatus: zod.enum(["ChuaNop", "ChoDuyet", "DaXacMinh", "TuChoi"]),
+  updatedAt: zod.iso.datetime({ offset: true }),
+})
+
 export const LoginBody = zod.object({
   email: zod.string(),
   password: zod.string(),

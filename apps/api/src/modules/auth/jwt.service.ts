@@ -10,6 +10,7 @@ export type AccessClaims = JWTPayload & {
   email: string
   name: string
   role: string
+  authVersion: number
 }
 
 @Injectable()
@@ -24,8 +25,13 @@ export class JwtService {
     this.secret = new TextEncoder().encode(value)
   }
 
-  async signAccessToken(user: AuthUser) {
-    return new SignJWT({ email: user.email, name: user.name, role: user.role })
+  async signAccessToken(user: AuthUser, authVersion = 0) {
+    return new SignJWT({
+      email: user.email,
+      name: user.name,
+      role: user.role,
+      authVersion,
+    })
       .setProtectedHeader({ alg: "HS256", typ: "JWT" })
       .setSubject(user.id)
       .setJti(randomUUID())
@@ -46,7 +52,9 @@ export class JwtService {
         typeof payload.jti !== "string" ||
         typeof payload.email !== "string" ||
         typeof payload.name !== "string" ||
-        typeof payload.role !== "string"
+        typeof payload.role !== "string" ||
+        !Number.isInteger(payload.authVersion) ||
+        Number(payload.authVersion) < 0
       )
         throw new Error()
       return payload as AccessClaims

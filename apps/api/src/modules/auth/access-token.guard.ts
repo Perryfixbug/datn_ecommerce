@@ -7,12 +7,14 @@ import {
 import { RedisService } from "../../infrastructure/redis/redis.service.js"
 import { ACCESS_BLACKLIST_PREFIX } from "./auth.constants.js"
 import { JwtService } from "./jwt.service.js"
+import { PrismaService } from "../../infrastructure/database/prisma.service.js"
 
 @Injectable()
 export class AccessTokenGuard implements CanActivate {
   constructor(
     private readonly jwt: JwtService,
-    private readonly redis: RedisService
+    private readonly redis: RedisService,
+    private readonly db: PrismaService
   ) {}
 
   async canActivate(context: ExecutionContext) {
@@ -30,6 +32,22 @@ export class AccessTokenGuard implements CanActivate {
     const token = value.slice(7)
     const claims = await this.jwt.verifyAccessToken(token)
     if (
+      !/^[1-9][0-9]{0,18}$/.test(claims.sub) ||
+      BigInt(claims.sub) > 9223372036854775807n
+    )
+      throw new UnauthorizedException({
+        code: "INVALID_ACCESS_TOKEN",
+        message: "Access token không hợp lệ",
+      })
+    const account = await this.db.nguoiDung.findUnique({
+      where: { idNguoiDung: BigInt(claims.sub) },
+      select: { trangThai: true, authVersion: true, vaiTro: true },
+    })
+    if (
+      !account ||
+      account.trangThai !== "HoatDong" ||
+      account.authVersion !== claims.authVersion ||
+      account.vaiTro !== claims.role ||
       !claims.jti ||
       (await this.redis.isBlacklisted(ACCESS_BLACKLIST_PREFIX + claims.jti))
     )

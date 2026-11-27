@@ -1,5 +1,7 @@
 ﻿# A-034 Báo cáo tổng hợp
 
+> Trạng thái triển khai: **CẦN XÁC NHẬN**: chưa triển khai; phạm vi hoặc chính sách còn điểm chưa chốt. Phạm vi đang mâu thuẫn: summary trong admin-api và lịch sử xử lý trong functions.md. Xem [bảng tiến độ và mức kiểm chứng](../admin-api.md#tổng-quan-tiến-độ).
+
 | Trường                  | Nội dung                                                                         |
 | ----------------------- | -------------------------------------------------------------------------------- |
 | Mã chức năng/use case   | `A-034`, `U22`                                                                   |

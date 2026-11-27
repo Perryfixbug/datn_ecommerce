@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "dev": "prisma generate && nest start --watch",
-    "build": "prisma generate && nest build",
+    "build": "prisma generate && nest build && node scripts/copy-openapi.mjs",
     "start": "node dist/apps/api/src/main.js",
     "lint": "eslint --max-warnings 0",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -40,6 +40,7 @@
     "pino-http": "^11.0.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
+    "swagger-ui-express": "^5.0.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -49,6 +50,7 @@
     "@types/node": "^25.2.3",
     "@types/pg": "^8.23.1",
     "@types/supertest": "^7.2.1",
+    "@types/swagger-ui-express": "^4.1.8",
     "eslint": "^9.39.2",
     "jest": "^30.5.2",
     "prisma": "7.10.1",

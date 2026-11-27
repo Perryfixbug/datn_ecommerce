@@ -5,6 +5,2063 @@ info:
 tags:
   - name: health
 paths:
+  /api/v1/admin/accounts:
+    get:
+      operationId: Accounts_listAdminAccounts
+      parameters:
+        - $ref: "#/components/parameters/AdminAccounts.AccountQuery.cursor"
+        - $ref: "#/components/parameters/AdminAccounts.AccountQuery.limit"
+        - $ref: "#/components/parameters/AdminAccounts.AccountQuery.search"
+        - $ref: "#/components/parameters/AdminAccounts.AccountQuery.role"
+        - $ref: "#/components/parameters/AdminAccounts.AccountQuery.status"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - nextCursor
+                  - total
+                  - items
+                properties:
+                  nextCursor:
+                    type: string
+                    nullable: true
+                  total:
+                    type: integer
+                    format: int64
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AdminAccounts.AccountSummary"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/accounts/{accountId}:
+    get:
+      operationId: Accounts_getAdminAccount
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminAccounts.AccountId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminAccounts.AccountDetail"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/accounts/{accountId}/lock:
+    post:
+      operationId: Accounts_lockAdminAccount
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminAccounts.AccountId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminAccounts.AccountMutation"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminAccounts.AccountReason"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/accounts/{accountId}/unlock:
+    post:
+      operationId: Accounts_unlockAdminAccount
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminAccounts.AccountId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminAccounts.AccountMutation"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminAccounts.AccountReason"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/cases:
+    get:
+      operationId: Cases_listAdminCases
+      parameters:
+        - $ref: "#/components/parameters/AdminCases.CaseQuery.cursor"
+        - $ref: "#/components/parameters/AdminCases.CaseQuery.limit"
+        - $ref: "#/components/parameters/AdminCases.CaseQuery.kind"
+        - $ref: "#/components/parameters/AdminCases.CaseQuery.status"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - nextCursor
+                  - total
+                  - items
+                properties:
+                  nextCursor:
+                    type: string
+                    nullable: true
+                  total:
+                    type: integer
+                    format: int64
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AdminCases.CaseSummary"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/cases/{caseId}:
+    get:
+      operationId: Cases_getAdminCase
+      parameters:
+        - name: caseId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminCases.CaseId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminCases.CaseDetail"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/cases/{caseId}/resolution:
+    post:
+      operationId: Cases_resolveAdminCase
+      parameters:
+        - name: caseId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminCases.CaseId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminCases.CaseDetail"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminCases.Resolution"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/catalog/categories:
+    get:
+      operationId: Categories_listAdminCategories
+      parameters:
+        - $ref: "#/components/parameters/AdminCategories.CategoryQuery.cursor"
+        - $ref: "#/components/parameters/AdminCategories.CategoryQuery.limit"
+        - $ref: "#/components/parameters/AdminCategories.CategoryQuery.parentId"
+        - $ref: "#/components/parameters/AdminCategories.CategoryQuery.search"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - nextCursor
+                  - total
+                  - items
+                properties:
+                  nextCursor:
+                    type: string
+                    nullable: true
+                  total:
+                    type: integer
+                    format: int64
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AdminCategories.Category"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      security:
+        - BearerAuth: []
+    post:
+      operationId: Categories_createAdminCategory
+      parameters: []
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminCategories.Category"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminCategories.CategoryInput"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/catalog/categories/{categoryId}:
+    patch:
+      operationId: Categories_updateAdminCategory
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminCategories.CategoryId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminCategories.Category"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminCategories.CategoryUpdate"
+      security:
+        - BearerAuth: []
+    delete:
+      operationId: Categories_deleteAdminCategory
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminCategories.CategoryId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  categoryId:
+                    $ref: "#/components/schemas/AdminCategories.CategoryId"
+                required:
+                  - categoryId
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/homepage:
+    get:
+      operationId: Homepage_getHomepage
+      parameters: []
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminHomepage.Config"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/homepage/ads:
+    post:
+      operationId: Homepage_createHomepageAd
+      parameters: []
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminHomepage.Config"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminHomepage.MediaInput"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/homepage/ads/{itemId}:
+    patch:
+      operationId: Homepage_updateHomepageAd
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminHomepage.ItemId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminHomepage.Config"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminHomepage.MediaInput"
+      security:
+        - BearerAuth: []
+    delete:
+      operationId: Homepage_deleteHomepageAd
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminHomepage.ItemId"
+        - name: version
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminHomepage.Version"
+          explode: false
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminHomepage.Config"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/homepage/banners:
+    post:
+      operationId: Homepage_createHomepageBanner
+      parameters: []
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminHomepage.Config"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminHomepage.MediaInput"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/homepage/banners/{itemId}:
+    patch:
+      operationId: Homepage_updateHomepageBanner
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminHomepage.ItemId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminHomepage.Config"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminHomepage.MediaInput"
+      security:
+        - BearerAuth: []
+    delete:
+      operationId: Homepage_deleteHomepageBanner
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminHomepage.ItemId"
+        - name: version
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminHomepage.Version"
+          explode: false
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminHomepage.Config"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/homepage/category-sections:
+    post:
+      operationId: Homepage_createHomepageCategorySection
+      parameters: []
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminHomepage.Config"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminHomepage.CategoryInput"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/homepage/category-sections/{itemId}:
+    patch:
+      operationId: Homepage_updateHomepageCategorySection
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminHomepage.ItemId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminHomepage.Config"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminHomepage.CategoryInput"
+      security:
+        - BearerAuth: []
+    delete:
+      operationId: Homepage_deleteHomepageCategorySection
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminHomepage.ItemId"
+        - name: version
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminHomepage.Version"
+          explode: false
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminHomepage.Config"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/homepage/order:
+    post:
+      operationId: Homepage_reorderHomepage
+      parameters: []
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminHomepage.Config"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminHomepage.Order"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/homepage/preview:
+    get:
+      operationId: Homepage_previewHomepage
+      parameters:
+        - name: at
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+          explode: false
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminHomepage.Preview"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/homepage/publish:
+    post:
+      operationId: Homepage_publishHomepage
+      parameters: []
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminHomepage.Config"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminHomepage.Change"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/product-moderation:
+    get:
+      operationId: ProductModeration_listProductModeration
+      parameters:
+        - $ref: "#/components/parameters/AdminModeration.ModerationQuery.cursor"
+        - $ref: "#/components/parameters/AdminModeration.ModerationQuery.limit"
+        - $ref: "#/components/parameters/AdminModeration.ModerationQuery.search"
+        - $ref: "#/components/parameters/AdminModeration.ModerationQuery.storeId"
+        - $ref: "#/components/parameters/AdminModeration.ModerationQuery.status"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - nextCursor
+                  - total
+                  - items
+                properties:
+                  nextCursor:
+                    type: string
+                    nullable: true
+                  total:
+                    type: integer
+                    format: int64
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AdminModeration.ProductSummary"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/product-moderation/{productId}:
+    get:
+      operationId: ProductModeration_getProductModeration
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminModeration.ProductId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminModeration.ProductDetail"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/product-moderation/{productId}/approval:
+    post:
+      operationId: ProductModeration_approveProductModeration
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminModeration.ProductId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminModeration.ModerationResult"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminModeration.Approval"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/product-moderation/{productId}/rejection:
+    post:
+      operationId: ProductModeration_rejectProductModeration
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminModeration.ProductId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminModeration.ModerationResult"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminModeration.Rejection"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/reports/{reportId}/resolution:
+    post:
+      operationId: Reports_resolveAdminReport
+      description: Chỉ QuanTriVien/KiemDuyetVien được kết luận báo cáo sản phẩm; không tự ẩn sản phẩm hay khóa tài khoản/cửa hàng. Ghi lịch sử và thông báo nguyên tử; đã kết luận trả 409.
+      parameters:
+        - name: reportId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminReports.ReportId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminReports.ReportResolution"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminReports.Resolution"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/stores:
+    get:
+      operationId: Stores_listAdminStores
+      parameters:
+        - $ref: "#/components/parameters/AdminStores.StoreQuery.cursor"
+        - $ref: "#/components/parameters/AdminStores.StoreQuery.limit"
+        - $ref: "#/components/parameters/AdminStores.StoreQuery.search"
+        - $ref: "#/components/parameters/AdminStores.StoreQuery.status"
+        - $ref: "#/components/parameters/AdminStores.StoreQuery.verificationStatus"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - nextCursor
+                  - total
+                  - items
+                properties:
+                  nextCursor:
+                    type: string
+                    nullable: true
+                  total:
+                    type: integer
+                    format: int64
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AdminStores.StoreSummary"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/stores/{storeId}:
+    get:
+      operationId: Stores_getAdminStore
+      parameters:
+        - name: storeId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminStores.StoreId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminStores.StoreDetail"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/stores/{storeId}/approval:
+    post:
+      operationId: Stores_approveAdminStore
+      parameters:
+        - name: storeId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminStores.StoreId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminStores.StoreMutation"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/stores/{storeId}/lock:
+    post:
+      operationId: Stores_lockAdminStore
+      parameters:
+        - name: storeId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminStores.StoreId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminStores.StoreMutation"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminStores.StoreReason"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/stores/{storeId}/rejection:
+    post:
+      operationId: Stores_rejectAdminStore
+      parameters:
+        - name: storeId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminStores.StoreId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminStores.StoreMutation"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminStores.StoreReason"
+      security:
+        - BearerAuth: []
+  /api/v1/admin/stores/{storeId}/unlock:
+    post:
+      operationId: Stores_unlockAdminStore
+      parameters:
+        - name: storeId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/AdminStores.StoreId"
+      responses:
+        "200":
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminStores.StoreMutation"
+        "400":
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "401":
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "403":
+          description: Access is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "404":
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "409":
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Common.ErrorResponse"
+      security:
+        - BearerAuth: []
   /api/v1/auth/login:
     post:
       operationId: login
@@ -126,7 +2183,1024 @@ paths:
       tags:
         - health
 components:
+  parameters:
+    AdminAccounts.AccountQuery.cursor:
+      name: cursor
+      in: query
+      required: false
+      schema:
+        $ref: "#/components/schemas/AdminAccounts.AccountId"
+      explode: false
+    AdminAccounts.AccountQuery.limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 20
+      explode: false
+    AdminAccounts.AccountQuery.role:
+      name: role
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - NguoiMua
+          - NguoiBan
+          - NhanVien
+      explode: false
+    AdminAccounts.AccountQuery.search:
+      name: search
+      in: query
+      required: false
+      schema:
+        type: string
+        pattern: \S
+        minLength: 1
+        maxLength: 100
+      explode: false
+    AdminAccounts.AccountQuery.status:
+      name: status
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - HoatDong
+          - BiKhoa
+      explode: false
+    AdminCases.CaseQuery.cursor:
+      name: cursor
+      in: query
+      required: false
+      schema:
+        $ref: "#/components/schemas/AdminCases.CaseId"
+      explode: false
+    AdminCases.CaseQuery.kind:
+      name: kind
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - complaint
+          - report
+          - dispute
+      explode: false
+    AdminCases.CaseQuery.limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 20
+      explode: false
+    AdminCases.CaseQuery.status:
+      name: status
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - ChoXuLy
+          - DaXuLy
+      explode: false
+    AdminCategories.CategoryQuery.cursor:
+      name: cursor
+      in: query
+      required: false
+      schema:
+        $ref: "#/components/schemas/AdminCategories.CategoryId"
+      explode: false
+    AdminCategories.CategoryQuery.limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 20
+      explode: false
+    AdminCategories.CategoryQuery.parentId:
+      name: parentId
+      in: query
+      required: false
+      schema:
+        $ref: "#/components/schemas/AdminCategories.CategoryId"
+      explode: false
+    AdminCategories.CategoryQuery.search:
+      name: search
+      in: query
+      required: false
+      schema:
+        type: string
+        pattern: \S
+        minLength: 1
+        maxLength: 100
+      explode: false
+    AdminModeration.ModerationQuery.cursor:
+      name: cursor
+      in: query
+      required: false
+      schema:
+        $ref: "#/components/schemas/AdminModeration.ProductId"
+      explode: false
+    AdminModeration.ModerationQuery.limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 20
+      explode: false
+    AdminModeration.ModerationQuery.search:
+      name: search
+      in: query
+      required: false
+      schema:
+        type: string
+        pattern: \S
+        minLength: 1
+        maxLength: 100
+      explode: false
+    AdminModeration.ModerationQuery.status:
+      name: status
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - ChoDuyet
+          - DaDuyet
+          - TuChoi
+        default: ChoDuyet
+      explode: false
+    AdminModeration.ModerationQuery.storeId:
+      name: storeId
+      in: query
+      required: false
+      schema:
+        $ref: "#/components/schemas/AdminModeration.ProductId"
+      explode: false
+    AdminStores.StoreQuery.cursor:
+      name: cursor
+      in: query
+      required: false
+      schema:
+        $ref: "#/components/schemas/AdminStores.StoreId"
+      explode: false
+    AdminStores.StoreQuery.limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 20
+      explode: false
+    AdminStores.StoreQuery.search:
+      name: search
+      in: query
+      required: false
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 100
+      explode: false
+    AdminStores.StoreQuery.status:
+      name: status
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - HoatDong
+          - TamDong
+          - BiKhoa
+      explode: false
+    AdminStores.StoreQuery.verificationStatus:
+      name: verificationStatus
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - ChuaNop
+          - ChoDuyet
+          - DaXacMinh
+          - TuChoi
+      explode: false
   schemas:
+    AdminAccounts.AccountDetail:
+      type: object
+      required:
+        - updatedAt
+        - lastLoginAt
+      properties:
+        updatedAt:
+          type: string
+          format: date-time
+        lastLoginAt:
+          type: string
+          format: date-time
+          nullable: true
+      allOf:
+        - $ref: "#/components/schemas/AdminAccounts.AccountSummary"
+    AdminAccounts.AccountId:
+      type: string
+      pattern: ^[1-9][0-9]{0,18}$
+    AdminAccounts.AccountMutation:
+      type: object
+      required:
+        - accountId
+        - status
+        - updatedAt
+      properties:
+        accountId:
+          $ref: "#/components/schemas/AdminAccounts.AccountId"
+        status:
+          type: string
+          enum:
+            - HoatDong
+            - BiKhoa
+        updatedAt:
+          type: string
+          format: date-time
+    AdminAccounts.AccountReason:
+      type: object
+      required:
+        - reason
+      properties:
+        reason:
+          type: string
+          minLength: 1
+          maxLength: 500
+          pattern: \S
+    AdminAccounts.AccountSummary:
+      type: object
+      required:
+        - accountId
+        - name
+        - email
+        - phone
+        - role
+        - status
+        - createdAt
+      properties:
+        accountId:
+          $ref: "#/components/schemas/AdminAccounts.AccountId"
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        role:
+          type: string
+          enum:
+            - NguoiMua
+            - NguoiBan
+            - NhanVien
+        status:
+          type: string
+          enum:
+            - HoatDong
+            - BiKhoa
+        createdAt:
+          type: string
+          format: date-time
+    AdminCases.CaseDetail:
+      type: object
+      required:
+        - content
+        - evidence
+        - outcome
+        - reason
+        - handlerId
+        - history
+      properties:
+        content:
+          type: string
+        evidence:
+          type: string
+          nullable: true
+          description: Bằng chứng lưu trong nguồn dữ liệu, không tự tải hoặc diễn giải URL.
+        outcome:
+          type: string
+          nullable: true
+        reason:
+          type: string
+          nullable: true
+        handlerId:
+          type: string
+          nullable: true
+        history:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdminCases.CaseHistory"
+      allOf:
+        - $ref: "#/components/schemas/AdminCases.CaseSummary"
+    AdminCases.CaseHistory:
+      type: object
+      required:
+        - historyId
+        - actorId
+        - action
+        - reason
+        - createdAt
+      properties:
+        historyId:
+          type: string
+        actorId:
+          type: string
+        action:
+          type: string
+        reason:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+    AdminCases.CaseId:
+      type: string
+      pattern: ^(complaint:[1-9][0-9]{0,18}|report:[1-9][0-9]{0,18}|dispute:[1-9][0-9]{0,18}:[1-9][0-9]{0,18})$
+      description: ID có tiền tố complaint:id, report:id hoặc dispute:orderId:storeId; các thành phần số thuộc bigint dương PostgreSQL.
+    AdminCases.CaseSummary:
+      type: object
+      required:
+        - caseId
+        - kind
+        - status
+        - requesterId
+        - requesterName
+        - orderId
+        - storeId
+        - productId
+        - createdAt
+        - closedAt
+      properties:
+        caseId:
+          $ref: "#/components/schemas/AdminCases.CaseId"
+        kind:
+          type: string
+          enum:
+            - complaint
+            - report
+            - dispute
+        status:
+          type: string
+          enum:
+            - ChoXuLy
+            - DaXuLy
+        requesterId:
+          type: string
+        requesterName:
+          type: string
+        orderId:
+          type: string
+          nullable: true
+        storeId:
+          type: string
+          nullable: true
+        productId:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        closedAt:
+          type: string
+          format: date-time
+          nullable: true
+    AdminCases.Resolution:
+      type: object
+      required:
+        - outcome
+        - reason
+      properties:
+        outcome:
+          type: string
+          enum:
+            - ChapNhan
+            - TuChoi
+        reason:
+          type: string
+          minLength: 1
+          maxLength: 1000
+          pattern: \S
+    AdminCategories.Category:
+      type: object
+      required:
+        - categoryId
+        - name
+        - parentId
+        - createdAt
+        - updatedAt
+      properties:
+        categoryId:
+          $ref: "#/components/schemas/AdminCategories.CategoryId"
+        name:
+          type: string
+        parentId:
+          type: string
+          allOf:
+            - $ref: "#/components/schemas/AdminCategories.CategoryId"
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    AdminCategories.CategoryId:
+      type: string
+      pattern: ^[1-9][0-9]{0,18}$
+    AdminCategories.CategoryInput:
+      type: object
+      required:
+        - name
+        - parentId
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          pattern: \S
+        parentId:
+          type: string
+          allOf:
+            - $ref: "#/components/schemas/AdminCategories.CategoryId"
+          nullable: true
+    AdminCategories.CategoryUpdate:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/AdminCategories.CategoryInput"
+      description: PATCH gửi tên và cha mong muốn; null đưa danh mục về gốc.
+    AdminHomepage.CategoryInput:
+      type: object
+      required:
+        - title
+        - categoryIds
+        - enabled
+        - startsAt
+        - endsAt
+      properties:
+        title:
+          $ref: "#/components/schemas/AdminHomepage.Title"
+        categoryIds:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdminHomepage.ItemId"
+          minItems: 1
+          maxItems: 30
+        enabled:
+          type: boolean
+        startsAt:
+          type: string
+          format: date-time
+          nullable: true
+        endsAt:
+          type: string
+          format: date-time
+          nullable: true
+      allOf:
+        - $ref: "#/components/schemas/AdminHomepage.Change"
+    AdminHomepage.Change:
+      type: object
+      required:
+        - version
+      properties:
+        version:
+          $ref: "#/components/schemas/AdminHomepage.Version"
+    AdminHomepage.Config:
+      type: object
+      required:
+        - version
+        - draft
+        - published
+        - publishedVersion
+        - publishedAt
+      properties:
+        version:
+          $ref: "#/components/schemas/AdminHomepage.Version"
+        draft:
+          $ref: "#/components/schemas/AdminHomepage.Content"
+        published:
+          type: object
+          allOf:
+            - $ref: "#/components/schemas/AdminHomepage.Content"
+          nullable: true
+        publishedVersion:
+          type: integer
+          allOf:
+            - $ref: "#/components/schemas/AdminHomepage.Version"
+          nullable: true
+        publishedAt:
+          type: string
+          format: date-time
+          nullable: true
+    AdminHomepage.Content:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdminHomepage.HomepageItem"
+          maxItems: 100
+    AdminHomepage.HomepageItem:
+      type: object
+      required:
+        - itemId
+        - kind
+        - title
+        - imageUrl
+        - targetUrl
+        - categoryIds
+        - enabled
+        - startsAt
+        - endsAt
+      properties:
+        itemId:
+          $ref: "#/components/schemas/AdminHomepage.ItemId"
+        kind:
+          type: string
+          enum:
+            - banner
+            - ad
+            - category-section
+        title:
+          $ref: "#/components/schemas/AdminHomepage.Title"
+        imageUrl:
+          type: string
+          allOf:
+            - $ref: "#/components/schemas/AdminHomepage.MediaUrl"
+          nullable: true
+        targetUrl:
+          type: string
+          allOf:
+            - $ref: "#/components/schemas/AdminHomepage.InternalLink"
+          nullable: true
+        categoryIds:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdminHomepage.ItemId"
+        enabled:
+          type: boolean
+        startsAt:
+          type: string
+          format: date-time
+          nullable: true
+        endsAt:
+          type: string
+          format: date-time
+          nullable: true
+    AdminHomepage.InternalLink:
+      type: string
+      minLength: 1
+      maxLength: 2048
+      pattern: ^/(?!/)[^\s]*$
+    AdminHomepage.ItemId:
+      type: string
+      pattern: ^[1-9][0-9]{0,18}$
+    AdminHomepage.MediaInput:
+      type: object
+      required:
+        - title
+        - imageUrl
+        - targetUrl
+        - enabled
+        - startsAt
+        - endsAt
+      properties:
+        title:
+          $ref: "#/components/schemas/AdminHomepage.Title"
+        imageUrl:
+          $ref: "#/components/schemas/AdminHomepage.MediaUrl"
+        targetUrl:
+          $ref: "#/components/schemas/AdminHomepage.InternalLink"
+        enabled:
+          type: boolean
+        startsAt:
+          type: string
+          format: date-time
+          nullable: true
+        endsAt:
+          type: string
+          format: date-time
+          nullable: true
+      allOf:
+        - $ref: "#/components/schemas/AdminHomepage.Change"
+    AdminHomepage.MediaUrl:
+      type: string
+      minLength: 1
+      maxLength: 2048
+      pattern: ^(https://[^/\s]+/|/(?!/))[^\s]*$
+    AdminHomepage.Order:
+      type: object
+      required:
+        - itemIds
+      properties:
+        itemIds:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdminHomepage.ItemId"
+          maxItems: 100
+      allOf:
+        - $ref: "#/components/schemas/AdminHomepage.Change"
+    AdminHomepage.Preview:
+      type: object
+      required:
+        - version
+        - at
+        - items
+      properties:
+        version:
+          $ref: "#/components/schemas/AdminHomepage.Version"
+        at:
+          type: string
+          format: date-time
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdminHomepage.HomepageItem"
+    AdminHomepage.Title:
+      type: string
+      minLength: 1
+      maxLength: 200
+      pattern: \S
+    AdminHomepage.Version:
+      type: integer
+      format: int32
+      minimum: 0
+      maximum: 2147483646
+    AdminModeration.Approval:
+      type: object
+      required:
+        - version
+      properties:
+        version:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 2147483646
+          description: Phiên bản kiểm duyệt đã đọc; thay đổi nội dung phải tăng phiên bản này.
+    AdminModeration.ModerationResult:
+      type: object
+      required:
+        - productId
+        - moderationStatus
+        - version
+        - reviewedAt
+      properties:
+        productId:
+          $ref: "#/components/schemas/AdminModeration.ProductId"
+        moderationStatus:
+          type: string
+          enum:
+            - ChoDuyet
+            - DaDuyet
+            - TuChoi
+        version:
+          type: integer
+          format: int32
+        reviewedAt:
+          type: string
+          format: date-time
+    AdminModeration.ProductDetail:
+      type: object
+      required:
+        - description
+        - classification
+        - updatedAt
+        - rejectionReason
+        - reviewedAt
+        - variants
+      properties:
+        description:
+          type: string
+          nullable: true
+        classification:
+          type: string
+          nullable: true
+        updatedAt:
+          type: string
+          format: date-time
+        rejectionReason:
+          type: string
+          nullable: true
+        reviewedAt:
+          type: string
+          format: date-time
+          nullable: true
+        variants:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdminModeration.Variant"
+      allOf:
+        - $ref: "#/components/schemas/AdminModeration.ProductSummary"
+    AdminModeration.ProductId:
+      type: string
+      pattern: ^[1-9][0-9]{0,18}$
+    AdminModeration.ProductSummary:
+      type: object
+      required:
+        - productId
+        - code
+        - name
+        - image
+        - storeId
+        - storeName
+        - categoryId
+        - categoryName
+        - visibility
+        - moderationStatus
+        - version
+        - createdAt
+      properties:
+        productId:
+          $ref: "#/components/schemas/AdminModeration.ProductId"
+        code:
+          type: string
+          nullable: true
+        name:
+          type: string
+        image:
+          type: string
+          nullable: true
+        storeId:
+          $ref: "#/components/schemas/AdminModeration.ProductId"
+        storeName:
+          type: string
+        categoryId:
+          $ref: "#/components/schemas/AdminModeration.ProductId"
+        categoryName:
+          type: string
+        visibility:
+          type: string
+          enum:
+            - Hien
+            - An
+            - Khoa
+        moderationStatus:
+          type: string
+          enum:
+            - ChoDuyet
+            - DaDuyet
+            - TuChoi
+        version:
+          type: integer
+          format: int32
+        createdAt:
+          type: string
+          format: date-time
+    AdminModeration.Rejection:
+      type: object
+      required:
+        - reason
+      properties:
+        reason:
+          type: string
+          minLength: 1
+          maxLength: 500
+          pattern: \S
+      allOf:
+        - $ref: "#/components/schemas/AdminModeration.Approval"
+    AdminModeration.Variant:
+      type: object
+      required:
+        - variantId
+        - name
+        - attributes
+        - image
+        - price
+        - stock
+      properties:
+        variantId:
+          $ref: "#/components/schemas/AdminModeration.ProductId"
+        name:
+          type: string
+        attributes:
+          type: string
+        image:
+          type: string
+          nullable: true
+        price:
+          allOf:
+            - $ref: "#/components/schemas/Common.VndAmount"
+          description: Giá nguyên đồng VND, biểu diễn chuỗi để bảo toàn Decimal.
+        stock:
+          type: integer
+          format: int32
+    AdminReports.ReportId:
+      type: string
+      pattern: ^[1-9][0-9]{0,18}$
+      description: ID báo cáo dạng bigint dương PostgreSQL, tối đa 9223372036854775807.
+    AdminReports.ReportResolution:
+      type: object
+      required:
+        - reportId
+        - status
+        - outcome
+        - reason
+        - handlerId
+        - closedAt
+      properties:
+        reportId:
+          $ref: "#/components/schemas/AdminReports.ReportId"
+        status:
+          type: string
+          enum:
+            - DaKetLuan
+        outcome:
+          type: string
+          enum:
+            - ViPham
+            - KhongViPham
+        reason:
+          type: string
+        handlerId:
+          type: string
+        closedAt:
+          type: string
+          format: date-time
+    AdminReports.Resolution:
+      type: object
+      required:
+        - outcome
+        - reason
+      properties:
+        outcome:
+          type: string
+          enum:
+            - ViPham
+            - KhongViPham
+        reason:
+          type: string
+          minLength: 1
+          maxLength: 1000
+          pattern: \S
+    AdminStores.StoreDetail:
+      type: object
+      required:
+        - description
+        - address
+        - phone
+        - openedOn
+        - updatedAt
+        - verification
+      properties:
+        description:
+          type: string
+          nullable: true
+        address:
+          type: string
+        phone:
+          type: string
+        openedOn:
+          type: string
+          format: date
+        updatedAt:
+          type: string
+          format: date-time
+        verification:
+          type: object
+          properties:
+            taxType:
+              type: string
+              nullable: true
+            companyName:
+              type: string
+              nullable: true
+            taxCode:
+              type: string
+              nullable: true
+            rejectionReason:
+              type: string
+              nullable: true
+            submittedAt:
+              type: string
+              format: date-time
+              nullable: true
+            reviewedAt:
+              type: string
+              format: date-time
+              nullable: true
+          required:
+            - taxType
+            - companyName
+            - taxCode
+            - rejectionReason
+            - submittedAt
+            - reviewedAt
+      allOf:
+        - $ref: "#/components/schemas/AdminStores.StoreSummary"
+    AdminStores.StoreId:
+      type: string
+      pattern: ^[1-9][0-9]{0,18}$
+    AdminStores.StoreMutation:
+      type: object
+      required:
+        - storeId
+        - sellerId
+        - status
+        - verificationStatus
+        - updatedAt
+      properties:
+        storeId:
+          $ref: "#/components/schemas/AdminStores.StoreId"
+        sellerId:
+          $ref: "#/components/schemas/AdminStores.StoreId"
+        status:
+          type: string
+          enum:
+            - HoatDong
+            - TamDong
+            - BiKhoa
+        verificationStatus:
+          type: string
+          enum:
+            - ChuaNop
+            - ChoDuyet
+            - DaXacMinh
+            - TuChoi
+        updatedAt:
+          type: string
+          format: date-time
+    AdminStores.StoreReason:
+      type: object
+      required:
+        - reason
+      properties:
+        reason:
+          type: string
+          minLength: 1
+          maxLength: 500
+          pattern: \S
+    AdminStores.StoreSummary:
+      type: object
+      required:
+        - storeId
+        - code
+        - name
+        - image
+        - province
+        - ward
+        - status
+        - sellerId
+        - sellerName
+        - verificationStatus
+        - createdAt
+      properties:
+        storeId:
+          $ref: "#/components/schemas/AdminStores.StoreId"
+        code:
+          type: string
+          nullable: true
+        name:
+          type: string
+        image:
+          type: string
+          nullable: true
+        province:
+          type: string
+        ward:
+          type: string
+        status:
+          type: string
+          enum:
+            - HoatDong
+            - TamDong
+            - BiKhoa
+        sellerId:
+          $ref: "#/components/schemas/AdminStores.StoreId"
+        sellerName:
+          type: string
+        verificationStatus:
+          type: string
+          enum:
+            - ChuaNop
+            - ChoDuyet
+            - DaXacMinh
+            - TuChoi
+        createdAt:
+          type: string
+          format: date-time
     Common.AuthUser:
       type: object
       required:
@@ -250,3 +3324,10 @@ components:
           type: string
         refreshToken:
           type: string
+    Common.VndAmount:
+      type: string
+      description: Số tiền nguyên theo đơn vị đồng Việt Nam, không dùng số thực trong JSON.
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: Bearer

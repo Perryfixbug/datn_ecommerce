@@ -1,5 +1,7 @@
 ﻿# A-038 Báo cáo vận hành theo khoảng thời gian
 
+> Trạng thái triển khai: **CẦN XÁC NHẬN**: chưa triển khai; phạm vi hoặc chính sách còn điểm chưa chốt. Cần đối chiếu lại mã/chức năng với functions.md trước khi chốt đặc tả. Xem [bảng tiến độ và mức kiểm chứng](../admin-api.md#tổng-quan-tiến-độ).
+
 | Trường                  | Nội dung                                                                         |
 | ----------------------- | -------------------------------------------------------------------------------- |
 | Mã chức năng/use case   | `A-038`, `U18`                                                                   |

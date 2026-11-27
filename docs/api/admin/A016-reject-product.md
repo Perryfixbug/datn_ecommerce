@@ -1,5 +1,7 @@
 ﻿# A-016 Từ chối sản phẩm
 
+> Trạng thái triển khai: **ĐÃ LÀM**: đã có hợp đồng, module NestJS và kiểm thử liên quan. Xem [bảng tiến độ và mức kiểm chứng](../admin-api.md#tổng-quan-tiến-độ).
+
 | Trường                  | Nội dung                                                                         |
 | ----------------------- | -------------------------------------------------------------------------------- |
 | Mã chức năng/use case   | `A-016`, `U21`                                                                   |
@@ -10,6 +12,12 @@
 | Authentication          | Access token; vòng đời token và logout TBD                                       |
 | Authorization/ownership | Permission cụ thể TBD; backend kiểm tra quyền và phạm vi dữ liệu                 |
 | Idempotency/transaction | TBD; thao tác thay đổi trạng thái phải tránh ghi nhận lặp khi retry              |
+
+### Quyết định triển khai
+
+Các mục TBD bên dưới được thay bởi [quyết định kiểm duyệt](product-moderation-decisions.md).
+TypeSpec tại packages/api-spec/typespec/admin-product-moderation.tsp; module tại
+apps/api/src/modules/product-moderation/; test HTTP tại apps/api/test/product-moderation.spec.ts.
 
 ### Request
 
